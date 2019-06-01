@@ -1,0 +1,47 @@
+{
+  "name": "express-objection-starter",
+  "version": "0.0.0",
+  "description": "express starter with knex.js, objection.js, authentication and more!",
+  "keywords": [
+    "express",
+    "objection",
+    "knex",
+    "starter",
+    "template",
+    "boilerplate",
+    "passport",
+    "pm2",
+    "websocket",
+    "hook",
+    "git",
+    "nodemon"
+  ],
+  "repository": "JaneJeon/express-objection-starter",
+  "author": "Jane Jeon <JaneJeon9719@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "husky": "^2.3.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.17.1"
+  },
+  "prettier": {
+    "semi": false
+  },
+  "husky": {
+    "hooks": {
+      "post-merge": "yarn",
+      "pre-commit": "prettier --write '**/*.js'"
+    }
+  }
+}
