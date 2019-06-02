@@ -53,6 +53,10 @@ class User extends password(visibility(BaseModel)) {
     return {}
   }
 
+  get isAdmin() {
+    return this.role == "admin" || this.role == "superuser"
+  }
+
   processInput() {
     if (this.username) this.username = this.username.toLowerCase()
     if (this.email) this.email = normalize(this.email)

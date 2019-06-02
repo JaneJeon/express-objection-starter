@@ -1,8 +1,10 @@
 const { Router } = require("express")
 
 module.exports = Router()
-  .get("/", (req, res) => res.render("index"))
-  .get("/about")
-  .get("/signup")
+  .use((req, res, next) => {
+    res.locals.user = req.user
+    next()
+  })
+  .get("/", (req, res) => res.render("index", { title: "App" }))
   .use("/", require("./sessions"))
   .use("/users", require("./users"))
