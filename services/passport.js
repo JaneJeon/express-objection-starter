@@ -2,7 +2,7 @@ const passport = require("passport")
 const User = require("../models/user")
 const { Strategy: LocalStrategy } = require("passport-local")
 
-passport.serializeUser((user, done) => done(null, user.id))
+passport.serializeUser((user, done) => done(null, user.username))
 passport.deserializeUser(async (id, done) => {
   try {
     done(null, await User.query().findById(id))

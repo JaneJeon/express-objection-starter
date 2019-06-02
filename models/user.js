@@ -25,7 +25,7 @@ class User extends password(visibility(BaseModel)) {
           maxLength: process.env.MAX_PASSWORD_LENGTH
         },
         verified: { type: "boolean", default: false },
-        avatar: { type: "string" },
+        avatar: { type: "string", default: "" }, // TODO:
         role: {
           type: "string",
           enum: ["user", "admin", "superuser"],
