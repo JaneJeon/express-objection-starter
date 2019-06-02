@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "express starter with knex.js, objection.js, authentication and more!",
   "keywords": [
     "express",
@@ -14,34 +14,80 @@
     "websocket",
     "hook",
     "git",
-    "nodemon"
+    "nodemon",
+    "handlebars",
+    "aws",
+    "postgres",
+    "redis"
   ],
   "repository": "JaneJeon/express-objection-starter",
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "pm2 start app.js -i max",
+    "watch": "DEBUG=app:* nodemon app",
+    "test": "NODE_ENV=test mocha --bail --exit --recursive --slow 500",
+    "secret": "node -p \"require('uid-safe').sync(24)\"",
+    "migrate": "DEBUG=knex knex migrate:latest --knexfile ./services/knex.js",
+    "migrate:make": "knex migrate:make --knexfile ./services/knex.js",
+    "rollback": "DEBUG=knex knex migrate:rollback --knexfile ./services/knex.js",
+    "seed": "DEBUG=knex knex seed:run --knexfile ./services/knex.js",
+    "clean": "rm -f *.log; rm -rf node_modules"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "hbs": "~4.0.4",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "aws-sdk": "^2.466.0",
+    "bull": "^3.10.0",
+    "connect-flash": "^0.1.1",
+    "cookie-session": "^1.3.3",
+    "csurf": "^1.10.0",
+    "dayjs": "^1.8.14",
+    "debug": "^4.1.1",
+    "dotenv-defaults": "^1.0.2",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^4.0.4",
+    "express-ws": "^4.0.0",
+    "hbs": "^4.0.4",
+    "helmet": "^3.18.0",
+    "http-assert": "^1.4.1",
+    "http-errors": "^1.7.2",
+    "ioredis": "^4.9.5",
+    "knex": "^0.17.2",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "normalize-email": "^1.1.1",
+    "objection": "^1.6.9",
+    "objection-db-errors": "^1.1.1",
+    "objection-password": "^2.0.0",
+    "objection-visibility": "^0.4.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.11.0",
+    "pluralize": "^8.0.0",
+    "pm2": "^3.5.1",
+    "rate-limit-redis": "^1.6.0",
+    "sharp": "^0.22.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.1",
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
     "husky": "^2.3.0",
+    "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
-    "prettier": "^1.17.1"
+    "prettier": "^1.17.1",
+    "supertest": "^4.0.2"
   },
   "prettier": {
     "semi": false
   },
   "husky": {
     "hooks": {
-      "post-merge": "yarn",
-      "pre-commit": "prettier --write '**/*.js'"
+      "post-merge": "yarn && yarn migrate",
+      "pre-commit": "prettier --write '**/*.js'",
+      "pre-push": "yarn test"
     }
   }
 }

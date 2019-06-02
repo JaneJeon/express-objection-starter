@@ -1,41 +1,37 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require("express-async-errors")
+require("./services/env")
+require("./services/passport")
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const express = require("express")
+const app = express()
+require("express-ws")(app)
 
-var app = express();
+const path = require("path")
+const createError = require("http-errors")
+const passport = require("passport")
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+// the app should be running behind proxy in production,
+// and the logger should shut up during tests
+if (process.env.NODE_ENV == "development") app.use(require("morgan")("dev"))
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app
+  .set("views", path.join(__dirname, "views"))
+  .set("view engine", "hbs")
+  .set("trust proxy", process.env.NODE_ENV == "production")
+  .use(require("helmet")())
+  .use(require("./services/session"))
+  .use(require("connect-flash")())
+  .use(express.urlencoded({ extended: false }))
+  .use(express.static(path.join(__dirname, "public")))
+  .use(passport.initialize())
+  .use(passport.session())
+  .use(require("./services/ratelimit"))
+  .use(require("./routes"))
+  .use((req, res, next) => next(createError(404))) // catch 404
+  .use(require("./services/error"))
+  .listen(process.env.PORT, err => {
+    if (err) console.error(err)
+    require("./services/debug")()("server running on port", process.env.PORT)
+  })
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+module.exports = app
