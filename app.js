@@ -31,7 +31,7 @@ app
   .use(require("./services/error"))
   .listen(process.env.PORT, err => {
     if (err) console.error(err)
-    require("./services/debug")()("server running on port", process.env.PORT)
+    require("./services/debug")("server")("running on port", process.env.PORT)
   })
 
 module.exports = app
