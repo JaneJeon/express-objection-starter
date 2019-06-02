@@ -57,6 +57,10 @@ class BaseModel extends DbErrors(Model) {
 
   static get QueryBuilder() {
     return class extends Model.QueryBuilder {
+      findById(id) {
+        return super.findById(id).throwIfNotFound()
+      }
+
       paginate(after, sortField = "id") {
         return this.skipUndefined()
           .where(sortField, "<", after)
