@@ -8,16 +8,11 @@ module.exports = Router()
     res.locals.user = await User.query().findById(req.params.userId)
     res.render("users/show", { title: `${req.params.userId}'s account` })
   })
-  .get(
-    "/:userId/edit",
-    ensureIsSignedIn,
-    ensureIsAdminOrSelf,
-    async (req, res) => {
-      res.locals.user = await User.query().findById(req.params.userId)
+  .get("/:userId/edit", ensureIsSignedIn, ensureIsAdminOrSelf, (req, res) => {
+    res.locals.userId = req.params.userId
 
-      res.render("users/edit", { title: "Update profile" })
-    }
-  )
+    res.render("users/edit", { title: "Update profile" })
+  })
   .post("/", async (req, res) => {
     User.filterPost(req.body)
 

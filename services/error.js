@@ -3,7 +3,6 @@ const debug = require("./debug")("error")
 module.exports = (err, req, res, next) => {
   debug("req.user: %o", req.user)
   debug("req.body: %o", req.body)
-
   console.error(err)
 
   if (res.headersSent) return
