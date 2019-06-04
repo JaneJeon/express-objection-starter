@@ -13,7 +13,7 @@ module.exports = Router()
 
     req.login(user, err => {
       if (err) throw err
-      res.send(req.user)
+      res.status(201).send(req.user)
     })
   })
   .patch(
@@ -21,6 +21,7 @@ module.exports = Router()
     ensureIsSignedIn,
     ensureIsAdminOrSelf,
     async (req, res) => {
+      // TODO: admin
       User.filterPatch(req.body)
 
       const user = await req.requestedUser.$query().patch(req.body)

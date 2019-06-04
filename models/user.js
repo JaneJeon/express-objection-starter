@@ -11,15 +11,15 @@ class User extends password(visibility(BaseModel)) {
         username: {
           type: "string",
           transform: ["trim", "toLowerCase"],
-          minLength: process.env.MIN_USERNAME_LENGTH,
-          maxLength: process.env.MAX_USERNAME_LENGTH,
+          minLength: +process.env.MIN_USERNAME_LENGTH,
+          maxLength: +process.env.MAX_USERNAME_LENGTH,
           pattern: "^\\w+$"
         },
         email: { type: "string", format: "email" },
         password: {
           type: "string",
-          minLength: process.env.MIN_PASSWORD_LENGTH,
-          maxLength: process.env.MAX_PASSWORD_LENGTH
+          minLength: +process.env.MIN_PASSWORD_LENGTH,
+          maxLength: +process.env.MAX_PASSWORD_LENGTH
         },
         verified: { type: "boolean", default: false },
         avatar: { type: "string", default: "" }, // TODO:
@@ -48,11 +48,7 @@ class User extends password(visibility(BaseModel)) {
   }
 
   static get reservedPostFields() {
-    return ["avatar", "role"]
-  }
-
-  static get reservedPatchFields() {
-    return ["username"]
+    return ["role", "verified"]
   }
 
   static get relationMappings() {
