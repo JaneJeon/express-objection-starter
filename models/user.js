@@ -2,6 +2,7 @@ const BaseModel = require("./base")
 const { default: visibility } = require("objection-visibility")
 const password = require("objection-password")()
 const normalize = require("normalize-email")
+const gravatar = require("gravatar")
 
 class User extends password(visibility(BaseModel)) {
   static get jsonSchema() {
@@ -22,7 +23,7 @@ class User extends password(visibility(BaseModel)) {
           maxLength: +process.env.MAX_PASSWORD_LENGTH
         },
         verified: { type: "boolean", default: false },
-        avatar: { type: "string", default: "" }, // TODO:
+        avatar: { type: "string" },
         role: {
           type: "string",
           enum: ["user", "admin", "superuser"],
@@ -60,7 +61,10 @@ class User extends password(visibility(BaseModel)) {
   }
 
   processInput() {
-    if (this.email) this.email = normalize(this.email)
+    if (this.email) {
+      this.email = normalize(this.email)
+      this.avatar = gravatar.url(this.email, { s: "500", d: "retro" })
+    }
   }
 
   async $beforeInsert(queryContext) {
