@@ -4,16 +4,13 @@ const password = require("objection-password")()
 const normalize = require("normalize-email")
 
 class User extends password(visibility(BaseModel)) {
-  static get idColumn() {
-    return "username"
-  }
-
   static get jsonSchema() {
     return {
       type: "object",
       properties: {
         username: {
           type: "string",
+          transform: ["trim", "toLowerCase"],
           minLength: process.env.MIN_USERNAME_LENGTH,
           maxLength: process.env.MAX_USERNAME_LENGTH,
           pattern: "^\\w+$"
@@ -30,6 +27,15 @@ class User extends password(visibility(BaseModel)) {
           type: "string",
           enum: ["user", "admin", "superuser"],
           default: "user"
+        }
+      },
+      errorMessage: {
+        properties: {
+          username: `username should be between ${
+            process.env.MIN_USERNAME_LENGTH
+          } and ${
+            process.env.MAX_USERNAME_LENGTH
+          } characters long, and contain only alphabets, numbers, _ and -`
         }
       },
       required: ["username", "email", "password"],
@@ -58,7 +64,6 @@ class User extends password(visibility(BaseModel)) {
   }
 
   processInput() {
-    if (this.username) this.username = this.username.toLowerCase()
     if (this.email) this.email = normalize(this.email)
   }
 
@@ -75,11 +80,13 @@ class User extends password(visibility(BaseModel)) {
   static get QueryBuilder() {
     return class extends super.QueryBuilder {
       findByUsername(username) {
-        return this.findOne({ username: username.toLowerCase() })
+        return this.findOne({
+          username: username.toLowerCase()
+        }).throwIfNotFound()
       }
 
       findByEmail(email) {
-        return this.findOne({ email: normalize(email) })
+        return this.findOne({ email: normalize(email) }).throwIfNotFound()
       }
     }
   }

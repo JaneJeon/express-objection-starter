@@ -15,14 +15,12 @@ passport.deserializeUser(async (id, done) => {
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await User.query().findById(username.toLowerCase())
+      const user = await User.query().findByUsername(username)
       ;(await user.verifyPassword(password))
         ? done(null, user)
-        : done(null, false, { message: "Incorrect password!" })
+        : done(null, false)
     } catch (err) {
-      err instanceof NotFoundError
-        ? done(null, false, { message: "Invalid username!" })
-        : done(err)
+      err instanceof NotFoundError ? done(null, false) : done(err)
     }
   })
 )

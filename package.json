@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "express starter with knex.js, objection.js, authentication and more!",
   "keywords": [
     "express",
@@ -15,10 +15,11 @@
     "hook",
     "git",
     "nodemon",
-    "handlebars",
     "aws",
     "postgres",
-    "redis"
+    "redis",
+    "api",
+    "ajv"
   ],
   "repository": "JaneJeon/express-objection-starter",
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
@@ -35,12 +36,15 @@
     "clean": "rm -f *.log; rm -rf node_modules"
   },
   "dependencies": {
+    "ajv-errors": "^1.0.1",
+    "ajv-keywords": "^3.4.0",
     "aws-sdk": "^2.466.0",
     "bull": "^3.10.0",
-    "connect-flash": "^0.1.1",
     "connect-redis": "^3.4.1",
+    "cors": "^2.8.5",
     "csurf": "^1.10.0",
     "dayjs": "^1.8.14",
+    "db-errors": "^0.2.3",
     "debug": "^4.1.1",
     "dotenv-defaults": "^1.0.2",
     "express": "^4.17.1",
@@ -48,15 +52,14 @@
     "express-rate-limit": "^4.0.4",
     "express-session": "^1.16.1",
     "express-ws": "^4.0.0",
-    "hbs": "^4.0.4",
+    "gravatar": "^1.8.0",
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
-    "http-errors": "^1.7.2",
     "ioredis": "^4.9.5",
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
-    "morgan": "^1.9.1",
     "multer": "^1.4.1",
+    "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
     "objection": "^1.6.9",
     "objection-db-errors": "^1.1.1",
@@ -77,6 +80,7 @@
   "devDependencies": {
     "husky": "^2.3.0",
     "mocha": "^6.1.4",
+    "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "prettier": "^1.17.1",
     "supertest": "^4.0.2"

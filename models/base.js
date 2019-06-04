@@ -1,4 +1,4 @@
-const { Model } = require("objection")
+const { Model, AjvValidator } = require("objection")
 const { DbErrors } = require("objection-db-errors")
 const memoize = require("lodash/memoize")
 const { plural } = require("pluralize")
@@ -24,6 +24,25 @@ class BaseModel extends DbErrors(Model) {
 
   static get defaultEagerAlgorithm() {
     return Model.JoinEagerAlgorithm
+  }
+
+  static createValidator() {
+    return new AjvValidator({
+      onCreateAjv: ajv => {
+        // modify the ajv instance
+        require("ajv-errors")(ajv)
+        require("ajv-keywords")(ajv, "transform")
+      },
+      options: {
+        // required by ajv-errors plugin
+        allErrors: true,
+        jsonPointers: true,
+        // mutating inputs
+        removeAdditional: true,
+        useDefaults: true,
+        coerceTypes: true
+      }
+    })
   }
 
   static get reservedPostFields() {

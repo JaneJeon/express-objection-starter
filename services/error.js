@@ -1,17 +1,75 @@
+const { MulterError } = require("multer")
+const { ValidationError, NotFoundError } = require("objection")
+const {
+  DBError,
+  UniqueViolationError,
+  NotNullViolationError,
+  ForeignKeyViolationError,
+  CheckViolationError,
+  DataError
+} = require("objection-db-errors")
 const debug = require("./debug")("error")
 
 module.exports = (err, req, res, next) => {
-  debug("req.user: %o", req.user)
   debug("req.body: %o", req.body)
-  console.error(err)
+  debug("req.user: %o", req.user)
 
-  if (res.headersSent) return
+  if (res.headersSent) {
+    console.error(err)
+    return
+  }
 
-  // set locals, only providing error in development
-  res.locals.message = err.message
-  res.locals.error = req.app.get("env") === "development" ? err : {}
+  if ([MulterError, ValidationError, DataError].includes(err.constructor)) {
+    err.statusCode = 400
+  } else if (err instanceof NotNullViolationError) {
+    err.statusCode = 400
+    err.data = {
+      column: err.column,
+      table: err.table
+    }
+  } else if (err instanceof CheckViolationError) {
+    err.statusCode = 400
+    err.data = {
+      table: err.table,
+      constraint: err.constraint
+    }
+  } else if (err instanceof NotFoundError) {
+    err.statusCode = 404
+  } else if (err instanceof UniqueViolationError) {
+    err.statusCode = 409
+    err.data = {
+      columns: err.columns,
+      table: err.table,
+      constraint: err.constraint
+    }
+  } else if (err instanceof ForeignKeyViolationError) {
+    err.statusCode = 409
+    err.data = {
+      table: err.table,
+      constraint: err.constraint
+    }
+  } else if (err instanceof DBError) {
+    err.statusCode = 500
+    err.name = "UnknownDatabaseError"
+  } else if (err.type && err.type.startsWith("Stripe")) {
+    // https://github.com/stripe/stripe-node/blob/master/lib/Error.js#L30
+    this.name = this.type
+    this.data = this.detail
+  } else if (!err.statusCode) {
+    err.statusCode = 500
+    err.name = "UnknownError"
+  }
 
-  // render the error page
-  res.status(err.status || 500)
-  res.render("error")
+  if (
+    err.statusCode == 500 ||
+    process.env.NODE_ENV == "development" ||
+    err.name.startsWith("AlgoliaSearch")
+  )
+    console.error(err)
+
+  res.status(err.statusCode).send({
+    message: err.message,
+    name: err.name,
+    data: err.data || {}
+  })
 }

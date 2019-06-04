@@ -3,15 +3,8 @@ const User = require("../models/user")
 const { ensureIsSignedIn, ensureIsAdminOrSelf } = require("../lib/middlewares")
 
 module.exports = Router()
-  .get("/new", (req, res) => res.render("users/new", { title: "Signup" }))
-  .get("/:userId", async (req, res) => {
-    res.locals.user = await User.query().findById(req.params.userId)
-    res.render("users/show", { title: `${req.params.userId}'s account` })
-  })
-  .get("/:userId/edit", ensureIsSignedIn, ensureIsAdminOrSelf, (req, res) => {
-    res.locals.userId = req.params.userId
-
-    res.render("users/edit", { title: "Update profile" })
+  .get("/:username", (req, res) => {
+    res.send(req.requestedUser)
   })
   .post("/", async (req, res) => {
     User.filterPost(req.body)
@@ -20,28 +13,28 @@ module.exports = Router()
 
     req.login(user, err => {
       if (err) throw err
-      res.redirect(`/users/${user.username}`)
+      res.send(req.user)
     })
   })
   .patch(
-    "/:userId",
+    "/:username",
     ensureIsSignedIn,
     ensureIsAdminOrSelf,
     async (req, res) => {
       User.filterPatch(req.body)
 
-      await req.user.$query().patch(req.body)
+      const user = await req.requestedUser.$query().patch(req.body)
 
-      res.redirect(`/users/${req.params.userId}`)
+      res.send(user)
     }
   )
   .delete(
-    "/:userId",
+    "/:username",
     ensureIsSignedIn,
     ensureIsAdminOrSelf,
     async (req, res) => {
-      await User.query().deleteById(req.params.userId)
+      await req.requestedUser.$query().delete()
 
-      res.redirect("/")
+      res.sendStatus(204)
     }
   )
