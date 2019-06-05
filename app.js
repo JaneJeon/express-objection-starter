@@ -17,8 +17,6 @@ app
   .use(require("helmet")())
   .use(require("cors")({ origin: true }))
   .use(require("./services/session"))
-  .use(require("csrf")())
-  .use((req, res, next) => next(res.cookie("XSRF-TOKEN", req.csrfToken())))
   .use(express.json())
   .use(passport.initialize())
   .use(passport.session())
