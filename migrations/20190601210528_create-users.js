@@ -14,7 +14,6 @@ exports.up = knex =>
     table.text("password").notNullable()
 
     table.boolean("verified").notNullable()
-    table.text("avatar").notNullable()
     table.text("role").notNullable()
 
     table.timestamps(true, true)

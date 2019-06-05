@@ -51,7 +51,6 @@
     "express-rate-limit": "^4.0.4",
     "express-session": "^1.16.1",
     "express-ws": "^4.0.0",
-    "gravatar": "^1.8.0",
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
     "ioredis": "^4.9.5",
