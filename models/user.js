@@ -49,7 +49,7 @@ class User extends password(visibility(BaseModel)) {
   }
 
   static get reservedPostFields() {
-    return ["role", "verified"]
+    return ["role", "verified", "avatar"]
   }
 
   static get relationMappings() {
