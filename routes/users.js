@@ -21,8 +21,7 @@ module.exports = Router()
     ensureIsSignedIn,
     ensureIsAdminOrSelf,
     async (req, res) => {
-      // TODO: admin
-      User.filterPatch(req.body)
+      if (!req.user.isAdmin) User.filterPatch(req.body)
 
       const user = await req.requestedUser.$query().patch(req.body)
 
