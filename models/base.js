@@ -7,7 +7,7 @@ const pluralCamelCaseMapper = memoize(str => plural(camelCase(str)))
 const isEmpty = require("lodash/isEmpty")
 const assert = require("http-assert")
 
-Model.knex(require("knex")(require("../services/knex")))
+Model.knex(require("knex")(require("../config/knex")))
 
 class BaseModel extends DbErrors(Model) {
   static get tableName() {

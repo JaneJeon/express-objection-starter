@@ -1,4 +1,3 @@
-const { MulterError } = require("multer")
 const { ValidationError, NotFoundError } = require("objection")
 const {
   DBError,
@@ -8,7 +7,7 @@ const {
   CheckViolationError,
   DataError
 } = require("objection-db-errors")
-const debug = require("./debug")("error")
+const debug = require("../services/debug")("error")
 
 module.exports = (err, req, res, next) => {
   debug("req.body: %o", req.body)
@@ -19,7 +18,7 @@ module.exports = (err, req, res, next) => {
     return
   }
 
-  if ([MulterError, ValidationError, DataError].includes(err.constructor)) {
+  if (err instanceof ValidationError || err instanceof DataError) {
     err.statusCode = 400
   } else if (err instanceof NotNullViolationError) {
     err.statusCode = 400
@@ -60,11 +59,7 @@ module.exports = (err, req, res, next) => {
     err.name = "UnknownError"
   }
 
-  if (
-    err.statusCode == 500 ||
-    process.env.NODE_ENV == "development" ||
-    err.name.startsWith("AlgoliaSearch")
-  )
+  if (err.statusCode == 500 || process.env.NODE_ENV == "development")
     console.error(err)
 
   res.status(err.statusCode).send({
