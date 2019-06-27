@@ -30,13 +30,9 @@ class BaseModel extends DbErrors(Model) {
     return new AjvValidator({
       onCreateAjv: ajv => {
         // modify the ajv instance
-        require("ajv-errors")(ajv)
         require("ajv-keywords")(ajv, "transform")
       },
       options: {
-        // required by ajv-errors plugin
-        allErrors: true,
-        jsonPointers: true,
         // mutating inputs
         removeAdditional: true,
         useDefaults: true,

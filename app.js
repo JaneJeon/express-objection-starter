@@ -2,11 +2,10 @@ require("express-async-errors")
 require("./config/env")
 require("./config/passport")
 
+const passport = require("passport")
 const express = require("express")
 const app = express()
 require("express-ws")(app)
-
-const passport = require("passport")
 
 // the app should be running behind proxy in production,
 // and the logger should shut up during tests

@@ -41,7 +41,6 @@
     "clean": "rm -f *.log; rm -rf node_modules"
   },
   "dependencies": {
-    "ajv-errors": "^1.0.1",
     "ajv-keywords": "^3.4.0",
     "aws-sdk": "^2.466.0",
     "bull": "^3.10.0",

@@ -28,15 +28,6 @@ class User extends password(visibility(BaseModel)) {
           default: "user"
         }
       },
-      errorMessage: {
-        properties: {
-          username: `username should be between ${
-            process.env.MIN_USERNAME_LENGTH
-          } and ${
-            process.env.MAX_USERNAME_LENGTH
-          } characters long, and contain only alphabets, numbers, _ and -`
-        }
-      },
       required: ["username", "email", "password"],
       additionalProperties: false
     }
