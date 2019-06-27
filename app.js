@@ -18,6 +18,7 @@ app
   .use(require("cors")({ origin: true }))
   .use(require("./config/session"))
   .use(express.json())
+  .use(require("express-query-boolean")())
   .use(passport.initialize())
   .use(passport.session())
   .use(require("./config/ratelimit"))
