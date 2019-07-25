@@ -7,11 +7,12 @@ types.setTypeParser(1082, obj => dayjs(obj).format("YYYY-MM-DD"))
 
 const { knexSnakeCaseMappers } = require("objection")
 const path = require("path")
+const debug = require("debug")
 
 module.exports = {
   client: "pg",
   connection: process.env.DATABASE_URL,
-  debug: (process.env.DEBUG || "").includes("knex"),
+  debug: debug.enabled("knex"),
   migrations: { directory: path.join(__dirname, "..", "migrations") },
   seeds: { directory: path.join(__dirname, "..", "seeds") },
   pool: {

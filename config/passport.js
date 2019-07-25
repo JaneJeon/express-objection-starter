@@ -4,12 +4,8 @@ const { NotFoundError } = require("objection")
 const { Strategy: LocalStrategy } = require("passport-local")
 
 passport.serializeUser((user, done) => done(null, user.id))
-passport.deserializeUser(async (id, done) => {
-  try {
-    done(null, await User.query().findById(id))
-  } catch (err) {
-    err instanceof NotFoundError ? done(null, false) : done(err)
-  }
+passport.deserializeUser((id, done) => {
+  done(null, User.fromJson({ id }, { skipValidation: true }))
 })
 
 passport.use(

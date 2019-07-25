@@ -1,19 +1,12 @@
 const { Model, AjvValidator } = require("objection")
 const { DbErrors } = require("objection-db-errors")
-const memoize = require("lodash/memoize")
-const { plural } = require("pluralize")
-const camelCase = require("lodash/camelCase")
-const pluralCamelCaseMapper = memoize(str => plural(camelCase(str)))
+const tableName = require("objection-table-name")
 const isEmpty = require("lodash/isEmpty")
 const assert = require("http-assert")
 
 Model.knex(require("knex")(require("../config/knex")))
 
-class BaseModel extends DbErrors(Model) {
-  static get tableName() {
-    return pluralCamelCaseMapper(this.name)
-  }
-
+class BaseModel extends tableName(DbErrors(Model)) {
   static get modelPaths() {
     return [__dirname]
   }

@@ -1,5 +1,5 @@
 const BaseModel = require("./base")
-const { default: visibility } = require("objection-visibility")
+const visibility = require("objection-visibility").default
 const password = require("objection-password")()
 const normalize = require("normalize-email")
 

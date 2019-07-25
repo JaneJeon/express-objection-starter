@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "express starter with knex.js, objection.js, authentication and more!",
   "keywords": [
     "express",
@@ -11,40 +11,37 @@
     "template",
     "boilerplate",
     "passport",
-    "pm2",
-    "websocket",
-    "hook",
-    "git",
-    "nodemon",
-    "aws",
     "postgres",
     "mysql",
     "elasticsearch",
     "algolia",
     "redis",
-    "rest",
     "api",
+    "jsonschema",
     "validation"
   ],
   "repository": "JaneJeon/express-objection-starter",
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "pm2 start app.js -i max",
-    "watch": "DEBUG=app:* nodemon app",
-    "test": "NODE_ENV=test mocha --bail --exit --recursive --slow 500",
+    "start": "pm2-runtime start app.js -i max --env production --node-args='--optimize_for_size'",
+    "start:worker": "#TODO:",
+    "watch": "NODE_ENV=development DEBUG=app:* nodemon app",
+    "watch:worker": "#TODO: HOW TO STOP?",
+    "test": "jest",
     "secret": "node -p \"require('uid-safe').sync(24)\"",
     "migrate": "DEBUG=knex knex migrate:latest --knexfile ./config/knex.js",
     "migrate:make": "knex migrate:make --knexfile ./config/knex.js",
     "rollback": "DEBUG=knex knex migrate:rollback --knexfile ./config/knex.js",
     "seed": "DEBUG=knex knex seed:run --knexfile ./config/knex.js",
-    "clean": "rm -f *.log; rm -rf node_modules"
+    "seed:make": "knex seed:make --knexfile ./config/knex.js"
   },
   "dependencies": {
     "ajv-keywords": "^3.4.0",
     "aws-sdk": "^2.466.0",
     "bull": "^3.10.0",
-    "connect-redis": "^3.4.1",
+    "connect-redis": "^3.4.2",
+    "connect-roles": "^3.1.2",
     "cors": "^2.8.5",
     "dayjs": "^1.8.14",
     "db-errors": "^0.2.3",
@@ -61,12 +58,13 @@
     "ioredis": "^4.9.5",
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
-    "morgan": "^1.9.1",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
     "objection": "^1.6.9",
     "objection-db-errors": "^1.1.1",
+    "objection-find": "^1.6.5",
     "objection-password": "^2.0.0",
+    "objection-table-name": "^1.0.0",
     "objection-visibility": "^0.4.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
@@ -81,13 +79,12 @@
   },
   "devDependencies": {
     "husky": "^2.3.0",
-    "mocha": "^6.1.4",
+    "jest": "^24.8.0",
+    "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
+    "objection-gen": "^0.5.2",
     "prettier": "^1.17.1",
     "supertest": "^4.0.2"
-  },
-  "prettier": {
-    "semi": false
   },
   "husky": {
     "hooks": {
@@ -95,5 +92,8 @@
       "pre-commit": "prettier --write '**/*.js'",
       "pre-push": "yarn test"
     }
+  },
+  "prettier": {
+    "semi": false
   }
 }
