@@ -1,5 +1,5 @@
 require("express-async-errors")
-require("./config/env")
+require("dotenv-defaults").config()
 require("./config/passport")
 
 const passport = require("passport")

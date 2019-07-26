@@ -4,7 +4,7 @@ const tableName = require("objection-table-name")
 const isEmpty = require("lodash/isEmpty")
 const assert = require("http-assert")
 
-Model.knex(require("knex")(require("../config/knex")))
+Model.knex(require("knex")(require("../knexfile")))
 
 class BaseModel extends tableName(DbErrors(Model)) {
   static get modelPaths() {
