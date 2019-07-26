@@ -1,3 +1,5 @@
+// we only need to load environment when we use knex cli,
+// which means NODE_ENV isn't loaded by nodemon, jest, or pm2/heroku
 const cliMode = !process.env.NODE_ENV
 if (cliMode) require("dotenv-defaults").config()
 

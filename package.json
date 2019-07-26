@@ -5,7 +5,6 @@
   "keywords": [
     "express",
     "objection",
-    "orm",
     "knex",
     "starter",
     "template",
@@ -25,11 +24,11 @@
   "license": "MIT",
   "scripts": {
     "start": "run-p start:*",
-    "start:web": "pm2-runtime start app.js -i max --env production --node-args='--optimize_for_size'",
-    "start:worker": "#TODO:",
+    "start:web": "node server --optimize-for-size",
+    "start:worker": "node worker --optimize-for-size",
     "watch": "run-p watch:*",
-    "watch:web": "nodemon app",
-    "watch:worker": "#TODO: make worker",
+    "watch:web": "nodemon server",
+    "watch:worker": "nodemon worker",
     "test": "jest",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
@@ -71,7 +70,6 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.11.0",
-    "pluralize": "^8.0.0",
     "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
     "sharp": "^0.22.1"
@@ -89,12 +87,11 @@
     "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
     "prettier": "^1.17.1",
-    "supertest": "^4.0.2"
+    "supertest-session": "^4.0.0"
   },
   "husky": {
     "hooks": {
       "post-merge": "yarn && yarn migrate",
-      "pre-commit": "prettier --write '**/*.js'",
       "pre-push": "yarn test"
     }
   },
