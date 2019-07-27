@@ -1,4 +1,3 @@
 const debug = require("debug")
-const appName = "app"
 
-module.exports = scope => debug(`${appName}:${scope}`)
+module.exports = scope => debug(`app:${scope}`)
