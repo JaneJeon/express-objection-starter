@@ -1,7 +1,7 @@
 const session = require("express-session")
 const RedisStore = require("connect-redis")(session)
 const client = require("../services/redis")
-const { sync: uid } = require("uid-safe")
+const nanoid = require("nanoid/non-secure")
 
 module.exports = session({
   store: new RedisStore({ client, logErrors: true }),
@@ -15,5 +15,5 @@ module.exports = session({
   saveUninitialized: false, // GDPR compliance
   // this is to allow search by user id
   // see: https://github.com/jaredhanson/passport/blob/master/lib/sessionmanager.js#L21
-  genid: req => `${req._passport.session.user.id}:${uid(16)}`
+  genid: req => `${req._passport.session.user.id}:${nanoid(10)}`
 })
