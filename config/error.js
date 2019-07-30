@@ -12,7 +12,7 @@ module.exports = (err, req, res, next) => {
   req.log.debug("req.user: %o, req.body: %o", req.user, req.body)
 
   if (res.headersSent) {
-    log.error(err)
+    req.log.error(err)
     return
   }
 
