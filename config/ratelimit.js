@@ -3,7 +3,8 @@ const RedisStore = require("rate-limit-redis")
 const client = require("../services/redis")
 
 module.exports = rateLimit({
-  windowMs: process.env.RATELIMIT_WINDOW_MS,
+  windowMs: process.env.RATELIMIT_WINDOW_SECONDS * 1000,
   max: process.env.NODE_ENV == "production" ? process.env.RATELIMIT_MAX : 0,
-  store: new RedisStore({ client })
+  store: new RedisStore({ client }),
+  keyGenerator: req => (req.user || {}).id || req.ip
 })

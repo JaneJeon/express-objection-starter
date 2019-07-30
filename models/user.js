@@ -65,10 +65,11 @@ class User extends password(visibility(BaseModel)) {
 
   static get QueryBuilder() {
     return class extends super.QueryBuilder {
-      findByUsername(username) {
-        return this.findOne({
-          username: username.toLowerCase()
-        }).throwIfNotFound()
+      findByUsername(username, user) {
+        const loweredName = username.toLowerCase()
+        if (user && user.username == loweredName) return user
+
+        return this.findOne({ username: loweredName }).throwIfNotFound()
       }
 
       findByEmail(email) {

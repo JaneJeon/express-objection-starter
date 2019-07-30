@@ -5,7 +5,11 @@ module.exports = Router()
   .post("/login", passport.authenticate("local"), (req, res) =>
     res.status(201).send(req.user)
   )
-  .delete("/logout", (req, res) => {
-    req.logout()
-    res.sendStatus(204)
+  .delete("/logout", (req, res, next) => {
+    req.session.destroy(err => {
+      if (err) next(err)
+
+      res.sendStatus(204)
+      next()
+    })
   })

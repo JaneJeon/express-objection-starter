@@ -7,14 +7,12 @@ const {
   CheckViolationError,
   DataError
 } = require("objection-db-errors")
-const debug = require("../services/debug")("error")
 
 module.exports = (err, req, res, next) => {
-  debug("req.body: %o", req.body)
-  debug("req.user: %o", req.user)
+  req.log.debug("req.user: %o, req.body: %o", req.user, req.body)
 
   if (res.headersSent) {
-    console.error(err)
+    log.error(err)
     return
   }
 
@@ -60,7 +58,7 @@ module.exports = (err, req, res, next) => {
   }
 
   if (err.statusCode == 500 || process.env.NODE_ENV == "development")
-    console.error(err)
+    req.log.error(err)
 
   res.status(err.statusCode).send({
     message: err.message,

@@ -46,7 +46,6 @@
     "cors": "^2.8.5",
     "dayjs": "^1.8.14",
     "db-errors": "^0.2.3",
-    "debug": "^4.1.1",
     "dotenv-defaults": "^1.0.2",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -59,6 +58,7 @@
     "ioredis": "^4.9.5",
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
+    "nanoid": "^2.0.3",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
     "objection": "^1.6.9",
@@ -71,7 +71,8 @@
     "passport-local": "^1.0.0",
     "pg": "^7.11.0",
     "rate-limit-redis": "^1.6.0",
-    "sharp": "^0.22.1"
+    "sharp": "^0.22.1",
+    "winston": "^3.2.1"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
@@ -86,7 +87,8 @@
     "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
     "prettier": "^1.17.1",
-    "supertest-session": "^4.0.0"
+    "supertest-session": "^4.0.0",
+    "winston-daily-rotate-file": "^3.10.0"
   },
   "husky": {
     "hooks": {
@@ -105,8 +107,7 @@
       "test"
     ],
     "env": {
-      "NODE_ENV": "development",
-      "DEBUG": "app:*"
+      "NODE_ENV": "development"
     }
   }
 }

@@ -1,12 +1,14 @@
 const queue = require("./services/queue")
+const log = require("./services/logger")
 
 // https://github.com/OptimalBits/bull/blob/develop/REFERENCE.md#events
 queue
   .on("stalled", job => {
-    // TODO:
+    log.warn("Job stalled:", job)
   })
   .on("failed", (job, err) => {
-    // TODO:
-    console.error(err)
+    log.error("Job failed: %s", err, job)
   })
-  .on("error", console.error)
+  .on("error", err => {
+    log.error("Unexpected error from queue: %s", err)
+  })
