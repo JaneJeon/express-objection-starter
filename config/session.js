@@ -2,9 +2,10 @@ const session = require("express-session")
 const RedisStore = require("connect-redis")(session)
 const client = require("../services/redis")
 const nanoid = require("nanoid/non-secure")
+const logger = require("../services/logger")
 
 module.exports = session({
-  store: new RedisStore({ client, logErrors: true }),
+  store: new RedisStore({ client, logErrors: logger }),
   secret: process.env.SESSION_SECRET,
   cookie: {
     sameSite: "lax", // CSRF protection
