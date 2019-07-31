@@ -18,8 +18,6 @@ module.exports = Router()
     req.session.browser = 0
     req.session.os = 0
     req.session.device_name = 0
-    req.session.useragent =
-      req.headers["x-ucbrowser-ua"] || req.headers["user-agent"] || ""
     req.session.created_at = new Date()
 
     res.status(201).send(req.user)

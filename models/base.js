@@ -1,6 +1,6 @@
 const { Model, AjvValidator } = require("objection")
 const { DbErrors } = require("objection-db-errors")
-const tableName = require("objection-table-name")
+const tableName = require("objection-table-name")()
 const isEmpty = require("lodash/isEmpty")
 const assert = require("http-assert")
 
