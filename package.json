@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "express starter with knex.js, objection.js, authentication and more!",
   "keywords": [
     "express",
@@ -37,18 +37,20 @@
     "seed:make": "knex seed:make"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.2.0",
     "ajv-keywords": "^3.4.0",
+    "algoliasearch": "^3.33.0",
     "aws-sdk": "^2.466.0",
     "axios": "^0.19.0",
     "bull": "^3.10.0",
     "connect-redis": "^3.4.2",
-    "connect-roles": "^3.1.2",
     "cors": "^2.8.5",
     "dayjs": "^1.8.14",
     "db-errors": "^0.2.3",
     "dotenv-defaults": "^1.0.2",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "express-pino-logger": "^4.0.0",
     "express-query-boolean": "^2.0.0",
     "express-rate-limit": "^4.0.4",
     "express-session": "^1.16.1",
@@ -58,9 +60,11 @@
     "ioredis": "^4.9.5",
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
+    "mysql2": "^1.6.5",
     "nanoid": "^2.0.3",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
+    "npm-run-all": "^4.1.5",
     "objection": "^1.6.9",
     "objection-db-errors": "^1.1.1",
     "objection-find": "^1.6.5",
@@ -70,9 +74,11 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.11.0",
+    "pino": "^5.13.1",
+    "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
     "sharp": "^0.22.1",
-    "winston": "^3.2.1"
+    "ua-parser-js": "^0.7.20"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
@@ -82,13 +88,11 @@
     "cross-env": "^5.2.0",
     "husky": "^2.3.0",
     "jest": "^24.8.0",
-    "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
-    "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
+    "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
-    "supertest-session": "^4.0.0",
-    "winston-daily-rotate-file": "^3.10.0"
+    "supertest-session": "^4.0.0"
   },
   "husky": {
     "hooks": {

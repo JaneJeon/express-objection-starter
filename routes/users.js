@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const User = require("../models/user")
-const { ensureIsSignedIn, ensureIsAdminOrSelf } = require("../lib/middlewares")
+const { ensureIsSignedIn, ensureIsAdminOrSelf } = require("../middlewares/auth")
 
 module.exports = Router()
   .get("/:username", (req, res) => {

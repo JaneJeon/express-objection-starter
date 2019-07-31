@@ -77,6 +77,10 @@ class User extends password(visibility(BaseModel)) {
       }
     }
   }
+
+  getSession(id = "") {
+    return `sess:${this.id}:${id}`
+  }
 }
 
 module.exports = User

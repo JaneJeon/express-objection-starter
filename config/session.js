@@ -9,10 +9,10 @@ module.exports = session({
   secret: process.env.SESSION_SECRET,
   cookie: {
     sameSite: "lax", // CSRF protection
-    httpOnly: true,
     maxAge: process.env.SESSION_MAXAGE_SECONDS * 1000
   },
-  resave: false, // redis-session has touch implementation
+  resave: false,
+  rolling: true,
   saveUninitialized: false, // GDPR compliance
   // this is to allow search by user id
   // see: https://github.com/jaredhanson/passport/blob/master/lib/sessionmanager.js#L21

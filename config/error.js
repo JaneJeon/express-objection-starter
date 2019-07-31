@@ -9,12 +9,7 @@ const {
 } = require("objection-db-errors")
 
 module.exports = (err, req, res, next) => {
-  req.log.debug("req.user: %o, req.body: %o", req.user, req.body)
-
-  if (res.headersSent) {
-    req.log.error(err)
-    return
-  }
+  if (res.headersSent) return
 
   if (err instanceof ValidationError || err instanceof DataError) {
     err.statusCode = 400
@@ -56,9 +51,6 @@ module.exports = (err, req, res, next) => {
     err.statusCode = 500
     err.name = "UnknownError"
   }
-
-  if (err.statusCode >= 500) req.log.error(err)
-  else req.log.debug(err)
 
   res.status(err.statusCode).send({
     message: err.message,
