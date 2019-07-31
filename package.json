@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "express starter with knex.js, objection.js, authentication and more!",
   "keywords": [
     "express",
@@ -12,7 +12,7 @@
     "passport",
     "postgres",
     "mysql",
-    "search",
+    "algolia",
     "elasticsearch",
     "redis",
     "api",
@@ -39,9 +39,11 @@
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
     "ajv-keywords": "^3.4.0",
+    "algoliasearch": "^3.33.0",
     "aws-sdk": "^2.466.0",
     "axios": "^0.19.0",
     "bull": "^3.10.0",
+    "cloudinary": "^1.14.0",
     "connect-redis": "^3.4.2",
     "cors": "^2.8.5",
     "dayjs": "^1.8.14",
