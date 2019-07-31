@@ -13,12 +13,14 @@ module.exports = Router()
     const ua = parser(
       req.headers["x-ucbrowser-ua"] || req.headers["user-agent"]
     )
+    const now = new Date()
 
     req.session.ip = req.ip
-    req.session.browser = 0
-    req.session.os = 0
-    req.session.device_name = 0
-    req.session.created_at = new Date()
+    req.session.browser = ua.browser.name
+    req.session.os = ua.os.name
+    req.session.device = ua.device.type
+    req.session.createdAt = req.session.createdAt || now
+    req.session.updatedAt = now
 
     res.status(201).send(req.user)
   })
