@@ -13,14 +13,12 @@ module.exports = Router()
     const ua = parser(
       req.headers["x-ucbrowser-ua"] || req.headers["user-agent"]
     )
-    const now = new Date()
 
     req.session.ip = req.ip
     req.session.browser = ua.browser.name
     req.session.os = ua.os.name
     req.session.device = ua.device.type
-    req.session.createdAt = req.session.createdAt || now
-    req.session.updatedAt = now
+    req.session.createdAt = new Date()
 
     res.status(201).send(req.user)
   })
@@ -63,4 +61,3 @@ module.exports = Router()
 
     res.sendStatus(204)
   })
-// TODO: "last accessed on"
