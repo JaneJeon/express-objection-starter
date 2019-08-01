@@ -31,7 +31,7 @@
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
     "test": "run-p dev:mail test:* --race",
-    "test:unit": "wait-on http://localhost:1080 && jest",
+    "test:unit": "wait-on http://localhost:1080 && jest --passWithNoTests",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "rollback": "knex migrate:rollback",
