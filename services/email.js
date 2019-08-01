@@ -1,8 +1,20 @@
 const nodemailer = require("nodemailer")
-const SES = require("aws-sdk/clients/ses")
 const logger = require("./logger")
 
-module.exports = nodemailer.createTransport(
-  { SES: new SES(), logger },
-  { from: process.env.EMAIL_ADDRESS }
-)
+const auth =
+  process.env.SMTP_USERNAME && process.env.SMTP_PASSWORD
+    ? {
+        user: process.env.SMTP_USERNAME,
+        pass: process.env.SMTP_PASSWORD
+      }
+    : null
+
+const transporter = nodemailer.createTransport({
+  service: process.env.SMTP_SERVICE,
+  ...(auth && { auth }),
+  logger
+})
+
+transporter.verify()
+
+module.exports = transporter

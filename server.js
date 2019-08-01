@@ -24,7 +24,7 @@ app
   .use((req, res, next) => res.sendStatus(404))
   .use(require("./config/error"))
   .listen(process.env.PORT, err => {
-    if (err) log.error(err)
+    if (err) throw err
     log.info("Server listening on port", process.env.PORT)
   })
   .setTimeout(process.env.TIMEOUT_SECONDS * 1000)

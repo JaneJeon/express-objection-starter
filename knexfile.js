@@ -3,16 +3,27 @@
 const cliMode = !process.env.NODE_ENV
 if (cliMode) require("dotenv-defaults").config()
 
-const { types } = require("pg")
-const dayjs = require("dayjs")
-types.setTypeParser(20, parseInt) // cast SELECT COUNT(*) to integer
-types.setTypeParser(1082, obj => dayjs(obj).format("YYYY-MM-DD"))
+const client = process.env.DATABASE_CLIENT
+
+if (client == "pg") {
+  const { types } = require("pg")
+  const dayjs = require("dayjs")
+  types.setTypeParser(20, parseInt) // cast SELECT COUNT(*) to integer
+  // to get around jsonschema validation quirks concerning date objects vs. strings
+  types.setTypeParser(1082, obj => dayjs(obj).format("YYYY-MM-DD"))
+}
 
 const { knexSnakeCaseMappers } = require("objection")
+const log = require("./services/logger")
 
 module.exports = {
-  client: "pg",
+  client,
   connection: process.env.DATABASE_URL,
+  ...knexSnakeCaseMappers(),
   debug: cliMode,
-  ...knexSnakeCaseMappers()
+  log: {
+    warn: log.warn,
+    error: log.error,
+    debug: log.debug
+  }
 }
