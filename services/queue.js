@@ -1,5 +1,5 @@
 const Bull = require("bull")
-const { pub, sub } = require("./redis")
+const { default: defaultInstance, pub, sub } = require("./redis")
 
 module.exports = new Bull("queue", {
   createClient: function(type) {
@@ -9,7 +9,7 @@ module.exports = new Bull("queue", {
       case "subscriber":
         return sub
       default:
-        return new Redis(process.env.REDIS_URL)
+        return defaultInstance
     }
   }
 })
