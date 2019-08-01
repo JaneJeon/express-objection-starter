@@ -8,13 +8,19 @@ module.exports = {
       instances,
       exec_mode: "cluster",
       max_memory_restart: maxMemory + "M",
-      node_args: "--optimize-for-size"
+      node_args: "--optimize-for-size",
+      env: {
+        NODE_ENV: "production"
+      }
     },
     {
       script: "worker.js",
       instances,
       max_memory_restart: maxMemory + "M",
-      node_args: "--optimize-for-size"
+      node_args: "--optimize-for-size",
+      env: {
+        NODE_ENV: "production"
+      }
     }
   ]
 }

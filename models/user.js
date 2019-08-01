@@ -1,6 +1,8 @@
 const BaseModel = require("./base")
 const visibility = require("objection-visibility").default
 const password = require("objection-password")()
+const assert = require("http-assert")
+const mailchecker = require("mailchecker")
 const normalize = require("normalize-email")
 
 class User extends password(visibility(BaseModel)) {
@@ -15,7 +17,7 @@ class User extends password(visibility(BaseModel)) {
           maxLength: +process.env.MAX_USERNAME_LENGTH,
           pattern: "^\\w+$"
         },
-        email: { type: "string", format: "email" },
+        email: { type: "string" },
         password: {
           type: "string",
           minLength: +process.env.MIN_PASSWORD_LENGTH,
@@ -50,7 +52,10 @@ class User extends password(visibility(BaseModel)) {
   }
 
   processInput() {
-    if (this.email) this.email = normalize(this.email)
+    if (this.email) {
+      assert(mailchecker.isValid(this.email), 400, "email is invalid")
+      this.email = normalize(this.email)
+    }
   }
 
   async $beforeInsert(queryContext) {
