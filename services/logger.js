@@ -14,6 +14,8 @@ const logger = (() => {
   }
 })()
 
+if (process.env.LOG_LEVEL) logger.level = process.env.LOG_LEVEL
+
 process.on(
   "uncaughtException",
   pino.final(logger, (err, finalLogger) => {
