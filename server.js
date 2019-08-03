@@ -15,6 +15,11 @@ app
   .use(require("helmet")())
   .use(require("cors")({ origin: true }))
   .use(require("./config/session"))
+  .use(require("csurf")({ cookie: true }))
+  .use((req, res, next) => {
+    res.cookie("XSRF-TOKEN", req.csrfToken())
+    next()
+  })
   .use(express.json())
   .use(require("express-query-boolean")())
   .use(passport.initialize())
