@@ -9,11 +9,14 @@ const auth =
       }
     : null
 
-const transporter = nodemailer.createTransport({
-  service: process.env.SMTP_SERVICE,
-  ...(auth && { auth }),
-  logger
-})
+const transporter = nodemailer.createTransport(
+  {
+    service: process.env.SMTP_SERVICE,
+    ...(auth && { auth }),
+    logger
+  },
+  { from: process.env.EMAIL_FROM }
+)
 
 transporter.verify()
 

@@ -24,7 +24,6 @@ module.exports = {
   log: {
     warn: log.warn,
     deprecate: log.warn,
-    error: log.error,
-    debug: log.debug
+    error: log.error
   }
 }
