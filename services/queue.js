@@ -23,12 +23,12 @@ queue
   })
   .on("resumed", job => {
     // The queue has been resumed.
-    log.info("Queue resumed")
+    log.info({ job }, "Queue resumed")
   })
   .on("cleaned", (jobs, type) => {
     // Old jobs have been cleaned from the queue. `jobs` is an array of cleaned
     // jobs, and `type` is the type of jobs cleaned.
-    log.info("Queue cleaned")
+    log.info({ jobs, type }, "Queue cleaned")
   })
   .on("drained", () => {
     // Emitted every time the queue has processed all the waiting jobs (even if there can be some delayed jobs not yet processed)
@@ -36,7 +36,7 @@ queue
   })
   .on("error", err => {
     // An error occured.
-    log.error({ err }, "Queue error")
+    log.error(err, "Queue error")
   })
   .on("waiting", jobId => {
     // A Job is waiting to be processed as soon as a worker is idling.

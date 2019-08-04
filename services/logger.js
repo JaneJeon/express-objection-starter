@@ -19,7 +19,7 @@ if (process.env.LOG_LEVEL) logger.level = process.env.LOG_LEVEL
 process.on(
   "uncaughtException",
   pino.final(logger, (err, finalLogger) => {
-    finalLogger.error(err, "uncaughtException")
+    finalLogger.fatal(err, "uncaughtException")
     process.exit(1)
   })
 )
@@ -27,7 +27,7 @@ process.on(
 process.on(
   "unhandledRejection",
   pino.final(logger, (err, finalLogger) => {
-    finalLogger.error(err, "unhandledRejection")
+    finalLogger.fatal(err, "unhandledRejection")
     process.exit(1)
   })
 )

@@ -20,14 +20,14 @@ app
     res.cookie("XSRF-TOKEN", req.csrfToken())
     next()
   })
+  .use(require("./config/ratelimit"))
   .use(express.json())
   .use(require("express-query-boolean")())
   .use(passport.initialize())
   .use(passport.session())
-  .use(require("./config/ratelimit"))
   .use(require("./routes"))
   .use((req, res, next) => res.sendStatus(404))
-  .use(require("./config/error"))
+  .use(require("./config/error-handler"))
   .listen(process.env.PORT, err => {
     if (err) throw err
     log.info("Server listening on port", process.env.PORT)
