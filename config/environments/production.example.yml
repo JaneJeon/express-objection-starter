@@ -1,0 +1,29 @@
+# https://expressjs.com/en/guide/behind-proxies.html
+# https://github.com/florianheinemann/express-sslify
+proxy:
+  trust: true
+  enforceHTTPS:
+    trustProtoHeader: true
+
+logger:
+  options:
+    level: info
+    prettyPrint: false
+
+# copy+paste the output of the following command to replace secret:
+# node -p "require('nanoid')(24)"
+session:
+  secret:
+
+database:
+  debug: false
+
+mail:
+  # services available at: https://nodemailer.com/smtp/well-known
+  smtp:
+    service: sendgrid
+    auth:
+      user: apikey
+      pass:
+  defaults:
+    from: production@example.com

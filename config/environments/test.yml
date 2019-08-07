@@ -1,0 +1,8 @@
+logger:
+  destination: ../logs/test-output.log
+
+ratelimit:
+  max: 0
+
+database:
+  debug: false

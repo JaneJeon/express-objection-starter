@@ -11,6 +11,10 @@ if (config.get('database:client') == 'pg') {
 const { knexSnakeCaseMappers } = require('objection')
 const log = require('./lib/logger')
 
+// unfortunately, there's no URL parameter for knexjs, so we have to manually inject it
+if (process.env.DATABASE_URL)
+  config.set('database:connection', process.env.DATABASE_URL)
+
 module.exports = Object.assign(config.get('database'), {
   ...knexSnakeCaseMappers(),
   log: {

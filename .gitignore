@@ -85,4 +85,4 @@ sw.*
 # Mac OSX
 .DS_Store
 
-config/environments/production.json
+config/environments/production.yml

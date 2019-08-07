@@ -1,8 +1,0 @@
-{
-  "ratelimit": {
-    "max": 0
-  },
-  "database": {
-    "debug": false
-  }
-}

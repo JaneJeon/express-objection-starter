@@ -1,0 +1,43 @@
+port: 3000
+timeout: 60000 # 1 minute, in milliseconds
+requestIdHeader: X-Request-Id
+proxy: false
+
+logger:
+  options:
+    level: debug
+    prettyPrint:
+      translateTime: true
+      ignore: pid,hostname,boot
+
+session:
+  secret: nyaa
+  cookie:
+    sameSite: lax # CSRF protection
+    maxAge: 86400000 # 1 day, in milliseconds
+    rememberMe: 2592000000 # 30 days, in milliseconds
+  resave: false
+  rolling: true
+  saveUninitialized: false # GDPR compliance
+
+ratelimit:
+  windowMs: 900000 # 15 minutes, in milliseconds
+  max: 100
+
+redis:
+  url: redis://localhost
+
+database:
+  # available clients: https://knexjs.org/#Installation-node
+  client: pg
+  connection: postgres://localhost/app
+  debug: true
+
+passport:
+
+mail:
+  # for maildev, we don't need credentials
+  smtp:
+    service: maildev
+  defaults:
+    from: test@example.com
