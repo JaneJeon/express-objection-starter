@@ -26,8 +26,5 @@ module.exports = (err, req, res, next) => {
     name: err.name
   })
 
-  req.log[err.statusCode >= 500 ? "error" : "warn"](
-    { req, err },
-    "Request error"
-  )
+  req.log[err.statusCode >= 500 ? "error" : "warn"]({ req, err })
 }
