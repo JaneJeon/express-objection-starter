@@ -1,14 +1,19 @@
-require('express-async-errors')
-require('dotenv-defaults').config()
+const config = require('./config')
 require('./config/passport')
+require('express-async-errors')
 
 const passport = require('passport')
 const express = require('express')
 const app = express()
 require('express-ws')(app)
 
+if (config.get('proxy'))
+  app
+    .set('trust proxy', config.get('proxy:trust'))
+    .use(require('express-sslify').HTTPS(config.get('proxy:enforceHTTPS')))
+else app.use(require('morgan')())
+
 app
-  .set('trust proxy', process.env.NODE_ENV == 'production')
   .use(require('./middlewares/request-id'))
   .use(require('./middlewares/request-logger'))
   .use(require('helmet')())
@@ -27,10 +32,10 @@ app
   .use(require('./routes'))
   .use((req, res, next) => res.sendStatus(404))
   .use(require('./middlewares/error-handler'))
-  .listen(process.env.PORT, err => {
+  .listen(config.get('port'), err => {
     if (err) throw err
-    require('./lib/logger').info('Server listening on port', process.env.PORT)
+    require('./lib/logger').info('Server listening on port', app.get('port'))
   })
-  .setTimeout(process.env.TIMEOUT_SECONDS * 1000)
+  .setTimeout(config.get('timeout'))
 
 module.exports = app

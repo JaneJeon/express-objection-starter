@@ -12,15 +12,15 @@ class User extends password(BaseModel) {
         username: {
           type: 'string',
           transform: ['trim', 'toLowerCase'],
-          minLength: +process.env.MIN_USERNAME_LENGTH,
-          maxLength: +process.env.MAX_USERNAME_LENGTH,
+          minLength: 4,
+          maxLength: 15,
           pattern: '^\\w+$'
         },
         email: { type: 'string' },
         password: {
           type: 'string',
-          minLength: +process.env.MIN_PASSWORD_LENGTH,
-          maxLength: +process.env.MAX_PASSWORD_LENGTH
+          minLength: 8,
+          maxLength: 60
         },
         verified: { type: 'boolean', default: false },
         role: {

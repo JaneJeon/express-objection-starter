@@ -1,11 +1,6 @@
-// we only need to load environment when we use knex cli,
-// which means NODE_ENV isn't loaded by nodemon, jest, or pm2
-const cliMode = !process.env.NODE_ENV
-if (cliMode) require('dotenv-defaults').config()
+const config = require('./config')
 
-const client = process.env.DATABASE_CLIENT
-
-if (client == 'pg') {
+if (config.get('database:client') == 'pg') {
   const { types } = require('pg')
   const dayjs = require('dayjs')
   types.setTypeParser(20, parseInt) // cast SELECT COUNT(*) to integer
@@ -16,14 +11,12 @@ if (client == 'pg') {
 const { knexSnakeCaseMappers } = require('objection')
 const log = require('./lib/logger')
 
-module.exports = {
-  client,
-  connection: process.env.DATABASE_URL,
+module.exports = Object.assign(config.get('database'), {
   ...knexSnakeCaseMappers(),
-  debug: cliMode,
   log: {
     warn: log.warn,
     deprecate: log.warn,
-    error: log.error
+    error: log.error,
+    debug: log.debug
   }
-}
+})

@@ -1,0 +1,35 @@
+{
+  "proxy": {
+    "trust": true,
+    "enforceHTTPS": {
+      "trustProtoHeader": true
+    }
+  },
+  "logger": {
+    "options": {
+      "level": "info",
+      "prettyPrint": false
+    }
+  },
+  "session": {
+    "secret": ""
+  },
+  "ratelimit": {
+    "max": 100
+  },
+  "database": {
+    "debug": false
+  },
+  "mail": {
+    "smtp": {
+      "service": "sendgrid",
+      "auth": {
+        "user": "apikey",
+        "pass": ""
+      }
+    },
+    "defaults": {
+      "from": "production@example.com"
+    }
+  }
+}

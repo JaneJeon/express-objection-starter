@@ -84,3 +84,5 @@ sw.*
 
 # Mac OSX
 .DS_Store
+
+config/config.production.json

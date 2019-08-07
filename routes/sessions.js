@@ -4,11 +4,12 @@ const redis = require('../lib/redis')
 const pick = require('lodash/pick')
 const { ensureIsSignedIn } = require('../middlewares/auth')
 const parser = require('ua-parser-js')
+const config = require('../config')
 
 module.exports = Router()
   .post('/login', passport.authenticate('local'), (req, res) => {
     if (req.body.rememberMe)
-      req.session.cookie.maxAge = +process.env.SESSION_REMEMBERME_MAXAGE_SECONDS
+      req.session.cookie.maxAge = config.get('session:cookie:rememberMe')
 
     const ua = parser(
       req.headers['x-ucbrowser-ua'] || req.headers['user-agent']

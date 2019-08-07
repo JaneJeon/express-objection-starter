@@ -1,0 +1,8 @@
+{
+  "logger": {
+    "destination": "../logs/test-output.log"
+  },
+  "database": {
+    "debug": false
+  }
+}
