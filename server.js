@@ -11,7 +11,7 @@ if (config.get('proxy'))
   app
     .set('trust proxy', config.get('proxy:trust'))
     .use(require('express-sslify').HTTPS(config.get('proxy:enforceHTTPS')))
-else app.use(require('morgan')())
+else app.use(require('morgan')('combined'))
 
 app
   .use(require('./middlewares/request-id'))
@@ -32,9 +32,10 @@ app
   .use(require('./routes'))
   .use((req, res, next) => res.sendStatus(404))
   .use(require('./middlewares/error-handler'))
-  .listen(config.get('port'), err => {
+  .listen(config.get('port'), function(err) {
     if (err) throw err
-    require('./lib/logger').info('Server listening on port', app.get('port'))
+    const log = require('./lib/logger')
+    log.info('Server listening on port', this.address().port)
   })
   .setTimeout(config.get('timeout'))
 
