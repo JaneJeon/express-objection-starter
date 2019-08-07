@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "an opinionated express starter with knex, objection, and more!",
   "keywords": [
     "express",
