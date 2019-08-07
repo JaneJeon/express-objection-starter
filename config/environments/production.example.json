@@ -14,9 +14,6 @@
   "session": {
     "secret": ""
   },
-  "ratelimit": {
-    "max": 100
-  },
   "database": {
     "debug": false
   },

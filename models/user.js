@@ -52,7 +52,11 @@ class User extends password(BaseModel) {
 
   processInput() {
     if (this.email) {
-      assert(mailchecker.isValid(this.email), 400, 'email is invalid')
+      assert(
+        mailchecker.isValid(this.email),
+        400,
+        'This email is not supported. Please choose a different address.'
+      )
       this.email = normalize(this.email)
     }
   }

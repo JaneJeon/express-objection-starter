@@ -30,7 +30,7 @@ module.exports = {
   },
   ratelimit: {
     windowMs: 900 * 1000, // 15 minutes, in milliseconds
-    max: 0
+    max: 100
   },
   redis: {
     url: 'redis://localhost'
