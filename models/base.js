@@ -1,12 +1,13 @@
 const { Model, AjvValidator } = require("objection")
 const { DbErrors } = require("objection-db-errors")
 const tableName = require("objection-table-name")()
+const visibility = require("objection-visibility").default
 const isEmpty = require("lodash/isEmpty")
 const assert = require("http-assert")
 
 Model.knex(require("knex")(require("../knexfile")))
 
-class BaseModel extends tableName(DbErrors(Model)) {
+class BaseModel extends tableName(visibility(DbErrors(Model))) {
   static get modelPaths() {
     return [__dirname]
   }

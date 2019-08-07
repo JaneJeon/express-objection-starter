@@ -1,11 +1,10 @@
 const BaseModel = require("./base")
-const visibility = require("objection-visibility").default
 const password = require("objection-password")()
 const assert = require("http-assert")
 const mailchecker = require("mailchecker")
 const normalize = require("normalize-email")
 
-class User extends password(visibility(BaseModel)) {
+class User extends password(BaseModel) {
   static get jsonSchema() {
     return {
       type: "object",
