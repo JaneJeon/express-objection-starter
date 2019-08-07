@@ -1,4 +1,4 @@
-const assert = require("http-assert")
+const assert = require('http-assert')
 
 exports.ensureIsSignedIn = (req, res, next) => next(assert(req.user, 401))
 

@@ -1,45 +1,45 @@
-const BaseModel = require("./base")
-const password = require("objection-password")()
-const assert = require("http-assert")
-const mailchecker = require("mailchecker")
-const normalize = require("normalize-email")
+const BaseModel = require('./base')
+const password = require('objection-password')()
+const assert = require('http-assert')
+const mailchecker = require('mailchecker')
+const normalize = require('normalize-email')
 
 class User extends password(BaseModel) {
   static get jsonSchema() {
     return {
-      type: "object",
+      type: 'object',
       properties: {
         username: {
-          type: "string",
-          transform: ["trim", "toLowerCase"],
+          type: 'string',
+          transform: ['trim', 'toLowerCase'],
           minLength: +process.env.MIN_USERNAME_LENGTH,
           maxLength: +process.env.MAX_USERNAME_LENGTH,
-          pattern: "^\\w+$"
+          pattern: '^\\w+$'
         },
-        email: { type: "string" },
+        email: { type: 'string' },
         password: {
-          type: "string",
+          type: 'string',
           minLength: +process.env.MIN_PASSWORD_LENGTH,
           maxLength: +process.env.MAX_PASSWORD_LENGTH
         },
-        verified: { type: "boolean", default: false },
+        verified: { type: 'boolean', default: false },
         role: {
-          type: "string",
-          enum: ["user", "admin", "superuser"],
-          default: "user"
+          type: 'string',
+          enum: ['user', 'admin', 'superuser'],
+          default: 'user'
         }
       },
-      required: ["username", "email", "password"],
+      required: ['username', 'email', 'password'],
       additionalProperties: false
     }
   }
 
   static get hidden() {
-    return ["password"]
+    return ['password']
   }
 
   static get reservedPostFields() {
-    return ["role", "verified"]
+    return ['role', 'verified']
   }
 
   static get relationMappings() {
@@ -47,12 +47,12 @@ class User extends password(BaseModel) {
   }
 
   get isAdmin() {
-    return this.role == "admin" || this.role == "superuser"
+    return this.role == 'admin' || this.role == 'superuser'
   }
 
   processInput() {
     if (this.email) {
-      assert(mailchecker.isValid(this.email), 400, "email is invalid")
+      assert(mailchecker.isValid(this.email), 400, 'email is invalid')
       this.email = normalize(this.email)
     }
   }
@@ -82,7 +82,7 @@ class User extends password(BaseModel) {
     }
   }
 
-  getSession(id = "") {
+  getSession(id = '') {
     return `sess:${this.id}:${id}`
   }
 }

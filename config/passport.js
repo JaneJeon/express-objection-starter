@@ -1,7 +1,7 @@
-const passport = require("passport")
-const User = require("../models/user")
-const { NotFoundError } = require("objection")
-const { Strategy: LocalStrategy } = require("passport-local")
+const passport = require('passport')
+const User = require('../models/user')
+const { NotFoundError } = require('objection')
+const { Strategy: LocalStrategy } = require('passport-local')
 
 passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser((id, done) => {

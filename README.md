@@ -1,7 +1,9 @@
 # Express Objection starter
-While node.js makes it easy to hack together an express server quickly, it's hard to *actually* build a production-ready, secure, scalable solution.
+
+While node.js makes it easy to hack together an express server quickly, it's hard to _actually_ build a production-ready, secure, scalable solution.
 
 Thus, based on my experience building production-level systems, I built a comprehensive express template with:
+
 - a proper ORM and query builder (Objection.js + knex) setup to avoid n+1 problems
 - extensible relational models with validation and pagination baked-in
 - secure authorization & authentication system (Active Sessions)

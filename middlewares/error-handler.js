@@ -1,5 +1,5 @@
-const { ValidationError, NotFoundError } = require("objection")
-const { DBError } = require("objection-db-errors")
+const { ValidationError, NotFoundError } = require('objection')
+const { DBError } = require('objection-db-errors')
 
 module.exports = (err, req, res, next) => {
   if (!err.statusCode) {
@@ -8,12 +8,12 @@ module.exports = (err, req, res, next) => {
     else if (err instanceof DBError)
       err.statusCode = (() => {
         switch (err.name) {
-          case ("NotNullViolationError",
-          "CheckViolationError",
-          "DataError",
-          "ConstraintViolationError"):
+          case ('NotNullViolationError',
+          'CheckViolationError',
+          'DataError',
+          'ConstraintViolationError'):
             return 400
-          case ("UniqueViolationError", "ForeignKeyViolationError"):
+          case ('UniqueViolationError', 'ForeignKeyViolationError'):
             return 409
           default:
             return 500
@@ -26,5 +26,6 @@ module.exports = (err, req, res, next) => {
     name: err.name
   })
 
-  req.log[err.statusCode >= 500 ? "error" : "warn"]({ req, err })
+  const level = err.statusCode >= 500 ? 'error' : 'warn'
+  req.log[level]({ req, err }, 'Request failed')
 }

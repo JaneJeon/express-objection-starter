@@ -1,12 +1,12 @@
-const { Router } = require("express")
-const User = require("../models/user")
-const { ensureIsSignedIn, ensureIsAdminOrSelf } = require("../middlewares/auth")
+const { Router } = require('express')
+const User = require('../models/user')
+const { ensureIsSignedIn, ensureIsAdminOrSelf } = require('../middlewares/auth')
 
 module.exports = Router()
-  .get("/:username", (req, res) => {
+  .get('/:username', (req, res) => {
     res.send(req.requestedUser)
   })
-  .post("/", async (req, res) => {
+  .post('/', async (req, res) => {
     User.filterPost(req.body)
 
     const user = await User.query().insert(req.body)
@@ -17,7 +17,7 @@ module.exports = Router()
     })
   })
   .patch(
-    "/:username",
+    '/:username',
     ensureIsSignedIn,
     ensureIsAdminOrSelf,
     async (req, res) => {
@@ -29,7 +29,7 @@ module.exports = Router()
     }
   )
   .delete(
-    "/:username",
+    '/:username',
     ensureIsSignedIn,
     ensureIsAdminOrSelf,
     async (req, res) => {

@@ -1,20 +1,20 @@
-const tableName = "users"
+const tableName = 'users'
 
 exports.up = knex =>
   knex.schema.createTable(tableName, table => {
     table.increments()
     table
-      .text("username")
+      .text('username')
       .notNullable()
       .unique()
     table
-      .text("email")
+      .text('email')
       .notNullable()
       .unique()
-    table.text("password").notNullable()
+    table.text('password').notNullable()
 
-    table.boolean("verified").notNullable()
-    table.text("role").notNullable()
+    table.boolean('verified').notNullable()
+    table.text('role').notNullable()
 
     table.timestamps(true, true)
   })

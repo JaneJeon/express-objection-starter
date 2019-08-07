@@ -1,1 +1,1 @@
-const queue = require("./services/queue")
+const queue = require('./services/queue')

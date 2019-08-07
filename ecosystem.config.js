@@ -4,19 +4,19 @@ const maxMemory = process.env.WEB_MEMORY || 512
 module.exports = {
   apps: [
     {
-      script: "server.js",
+      script: 'server.js',
       instances,
-      exec_mode: "cluster",
-      max_memory_restart: maxMemory + "M",
-      node_args: "--optimize-for-size",
-      env: { NODE_ENV: "production" }
+      exec_mode: 'cluster',
+      max_memory_restart: maxMemory + 'M',
+      node_args: '--optimize-for-size',
+      env: { NODE_ENV: 'production' }
     },
     {
-      script: "worker.js",
+      script: 'worker.js',
       instances,
-      max_memory_restart: maxMemory + "M",
-      node_args: "--optimize-for-size",
-      env: { NODE_ENV: "production" }
+      max_memory_restart: maxMemory + 'M',
+      node_args: '--optimize-for-size',
+      env: { NODE_ENV: 'production' }
     }
   ]
 }

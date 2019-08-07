@@ -1,8 +1,8 @@
-const logger = require("../lib/logger")
+const logger = require('../lib/logger')
 
 let accessLogger
 try {
-  accessLogger = require("morgan")("dev")
+  accessLogger = require('morgan')('dev')
 } catch (err) {
   accessLogger = (req, res, next) => next() // noop
 }

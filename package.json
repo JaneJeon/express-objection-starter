@@ -1,7 +1,7 @@
 {
   "name": "express-objection-starter",
   "version": "0.4.2",
-  "description": "express starter with knex.js, objection.js, authentication and more!",
+  "description": "an opinionated express starter with knex, objection, and more!",
   "keywords": [
     "express",
     "objection",
@@ -36,7 +36,8 @@
     "migrate:make": "knex migrate:make",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "seed:make": "knex seed:make"
+    "seed:make": "knex seed:make",
+    "lint:prettier": "prettier --write"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
@@ -63,7 +64,9 @@
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
     "mailchecker": "^3.2.35",
+    "mssql": "^5.1.0",
     "mysql": "^2.17.1",
+    "mysql2": "^1.6.5",
     "nanoid": "^2.0.3",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
@@ -80,6 +83,7 @@
     "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
     "sharp": "^0.22.1",
+    "sqlite3": "^4.0.9",
     "ua-parser-js": "^0.7.20"
   },
   "optionalDependencies": {
@@ -87,8 +91,10 @@
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "husky": "^2.3.0",
     "jest": "^24.8.0",
+    "lint-staged": "^9.2.1",
     "maildev": "^1.1.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
@@ -101,12 +107,20 @@
   },
   "husky": {
     "hooks": {
-      "post-merge": "yarn && yarn migrate",
+      "pre-commit": "lint-staged",
       "pre-push": "yarn test"
     }
   },
+  "lint-staged": {
+    "*.{js,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "singleQuote": true,
+    "proseWrap": "never"
   },
   "nodemonConfig": {
     "events": {

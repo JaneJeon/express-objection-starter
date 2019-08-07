@@ -1,13 +1,13 @@
-const session = require("express-session")
-const RedisStore = require("connect-redis")(session)
-const client = require("../lib/redis")
-const nanoid = require("nanoid/non-secure")
+const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+const client = require('../lib/redis')
+const nanoid = require('nanoid/non-secure')
 
 module.exports = session({
   store: new RedisStore({ client }),
   secret: process.env.SESSION_SECRET,
   cookie: {
-    sameSite: "lax", // CSRF protection
+    sameSite: 'lax', // CSRF protection
     maxAge: process.env.SESSION_MAXAGE_SECONDS * 1000
   },
   resave: false,

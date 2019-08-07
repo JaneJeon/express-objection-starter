@@ -1,11 +1,11 @@
-const { Model, AjvValidator } = require("objection")
-const { DbErrors } = require("objection-db-errors")
-const tableName = require("objection-table-name")()
-const visibility = require("objection-visibility").default
-const isEmpty = require("lodash/isEmpty")
-const assert = require("http-assert")
+const { Model, AjvValidator } = require('objection')
+const { DbErrors } = require('objection-db-errors')
+const tableName = require('objection-table-name')()
+const visibility = require('objection-visibility').default
+const isEmpty = require('lodash/isEmpty')
+const assert = require('http-assert')
 
-Model.knex(require("knex")(require("../knexfile")))
+Model.knex(require('knex')(require('../knexfile')))
 
 class BaseModel extends tableName(visibility(DbErrors(Model))) {
   static get modelPaths() {
@@ -24,7 +24,7 @@ class BaseModel extends tableName(visibility(DbErrors(Model))) {
     return new AjvValidator({
       onCreateAjv: ajv => {
         // modify the ajv instance
-        require("ajv-keywords")(ajv, "transform")
+        require('ajv-keywords')(ajv, 'transform')
       },
       options: {
         // mutating inputs
@@ -70,22 +70,22 @@ class BaseModel extends tableName(visibility(DbErrors(Model))) {
         return super.findById(id).throwIfNotFound()
       }
 
-      paginate(after, sortField = "id") {
+      paginate(after, sortField = 'id') {
         return this.skipUndefined()
-          .where(sortField, "<", after)
-          .orderBy(sortField, "desc")
+          .where(sortField, '<', after)
+          .orderBy(sortField, 'desc')
           .limit(this.modelClass().pageSize)
       }
 
       insert(obj) {
-        let q = super.insert(obj).returning("*")
+        let q = super.insert(obj).returning('*')
         if (!Array.isArray(obj)) q = q.first()
 
         return q
       }
 
       patch(obj) {
-        return super.patch(obj).returning("*")
+        return super.patch(obj).returning('*')
       }
     }
   }
