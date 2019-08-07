@@ -1,16 +1,34 @@
 const pino = require("pino")
 
+// https://github.com/fastify/fastify/blob/master/lib/logger.js
+const serializers = {
+  req: req => ({
+    id: req.id,
+    method: req.method,
+    url: req.url,
+    user: req.user
+  }),
+  res: res => ({
+    statusCode: res.statusCode,
+    statusMessage: res.statusMessage
+  })
+}
+
 const logger = (() => {
   switch (process.env.NODE_ENV) {
     case "development":
-      return pino({ level: "debug", prettyPrint: { translateTime: true } })
+      return pino({
+        level: "debug",
+        prettyPrint: { translateTime: true },
+        serializers
+      })
     case "test":
       return pino(
-        { level: "debug", prettyPrint: { translateTime: true } },
+        { level: "debug", prettyPrint: { translateTime: true }, serializers },
         `./logs/test-${new Date().toLocaleString()}.log`
       )
     default:
-      return pino({ useLevelLabels: true })
+      return pino({ serializers })
   }
 })()
 
@@ -32,4 +50,4 @@ process.on(
   })
 )
 
-module.exports = logger
+module.exports = logger.child({ boot: new Date() })

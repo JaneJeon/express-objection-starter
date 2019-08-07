@@ -7,11 +7,17 @@ const express = require("express")
 const app = express()
 require("express-ws")(app)
 
+if (process.env.NODE_ENV != "production") app.use(require("morgan")("dev"))
 const log = require("./services/logger")
+const reqIdGen = require("./lib/req-id-gen")
 
 app
   .set("trust proxy", process.env.NODE_ENV == "production")
-  .use(require("express-pino-logger")({ logger: log }))
+  .use((req, res, next) => {
+    req.id = req.header("X-Request-Id") || reqIdGen()
+    req.log = log.child({ req: { id: req.id } })
+    next()
+  })
   .use(require("helmet")())
   .use(require("cors")({ origin: true }))
   .use(require("./config/session"))

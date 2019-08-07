@@ -53,7 +53,7 @@ queue
   })
   .on("completed", (job, result) => {
     // A job successfully completed with a `result`.
-    log.info({ job }, "Job completed")
+    log.info({ job, result }, "Job completed")
   })
   .on("failed", (job, err) => {
     // A job failed with reason `err`!
