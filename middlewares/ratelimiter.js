@@ -1,6 +1,6 @@
 const rateLimit = require("express-rate-limit")
 const RedisStore = require("rate-limit-redis")
-const client = require("../services/redis")
+const client = require("../lib/redis")
 
 module.exports = rateLimit({
   windowMs: process.env.RATELIMIT_WINDOW_SECONDS * 1000,

@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "express starter with knex.js, objection.js, authentication and more!",
   "keywords": [
     "express",

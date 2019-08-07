@@ -1,6 +1,6 @@
 const session = require("express-session")
 const RedisStore = require("connect-redis")(session)
-const client = require("../services/redis")
+const client = require("../lib/redis")
 const nanoid = require("nanoid/non-secure")
 
 module.exports = session({

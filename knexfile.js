@@ -14,7 +14,7 @@ if (client == "pg") {
 }
 
 const { knexSnakeCaseMappers } = require("objection")
-const log = require("./services/logger")
+const log = require("./lib/logger")
 
 module.exports = {
   client,

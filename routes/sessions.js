@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const passport = require("passport")
-const redis = require("../services/redis")
+const redis = require("../lib/redis")
 const pick = require("lodash/pick")
 const { ensureIsSignedIn } = require("../middlewares/auth")
 const parser = require("ua-parser-js")
