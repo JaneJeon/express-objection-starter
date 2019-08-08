@@ -95,6 +95,7 @@
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.17",
     "cross-env": "^5.2.0",
     "husky": "^2.3.0",
     "jest": "^24.8.0",
