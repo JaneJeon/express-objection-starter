@@ -5,14 +5,14 @@ test('loads environment variables', () => {
 })
 
 test('loads the right environment', () => {
-  expect(config.get('logger:destination')).toBeTruthy()
+  expect(config.get('logger:destination')).toBeDefined()
 })
 
 test('loads default variables', () => {
-  expect(config.get('mail:smtp:service')).toBeTruthy()
+  expect(config.get('mail:smtp:service')).toBeDefined()
 })
 
 test('loads acl/schema', () => {
-  expect(config.get('acl')).toBeTruthy()
-  expect(config.get('schema')).toBeTruthy()
+  expect(config.get('acl')).toBeDefined()
+  expect(config.get('schema')).toBeDefined()
 })

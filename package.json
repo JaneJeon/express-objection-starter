@@ -1,7 +1,7 @@
 {
   "name": "express-objection-starter",
   "version": "0.5.3",
-  "description": "an opinionated express starter with knex, objection, and more!",
+  "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
     "objection",
@@ -40,7 +40,7 @@
     "lint:prettier": "prettier --write",
     "lint:yaml": "yaml2json --save",
     "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,css,scss,vue,html,md}'",
-    "lint:all:yaml": "yaml2json config --save --recursive"
+    "lint:all:yaml": "yarn lint:yaml config --recursive"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
