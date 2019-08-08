@@ -18,9 +18,9 @@ if (process.env.DATABASE_URL)
 module.exports = Object.assign(config.get('database'), {
   ...knexSnakeCaseMappers(),
   log: {
-    warn: log.warn,
-    deprecate: log.warn,
-    error: log.error,
-    debug: log.debug
+    warn: msg => log.warn(msg),
+    deprecate: msg => log.warn(msg),
+    error: msg => log.error(msg),
+    debug: msg => log.debug(msg)
   }
 })
