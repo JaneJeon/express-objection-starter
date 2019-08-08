@@ -111,9 +111,9 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint:all:yaml && lint-staged",
+      "pre-commit": "lint-staged",
       "pre-push": "yarn test",
-      "post-merge": "run-s install migrate"
+      "post-merge": "run-s install lint:all:yaml migrate"
     }
   },
   "lint-staged": {
