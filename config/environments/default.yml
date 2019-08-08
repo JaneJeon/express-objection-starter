@@ -27,13 +27,19 @@ ratelimit:
 redis:
   url: redis://localhost
 
+queue:
+  defaultJobOptions:
+    attempts: 3
+    removeOnComplete: true
+    backoff:
+      type: exponential
+      delay: 15000 # 15 seconds, in milliseconds
+
 database:
   # available clients: https://knexjs.org/#Installation-node
   client: pg
   connection: postgres://localhost/app
   debug: true
-
-passport:
 
 mail:
   # for maildev, we don't need credentials
