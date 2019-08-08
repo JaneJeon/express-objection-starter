@@ -131,9 +131,6 @@
     "events": {
       "start": "cls || clear"
     },
-    "ignore": [
-      "test"
-    ],
     "env": {
       "NODE_ENV": "development"
     }
