@@ -1,5 +1,9 @@
 const config = require('.')
 
+test('loads environment variables', () => {
+  expect(config.get('node:env')).toEqual('test')
+})
+
 test('loads the right environment', () => {
   expect(config.get('logger:destination')).toBeTruthy()
 })
