@@ -12,11 +12,11 @@ jobs:
         environment:
           PGHOST: 127.0.0.1
           PGUSER: knex
-      - image: circleci/redis:5
-      - image: circleci/postgres:11
+      - image: circleci/redis
+      - image: circleci/postgres
         environment:
           POSTGRES_USER: knex
-          POSTGRES_DB: bazaar
+          POSTGRES_DB: app
 
     working_directory: ~/repo
 
@@ -37,28 +37,25 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: |
-          yarn rollback
-          yarn migrate
-          yarn seed
+      - run: yarn migrate
 
       - run: yarn test
+#
+#   deploy:
+#     docker:
+#       - image: buildpack-deps:trusty
+#     steps:
+#       - checkout
+#       - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
-  deploy:
-    docker:
-      - image: buildpack-deps:trusty
-    steps:
-      - checkout
-      - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+# workflows:
+#   version: 2
+#   build-deploy:
+#     jobs:
+#       - build
+#       - deploy:
+#           requires:
+#             - build
+#           filters:
+#             branches:
+#               only: master
