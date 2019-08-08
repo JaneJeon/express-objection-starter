@@ -4,10 +4,15 @@ const tableName = require('objection-table-name')()
 const visibility = require('objection-visibility').default
 const isEmpty = require('lodash/isEmpty')
 const assert = require('http-assert')
+const config = require('../config')
 
 Model.knex(require('knex')(require('../knexfile')))
 
 class BaseModel extends tableName(visibility(DbErrors(Model))) {
+  static get jsonSchema() {
+    return config.get(`schema:${this.name.toLowerCase()}`)
+  }
+
   static get modelPaths() {
     return [__dirname]
   }

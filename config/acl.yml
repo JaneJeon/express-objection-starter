@@ -1,0 +1,6 @@
+acl:
+  admin:
+    grants:
+      - resource: '*'
+        action: '*'
+        attributes: ['*']

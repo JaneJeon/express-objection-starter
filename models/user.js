@@ -1,39 +1,9 @@
 const BaseModel = require('./base')
 const password = require('objection-password')()
-const assert = require('http-assert')
-const mailchecker = require('mailchecker')
+const checkBlacklist = require('../lib/domain-checker')
 const normalize = require('normalize-email')
 
 class User extends password(BaseModel) {
-  static get jsonSchema() {
-    return {
-      type: 'object',
-      properties: {
-        username: {
-          type: 'string',
-          transform: ['trim', 'toLowerCase'],
-          minLength: 4,
-          maxLength: 15,
-          pattern: '^\\w+$'
-        },
-        email: { type: 'string' },
-        password: {
-          type: 'string',
-          minLength: 8,
-          maxLength: 60
-        },
-        verified: { type: 'boolean', default: false },
-        role: {
-          type: 'string',
-          enum: ['user', 'admin', 'superuser'],
-          default: 'user'
-        }
-      },
-      required: ['username', 'email', 'password'],
-      additionalProperties: false
-    }
-  }
-
   static get hidden() {
     return ['password']
   }
@@ -46,17 +16,10 @@ class User extends password(BaseModel) {
     return {}
   }
 
-  get isAdmin() {
-    return this.role == 'admin' || this.role == 'superuser'
-  }
-
   processInput() {
+    if (this.username) this.username = this.username.toLowerCase()
     if (this.email) {
-      assert(
-        mailchecker.isValid(this.email),
-        400,
-        'This email is not supported. Please choose a different address.'
-      )
+      checkBlacklist(this.email)
       this.email = normalize(this.email)
     }
   }

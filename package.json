@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "an opinionated express starter with knex, objection, and more!",
   "keywords": [
     "express",
@@ -31,13 +31,14 @@
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
     "test": "run-p dev:mail test:* --race",
-    "test:unit": "wait-on http://localhost:1080 && jest --passWithNoTests",
+    "test:unit": "wait-on http://localhost:1080 && jest",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "seed:make": "knex seed:make",
-    "lint:prettier": "prettier --write"
+    "lint:prettier": "prettier --write",
+    "lint:yaml": "yaml2json config --save --recursive"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
@@ -69,7 +70,6 @@
     "mysql2": "^1.6.5",
     "nanoid": "^2.0.3",
     "nconf": "^0.10.0",
-    "nconf-yaml": "^1.0.2",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
     "objection": "^1.6.9",
@@ -105,18 +105,19 @@
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
     "supertest-session": "^4.0.0",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "yamljs": "^0.3.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "yarn lint:yaml && lint-staged",
       "pre-push": "yarn test",
       "post-merge": "run-s install migrate"
     }
   },
   "lint-staged": {
-    "*.{js,css,json,md,yml}": [
-      "prettier --write",
+    "*.{js,css,json,md,yml,yaml}": [
+      "yarn lint:prettier",
       "git add"
     ]
   },
