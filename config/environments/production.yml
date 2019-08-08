@@ -9,6 +9,12 @@ logger:
   options:
     level: info
     prettyPrint: false
+  serializers:
+    req:
+      - id
+      - method
+      - url
+      - user
 
 # copy+paste the output of the following command to replace secret:
 # node -p "require('nanoid')(24)"

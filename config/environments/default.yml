@@ -9,6 +9,17 @@ logger:
     prettyPrint:
       translateTime: true
       ignore: pid,hostname,boot
+  # https://github.com/fastify/fastify/blob/master/lib/logger.js
+  serializers:
+    req:
+      - id
+      - method
+      - url
+      - user
+      - body
+    res:
+      - statusCode
+      - statusMessage
 
 session:
   secret: nyaa
