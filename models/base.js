@@ -27,10 +27,6 @@ class BaseModel extends tableName(visibility(DbErrors(Model))) {
 
   static createValidator() {
     return new AjvValidator({
-      onCreateAjv: ajv => {
-        // modify the ajv instance
-        require('ajv-keywords')(ajv, 'transform')
-      },
       options: {
         // mutating inputs
         removeAdditional: true,
