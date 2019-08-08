@@ -38,7 +38,9 @@
     "seed": "knex seed:run",
     "seed:make": "knex seed:make",
     "lint:prettier": "prettier --write",
-    "lint:yaml": "yaml2json config --save --recursive"
+    "lint:yaml": "yaml2json --save",
+    "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,css,scss,vue,html,md}'",
+    "lint:all:yaml": "yaml2json config --save --recursive"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
@@ -109,7 +111,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint:yaml && lint-staged",
+      "pre-commit": "yarn lint:all:yaml && lint-staged",
       "pre-push": "yarn test",
       "post-merge": "run-s install migrate"
     }
