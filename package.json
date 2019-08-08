@@ -30,6 +30,7 @@
     "dev:web": "nodemon server",
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
+    "pretest": "yarn lint:all:yaml",
     "test": "run-p dev:mail test:* --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
     "migrate": "knex migrate:latest",
