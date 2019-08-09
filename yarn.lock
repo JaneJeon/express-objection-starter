@@ -5402,6 +5402,11 @@ objection-password@^2.0.0:
   dependencies:
     bcrypt "^3.0.0"
 
+objection-soft-delete@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/objection-soft-delete/-/objection-soft-delete-1.0.7.tgz#b4007145a8157d8bf747bc16a092c8513b9fc6d9"
+  integrity sha512-YGGk48DdLiK2gkyXCY4ByItWad+UCHm2VzfsYg8AnD+zhVuCN7FJhjkT8XOwQvCGprqLYuFN7ij/ClLnghUKxA==
+
 objection-table-name@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/objection-table-name/-/objection-table-name-1.0.0.tgz#460369c73ce13904ab8b6a639aee6d669678a324"

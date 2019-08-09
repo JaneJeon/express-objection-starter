@@ -1,3 +1,3 @@
-release: yarn install --production
+release: yarn install --production && yarn setup
 web: yarn start:web
 worker: yarn start:worker

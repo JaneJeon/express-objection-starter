@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -31,7 +31,6 @@
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
     "dev:yaml": "yarn lint:all:yaml --watch",
-    "postinstall": "yarn setup",
     "pretest": "yarn setup",
     "test": "run-p dev:mail test:* --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
@@ -82,6 +81,7 @@
     "objection-db-errors": "^1.1.1",
     "objection-find": "^1.6.5",
     "objection-password": "^2.0.0",
+    "objection-soft-delete": "^1.0.7",
     "objection-table-name": "^1.0.0",
     "objection-visibility": "^0.4.0",
     "passport": "^0.4.0",
@@ -118,7 +118,7 @@
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "yarn test",
-      "post-merge": "yarn install"
+      "post-merge": "run-s install setup"
     }
   },
   "lint-staged": {
