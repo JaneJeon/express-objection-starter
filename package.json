@@ -41,7 +41,8 @@
     "lint:prettier": "prettier --write",
     "lint:yaml": "yaml2json --save",
     "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,css,scss,vue,html,md}'",
-    "lint:all:yaml": "yarn lint:yaml config --recursive"
+    "lint:all:yaml": "yarn lint:yaml config --recursive",
+    "setup": "run-s lint:all:yaml migrate"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
@@ -63,7 +64,6 @@
     "express-ws": "^4.0.0",
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
-    "husky": "^3.0.3",
     "ioredis": "^4.9.5",
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
@@ -75,6 +75,7 @@
     "nconf": "^0.10.0",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
+    "npm-run-all": "^4.1.5",
     "objection": "^1.6.9",
     "objection-db-errors": "^1.1.1",
     "objection-find": "^1.6.5",
@@ -99,12 +100,12 @@
   "devDependencies": {
     "@types/jest": "^24.0.17",
     "cross-env": "^5.2.0",
+    "husky": "^3.0.3",
     "jest": "^24.8.0",
     "lint-staged": "^9.2.1",
     "maildev": "^1.1.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
-    "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
@@ -115,7 +116,7 @@
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "yarn test",
-      "post-merge": "run-s install lint:all:yaml migrate"
+      "post-merge": "run-s install setup"
     }
   },
   "lint-staged": {
