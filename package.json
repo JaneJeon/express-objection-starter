@@ -63,7 +63,6 @@
     "express-session": "^1.16.1",
     "express-sslify": "^1.2.0",
     "express-ws": "^4.0.0",
-    "fast-json-stringify": "^1.15.4",
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
     "ioredis": "^4.9.5",
