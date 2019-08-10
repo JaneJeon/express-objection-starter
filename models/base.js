@@ -25,6 +25,10 @@ class BaseModel extends tableName(visibility(DbErrors(Model))) {
     this.jsonSchema = config.get(`schema:${this.name.toLowerCase()}`)
 
     return new AjvValidator({
+      onCreateAjv: ajv => {
+        // modify the ajv instance
+        require('ajv-keywords')(ajv, 'transform')
+      },
       options: {
         // mutating inputs
         removeAdditional: true,

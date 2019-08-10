@@ -2,10 +2,11 @@ schema:
   user:
     type: object
     properties:
-      id:
-        type: integer
       username:
         type: string
+        transform:
+          - trim
+          - toLowerCase
         minLength: 4
         maxLength: 15
         pattern: ^\w+$

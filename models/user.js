@@ -17,7 +17,6 @@ class User extends password(BaseModel) {
   }
 
   processInput() {
-    if (this.username) this.username = this.username.toLowerCase()
     if (this.email) {
       checkBlacklist(this.email)
       this.email = normalize(this.email)
