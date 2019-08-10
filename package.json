@@ -118,7 +118,7 @@
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "yarn test",
-      "post-merge": "run-s install setup"
+      "post-merge": "yarn install && yarn setup"
     }
   },
   "lint-staged": {
