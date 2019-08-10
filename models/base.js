@@ -5,14 +5,11 @@ const visibility = require('objection-visibility').default
 const isEmpty = require('lodash/isEmpty')
 const assert = require('http-assert')
 const config = require('../config')
+const fastJson = require('fast-json-stringify')
 
 Model.knex(require('knex')(require('../knexfile')))
 
 class BaseModel extends tableName(visibility(DbErrors(Model))) {
-  static get jsonSchema() {
-    return config.get(`schema:${this.name.toLowerCase()}`)
-  }
-
   static get modelPaths() {
     return [__dirname]
   }
@@ -26,6 +23,10 @@ class BaseModel extends tableName(visibility(DbErrors(Model))) {
   }
 
   static createValidator() {
+    const schema = config.get(`schema:${this.name.toLowerCase()}`)
+    this.jsonSchema = schema
+    this.toString = fastJson(schema)
+
     return new AjvValidator({
       options: {
         // mutating inputs
