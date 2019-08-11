@@ -30,10 +30,10 @@ schema:
       - password
     additionalProperties: false
 
-relations:
-  foo: bar
-
 visibility:
   user:
     hidden:
       - password
+
+relations:
+  foo: bar
