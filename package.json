@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.5.6",
+  "version": "0.7.0",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -15,6 +15,7 @@
     "elasticsearch",
     "redis",
     "api",
+    "backend",
     "jsonschema",
     "validation"
   ],
@@ -22,6 +23,7 @@
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "yarn setup",
     "start": "pm2 start pm2.config.js",
     "start:web": "pm2-runtime start pm2.config.js --only server",
     "start:worker": "pm2-runtime start pm2.config.js --only worker",
@@ -30,7 +32,7 @@
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
     "dev:yaml": "yarn lint:all:yaml --watch",
-    "pretest": "yarn setup",
+    "pretest": "is-ci || yarn setup",
     "test": "run-p dev:mail test:* --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
     "migrate": "knex migrate:latest",
@@ -38,13 +40,46 @@
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "seed:make": "knex seed:make",
+    "lint": "run-p lint:all:*",
     "lint:prettier": "prettier --write",
     "lint:yaml": "yaml2json --save",
-    "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,css,scss,vue,html,md}'",
+    "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,md,html,css}'",
     "lint:all:yaml": "yarn lint:yaml config --recursive",
-    "setup": "yarn lint:all:yaml && yarn migrate"
+    "lint:all:types": "node scripts/generate-types",
+    "setup": "yarn lint:all:yaml && yarn migrate",
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.test.js",
+      "migrations/",
+      "seeds/"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test",
+      "post-merge": "yarn && yarn setup"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md,yml,yaml}": [
+      "yarn lint:prettier",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "proseWrap": "never"
   },
   "dependencies": {
+    "@casl/ability": "^3.2.0",
     "@elastic/elasticsearch": "^7.2.0",
     "algoliasearch": "^3.33.0",
     "aws-sdk": "^2.466.0",
@@ -68,17 +103,17 @@
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
     "mailchecker": "^3.2.35",
+    "mssql": "^5.1.0",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.6.5",
     "nanoid": "^2.0.3",
     "nconf": "^0.10.0",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
     "objection": "^1.6.9",
     "objection-db-errors": "^1.1.1",
-    "objection-find": "^1.6.5",
     "objection-password": "^2.0.0",
-    "objection-soft-delete": "^1.0.7",
     "objection-table-name": "^1.0.0",
-    "objection-visibility": "^0.4.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.11.0",
@@ -86,6 +121,7 @@
     "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
     "sharp": "^0.22.1",
+    "sqlite3": "^4.1.0",
     "ua-parser-js": "^0.7.20",
     "yamljs": "^0.3.0"
   },
@@ -97,7 +133,9 @@
     "@types/jest": "^24.0.17",
     "cross-env": "^5.2.0",
     "husky": "^3.0.3",
+    "is-ci": "^2.0.0",
     "jest": "^24.8.0",
+    "json-schema-to-typescript": "^7.0.0",
     "lint-staged": "^9.2.1",
     "maildev": "^1.1.0",
     "morgan": "^1.9.1",
@@ -107,34 +145,7 @@
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
     "supertest-session": "^4.0.0",
+    "vuepress": "^1.0.3",
     "wait-on": "^3.3.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test",
-      "post-merge": "yarn install && yarn setup"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,json,md,yml,yaml}": [
-      "yarn lint:prettier",
-      "git add"
-    ]
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "proseWrap": "never"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "*.test.js",
-      "migrations/",
-      "seeds/"
-    ],
-    "env": {
-      "NODE_ENV": "development"
-    }
   }
 }

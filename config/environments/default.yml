@@ -32,8 +32,7 @@ session:
   saveUninitialized: false # GDPR compliance
 
 ratelimit:
-  windowMs: 900000 # 15 minutes, in milliseconds
-  max: 100
+  max: 0
 
 redis:
   url: redis://localhost

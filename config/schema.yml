@@ -21,19 +21,11 @@ schema:
         type: string
         enum:
           - user
+          - moderator
           - admin
-          - superuser
         default: user
     required:
       - username
       - email
       - password
     additionalProperties: false
-
-visibility:
-  user:
-    hidden:
-      - password
-
-relations:
-  foo: bar

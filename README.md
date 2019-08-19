@@ -1,4 +1,6 @@
-# Express Objection starter [![CircleCI](https://circleci.com/gh/JaneJeon/express-objection-starter.svg?style=shield)](https://circleci.com/gh/JaneJeon/express-objection-starter) [![npm version](https://badge.fury.io/js/express-objection-starter.svg)](https://badge.fury.io/js/express-objection-starter)
+# Express Objection starter
+
+[![CircleCI](https://circleci.com/gh/JaneJeon/express-objection-starter.svg?style=shield)](https://circleci.com/gh/JaneJeon/express-objection-starter) [![npm version](https://badge.fury.io/js/express-objection-starter.svg)](https://badge.fury.io/js/express-objection-starter)
 
 While node.js makes it easy to hack together an express server quickly, it's hard to _actually_ build a production-ready, secure, scalable solution.
 

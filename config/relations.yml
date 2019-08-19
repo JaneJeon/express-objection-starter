@@ -1,0 +1,4 @@
+# right now it's empty because... well, we only have users model
+relations:
+  user:
+    foo: bar

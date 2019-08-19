@@ -12,16 +12,6 @@ class User extends password(BaseModel) {
     }
   }
 
-  async $beforeInsert(queryContext) {
-    await super.$beforeInsert(queryContext)
-    this.processInput()
-  }
-
-  async $beforeUpdate(opt, queryContext) {
-    await super.$beforeUpdate(opt, queryContext)
-    this.processInput()
-  }
-
   static get QueryBuilder() {
     return class extends super.QueryBuilder {
       findByUsername(username, user) {

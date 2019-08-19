@@ -1,12 +1,11 @@
 const { Model, AjvValidator } = require('objection')
 const { DbErrors } = require('objection-db-errors')
 const tableName = require('objection-table-name')()
-const visibility = require('objection-visibility').default
 const config = require('../config')
 
 Model.knex(require('knex')(require('../knexfile')))
 
-class BaseModel extends visibility(DbErrors(tableName(Model))) {
+class BaseModel extends DbErrors(tableName(Model)) {
   static get modelPaths() {
     return [__dirname]
   }
@@ -23,8 +22,6 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
     const name = this.name.toLowerCase()
     this.jsonSchema = config.get(`schema:${name}`)
     this.relationMappings = config.get(`relations:${name}`)
-    this.hidden = config.get(`visibility:${name}:hidden`)
-    this.visible = config.get(`visibility:${name}:visible`)
 
     return new AjvValidator({
       options: {
@@ -34,6 +31,18 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
         coerceTypes: true
       }
     })
+  }
+
+  processInput() {}
+
+  async $beforeInsert(queryContext) {
+    await super.$beforeInsert(queryContext)
+    await this.processInput(queryContext)
+  }
+
+  async $beforeUpdate(opt, queryContext) {
+    await super.$beforeUpdate(opt, queryContext)
+    await this.processInput(opt, queryContext)
   }
 
   static get pageSize() {

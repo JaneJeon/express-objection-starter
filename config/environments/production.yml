@@ -21,6 +21,10 @@ logger:
 session:
   secret:
 
+ratelimit:
+  windowMs: 900000 # 15 minutes, in milliseconds
+  max: 100
+
 database:
   debug: false
 
