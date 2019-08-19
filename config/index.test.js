@@ -13,8 +13,8 @@ describe('config loader', () => {
     expect(config.get('mail:smtp:service')).toBeDefined()
   })
 
-  test('loads acl/schema', () => {
-    expect(config.get('acl')).toBeDefined()
+  test('loads schema/relations', () => {
     expect(config.get('schema')).toBeDefined()
+    expect(config.get('relations')).toBeDefined()
   })
 })

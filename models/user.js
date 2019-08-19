@@ -4,6 +4,10 @@ const checkBlacklist = require('../lib/domain-checker')
 const normalize = require('normalize-email')
 
 class User extends password(BaseModel) {
+  static get hidden() {
+    return ['password']
+  }
+
   processInput() {
     if (this.username) this.username = this.username.toLowerCase()
     if (this.email) {

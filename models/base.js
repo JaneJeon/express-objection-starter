@@ -1,11 +1,12 @@
 const { Model, AjvValidator } = require('objection')
-const { DbErrors } = require('objection-db-errors')
 const tableName = require('objection-table-name')()
+const { DbErrors } = require('objection-db-errors')
+const visibility = require('objection-visibility').default
 const config = require('../config')
 
 Model.knex(require('knex')(require('../knexfile')))
 
-class BaseModel extends DbErrors(tableName(Model)) {
+class BaseModel extends visibility(DbErrors(tableName(Model))) {
   static get modelPaths() {
     return [__dirname]
   }

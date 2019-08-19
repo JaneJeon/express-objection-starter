@@ -1,0 +1,41 @@
+default:
+  grants:
+    - resource: user
+      action: read
+      attributes: ['*', '!email']
+    - resource: user
+      action: create
+      attributes: ['*', '!role']
+user:
+  grants:
+    - resource: user
+      action: read
+      attributes: ['*', '!email']
+    - resource: user
+      action: read
+      attributes: ['email']
+      condition:
+        Fn: EQUALS
+        args:
+          id: $.id
+    - resource: user
+      action: [update, delete]
+      attributes: ['*', '!role']
+      condition:
+        Fn: EQUALS
+        args:
+          id: $.id
+moderator:
+  extends:
+    role: user
+admin:
+  extends:
+    role: moderator
+  grants:
+    - resource: user
+      action: update
+      attributes: ['role']
+      condition:
+        Fn: NOT_EQUALS
+        args:
+          role: admin

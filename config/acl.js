@@ -1,28 +1,10 @@
-const { AbilityBuilder } = require('@casl/ability')
+const AccessControl = require('role-acl')
 
-function defineAbilitiesFor(user = {}) {
-  return AbilityBuilder.define((can, cannot) => {
-    // default
-    can('crud', 'User', { id: user.id })
+const acl = require('./acl.json')
+const ac = new AccessControl(acl)
 
-    // can read anyone's user info EXCEPT password/email by default
-    cannot('read', 'User', ['password', 'email'])
-    // but a user can read their own email
-    can('read', 'User', ['email'], { id: user.id })
+for (const role in acl)
+  if (acl[role].extends)
+    ac.extendRole(role, acl[role].extends.role, acl[role].extends.condition)
 
-    // only allow anonymous users to create account
-    if (!user) can('create', 'User')
-    // do not allow users to set these fields
-    cannot(['create', 'update'], 'User', [
-      'verified',
-      'role',
-      'banned',
-      'deleted'
-    ])
-    // don't allow people to update username
-    cannot('update', 'User', ['username'])
-    if (user.role == 'admin') can('update', 'User', ['role', 'banned'])
-  })
-}
-
-module.exports = defineAbilitiesFor
+module.exports = ac

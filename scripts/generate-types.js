@@ -1,5 +1,5 @@
 const { compile } = require('json-schema-to-typescript')
-const { schema } = require('../config/schema')
+const schema = require('../config/schema')
 const { writeFileSync } = require('fs')
 const { resolve } = require('path')
 
