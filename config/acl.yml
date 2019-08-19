@@ -1,4 +1,4 @@
-default:
+anonymous:
   grants:
     - resource: user
       action: read
@@ -6,6 +6,7 @@ default:
     - resource: user
       action: create
       attributes: ['*', '!role']
+
 user:
   grants:
     - resource: user
@@ -17,24 +18,24 @@ user:
       condition:
         Fn: EQUALS
         args:
-          id: $.id
+          requester: $.user.id
     - resource: user
       action: [update, delete]
       attributes: ['*', '!role']
       condition:
         Fn: EQUALS
         args:
-          id: $.id
-moderator:
-  extends:
-    role: user
+          requester: $.user.id
+
 admin:
   extends:
-    role: moderator
+    role: user
   grants:
     - resource: user
       action: update
       attributes: ['role']
+      # TODO: admins shouldn't be able to affect other admins' status?
+      # TODO: but at the same time, they should be able to "step down" on their own
       condition:
         Fn: NOT_EQUALS
         args:

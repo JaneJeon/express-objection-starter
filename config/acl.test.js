@@ -1,75 +1,190 @@
 const acl = require('./acl')
 
-describe('abilities builder', () => {
-  describe('User', () => {
-    class User {
-      constructor({ id, role }) {
-        this.id = id
-        this.role = role
-      }
-    }
+describe('access control', () => {
+  describe('user resource', () => {
+    describe('anonymous', () => {
+      const role = 'anonymous'
 
-    const user1 = new User({ id: 1, role: 'user' })
-    const user2 = new User({ id: 2, role: 'user' })
-    const admin = new User({ id: 3, role: 'admin' })
-
-    user1.ability = acl(user1)
-    user2.ability = acl(user2)
-    admin.ability = acl(admin)
-    const anon = { ability: acl(undefined) }
-
-    describe('C', () => {
-      test('only anonymous users can create profile', () => {
-        expect(anon.ability.can('create', 'User')).toBe(true)
-        expect(user1.ability.can('create', 'User')).toBe(false)
-        expect(admin.ability.can('create', 'User')).toBe(false)
+      test('can read user', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('read')
+            .on('user').granted
+        ).toBe(true)
       })
 
-      test('users cannot specify certain fields when creating', () => {
-        // TODO: update test
-        expect(anon.ability.can('create', 'User', 'role,deleted')).toBe(false)
-      })
-    })
-
-    describe('R', () => {
-      test("anyone can read a user's public information", () => {
-        expect(anon.ability.can('read', 'User', 'username')).toBe(true)
-        expect(user1.ability.can('read', user2, 'role')).toBe(true)
+      test('cannot read email property', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('read')
+            .on('user')
+            .filter({ email: true }).email
+        ).toBeUndefined()
       })
 
-      test('only users can view their own email', () => {
-        expect(user1.ability.can('read', user1, 'email')).toBe(true)
-        expect(user2.ability.can('read', user1, 'email')).toBe(false)
+      test('can create user', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('create')
+            .on('user').granted
+        ).toBe(true)
       })
 
-      test("no one gets to see ANYONE's password", () => {
-        expect(user1.ability.can('read', user1, 'password')).toBe(false)
-        expect(admin.ability.can('read', user1, 'password')).toBe(false)
-      })
-    })
-
-    describe('U', () => {
-      test('users can only edit their own profile', () => {
-        //
-      })
-
-      test('users are not allowed to change certain fields', () => {
-        //
+      test('cannot set role', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('create')
+            .on('user')
+            .filter({ role: true }).role
+        ).toBeUndefined()
       })
 
-      test("admins can change others' roles", () => {
-        //
+      test('cannot update/delete', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('update')
+            .on('user').granted
+        ).toBe(false)
+
+        expect(
+          acl
+            .can(role)
+            .execute('delete')
+            .on('user').granted
+        ).toBe(false)
       })
     })
 
-    describe('D', () => {
-      test('users can only delete their own profile', () => {
-        expect(user1.ability.can('delete', user1)).toBe(true)
-        expect(user2.ability.can('delete', user1)).toBe(false)
+    describe('user', () => {
+      const role = 'user'
+
+      test('can read user', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('read')
+            .on('user').granted
+        ).toBe(true)
       })
 
-      test("annonymous users shouldn't even see the delete option", () => {
-        expect(anon.ability.can('delete', 'User')).toBe(false)
+      test('cannot read email property', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('read')
+            .on('user')
+            .filter({ email: true }).email
+        ).toBeUndefined()
+
+        expect(
+          acl
+            .can(role)
+            .execute('read')
+            .with({ requester: 1, user: { id: 2 } })
+            .on('user')
+            .filter({ email: true }).email
+        ).toBeUndefined()
+      })
+
+      test('can read own email address', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('read')
+            .with({ requester: 1, user: { id: 1 } })
+            .on('user')
+            .filter({ email: true }).email
+        ).toBe(true)
+      })
+
+      test('cannot create user', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('create')
+            .on('user').granted
+        ).toBe(false)
+      })
+
+      test('cannot update/delete by default', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('update')
+            .on('user').granted
+        ).toBe(false)
+
+        expect(
+          acl
+            .can(role)
+            .execute('delete')
+            .on('user').granted
+        ).toBe(false)
+      })
+
+      test('can update/delete self', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('update')
+            .with({ requester: 1, user: { id: 1 } })
+            .on('user').granted
+        ).toBe(true)
+
+        expect(
+          acl
+            .can(role)
+            .execute('delete')
+            .with({ requester: 1, user: { id: 1 } })
+            .on('user').granted
+        ).toBe(true)
+      })
+
+      test('cannot set role', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('update')
+            .on('user').granted
+        ).toBe(false)
+      })
+    })
+
+    describe('admin', () => {
+      const role = 'admin'
+
+      test('extends user', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('read')
+            .with({ requester: 1, user: { id: 1 } })
+            .on('user')
+            .filter({ email: true }).email
+        ).toBe(true)
+      })
+
+      test('can update role of non-admins', () => {
+        expect(
+          acl
+            .can(role)
+            .execute('update')
+            .with({ role: 'user' })
+            .on('user').granted
+        ).toBe(true)
+
+        expect(
+          acl
+            .can(role)
+            .execute('update')
+            .with({ role: 'admin' })
+            .on('user').attributes
+        ).toContain('!role')
       })
     })
   })

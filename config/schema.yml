@@ -21,7 +21,6 @@ user:
       type: string
       enum:
         - user
-        - moderator
         - admin
       default: user
   required:
