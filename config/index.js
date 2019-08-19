@@ -15,4 +15,9 @@ nconf
   )
   .file('default', path.resolve(__dirname, 'environments', 'default.json'))
 
+// mappings
+if (process.env.DATABASE_URL)
+  nconf.set('database:connection', process.env.DATABASE_URL)
+// TODO: bonsai_url
+
 module.exports = nconf

@@ -1,4 +1,4 @@
-const acl = require('./acl')
+const acl = require('../lib/acl')
 
 describe('access control', () => {
   describe('user resource', () => {
