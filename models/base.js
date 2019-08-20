@@ -22,6 +22,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
   }
 
   static createValidator() {
+    // yes, I'm using this as a static one-time hook
     const name = this.name.toLowerCase()
     this.jsonSchema = config.get(`schema:${name}`)
     this.relationMappings = config.get(`relations:${name}`)
@@ -54,14 +55,18 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
   static get QueryBuilder() {
     return class extends Model.QueryBuilder {
-      check(user = { role: 'anonymous' }, method = 'read', resource = {}) {
+      authorize(
+        requester = { role: 'anonymous' },
+        resource = {},
+        method = 'read'
+      ) {
         const access = acl
-          .can(user.role)
+          .can(requester.role)
           .execute(method)
-          .with(Object.assign(resource, { requester: user }))
+          .with(Object.assign(resource, { requester }))
           .on(this.modelClass().name)
 
-        assert(access.granted, 403)
+        assert(access.granted, requester.role == 'anonymous' ? 401 : 403)
 
         return this.runAfter(result => access.filter(result))
       }

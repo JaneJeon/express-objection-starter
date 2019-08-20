@@ -18,11 +18,8 @@ class User extends password(BaseModel) {
 
   static get QueryBuilder() {
     return class extends super.QueryBuilder {
-      findByUsername(username, user) {
-        const loweredName = username.toLowerCase()
-        if (user && user.username == loweredName) return user
-
-        return this.findOne({ username: loweredName }).throwIfNotFound()
+      findByUsername(username) {
+        return this.findOne({ username }).throwIfNotFound()
       }
 
       findByEmail(email) {
