@@ -5,15 +5,15 @@ module.exports = Router()
   .get('/:username', async (req, res) => {
     const username = req.params.username.toLowerCase()
     const user = await User.query()
-      .authorize(req.user, { username })
       .findByUsername(username)
+      .authorize(req.user, { username }) // only need to check username
 
     res.send(user)
   })
   .post('/', async (req, res) => {
     const user = await User.query()
-      .authorize(req.user, undefined, 'create')
       .insert(req.body)
+      .authorize(req.user)
 
     req.login(user, err => {
       if (err) throw err
@@ -25,18 +25,16 @@ module.exports = Router()
     let user = await User.query().findByUsername(username)
     user = await user
       .$query()
-      .authorize(req.user, user, 'update')
       .patch(req.body)
+      .authorize(req.user, user)
 
     res.send(user)
   })
   .delete('/:username', async (req, res) => {
     const username = req.params.username.toLowerCase()
-    const user = await User.query().findByUsername(username)
-    await user
-      .$query()
-      .authorize(req.user, user, 'delete')
+    await User.query()
       .delete()
+      .authorize(req.user, { username }) // only need to check username
 
     res.sendStatus(204)
   })

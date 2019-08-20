@@ -55,14 +55,18 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
   static get QueryBuilder() {
     return class extends Model.QueryBuilder {
-      authorize(
-        requester = { role: 'anonymous' },
-        resource = {},
-        method = 'read'
-      ) {
+      authorize(requester = { role: 'anonymous' }, resource = {}, action) {
+        let queryAction
+        if (this.isFind()) queryAction = 'read'
+        else if (this.isInsert()) queryAction = 'create'
+        else if (this.isUpdate()) queryAction = 'update'
+        else if (this.isDelete()) queryAction = 'delete'
+
+        if (!(action || queryAction)) throw new Error('need to specify action!')
+
         const access = acl
           .can(requester.role)
-          .execute(method)
+          .execute(action || queryAction)
           .with(Object.assign(resource, { requester }))
           .on(this.modelClass().name)
 

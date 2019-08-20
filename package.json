@@ -143,6 +143,7 @@
     "objection-gen": "^0.5.2",
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
+    "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
     "wait-on": "^3.3.0"
   }
