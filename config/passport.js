@@ -3,10 +3,9 @@ const User = require('../models/user')
 const { NotFoundError } = require('objection')
 const { Strategy: LocalStrategy } = require('passport-local')
 
-// TODO: figure out what to include
-passport.serializeUser((user, done) => done(null, user.username))
-passport.deserializeUser((username, done) => {
-  done(null, User.fromJson({ username }, { skipValidation: true }))
+passport.serializeUser((user, done) => done(null, user.id))
+passport.deserializeUser(async (id, done) => {
+  done(null, await User.query().findById(id))
 })
 
 passport.use(

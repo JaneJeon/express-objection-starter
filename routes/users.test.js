@@ -1,4 +1,5 @@
 const app = require('../server')
+const session = require('supertest-session')
 
 describe('user routes', () => {
   describe('GET /users/:username', () => {
