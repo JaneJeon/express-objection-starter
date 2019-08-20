@@ -1,41 +1,39 @@
 anonymous:
   grants:
-    - resource: user
+    - resource: User
       action: read
       attributes: ['*', '!email']
-    - resource: user
+    - resource: User
       action: create
       attributes: ['*', '!role']
 
 user:
   grants:
-    - resource: user
+    - resource: User
       action: read
       attributes: ['*', '!email']
-    - resource: user
+    - resource: User
       action: read
       attributes: ['email']
       condition:
         Fn: EQUALS
         args:
-          requester: $.user.id
-    - resource: user
+          username: $.requester.username
+    - resource: User
       action: [update, delete]
       attributes: ['*', '!role']
       condition:
         Fn: EQUALS
         args:
-          requester: $.user.id
+          username: $.requester.username
 
 admin:
   extends:
     role: user
   grants:
-    - resource: user
+    - resource: User
       action: update
       attributes: ['role']
-      # TODO: admins shouldn't be able to affect other admins' status?
-      # TODO: but at the same time, they should be able to "step down" on their own
       condition:
         Fn: NOT_EQUALS
         args:

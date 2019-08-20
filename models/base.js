@@ -3,6 +3,8 @@ const tableName = require('objection-table-name')()
 const { DbErrors } = require('objection-db-errors')
 const visibility = require('objection-visibility').default
 const config = require('../config')
+const acl = require('../lib/acl')
+const assert = require('http-assert')
 
 Model.knex(require('knex')(require('../knexfile')))
 
@@ -52,6 +54,18 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
   static get QueryBuilder() {
     return class extends Model.QueryBuilder {
+      check(user = { role: 'anonymous' }, method = 'read', resource = {}) {
+        const access = acl
+          .can(user.role)
+          .execute(method)
+          .with(Object.assign(resource, { requester: user }))
+          .on(this.modelClass().name)
+
+        assert(access.granted, 403)
+
+        return this.runAfter(result => access.filter(result))
+      }
+
       findById(id) {
         return super.findById(id).throwIfNotFound()
       }

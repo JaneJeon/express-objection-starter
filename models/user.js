@@ -5,7 +5,7 @@ const normalize = require('normalize-email')
 
 class User extends password(BaseModel) {
   static get hidden() {
-    return ['password']
+    return ['id', 'password']
   }
 
   processInput() {

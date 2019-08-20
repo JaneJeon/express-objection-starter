@@ -46,9 +46,7 @@
     "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,md,html,css}'",
     "lint:all:yaml": "yarn lint:yaml config --recursive",
     "lint:all:types": "node scripts/generate-types",
-    "setup": "yarn lint:all:yaml && yarn migrate",
-    "docs": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "setup": "yarn lint:all:yaml && yarn migrate"
   },
   "nodemonConfig": {
     "ignore": [
@@ -146,7 +144,6 @@
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
     "supertest-session": "^4.0.0",
-    "vuepress": "^1.0.3",
     "wait-on": "^3.3.0"
   }
 }

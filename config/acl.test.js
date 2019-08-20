@@ -10,7 +10,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .on('user').granted
+            .on('User').granted
         ).toBe(true)
       })
 
@@ -19,7 +19,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .on('user')
+            .on('User')
             .filter({ email: true }).email
         ).toBeUndefined()
       })
@@ -29,7 +29,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('create')
-            .on('user').granted
+            .on('User').granted
         ).toBe(true)
       })
 
@@ -38,7 +38,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('create')
-            .on('user')
+            .on('User')
             .filter({ role: true }).role
         ).toBeUndefined()
       })
@@ -48,14 +48,14 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('update')
-            .on('user').granted
+            .on('User').granted
         ).toBe(false)
 
         expect(
           acl
             .can(role)
             .execute('delete')
-            .on('user').granted
+            .on('User').granted
         ).toBe(false)
       })
     })
@@ -68,7 +68,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .on('user').granted
+            .on('User').granted
         ).toBe(true)
       })
 
@@ -77,7 +77,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .on('user')
+            .on('User')
             .filter({ email: true }).email
         ).toBeUndefined()
 
@@ -85,8 +85,8 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .with({ requester: 1, user: { id: 2 } })
-            .on('user')
+            .with({ username: 'hasan', requester: { username: 'minaj' } })
+            .on('User')
             .filter({ email: true }).email
         ).toBeUndefined()
       })
@@ -96,8 +96,8 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .with({ requester: 1, user: { id: 1 } })
-            .on('user')
+            .with({ username: 'uno', requester: { username: 'uno' } })
+            .on('User')
             .filter({ email: true }).email
         ).toBe(true)
       })
@@ -107,7 +107,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('create')
-            .on('user').granted
+            .on('User').granted
         ).toBe(false)
       })
 
@@ -116,14 +116,14 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('update')
-            .on('user').granted
+            .on('User').granted
         ).toBe(false)
 
         expect(
           acl
             .can(role)
             .execute('delete')
-            .on('user').granted
+            .on('User').granted
         ).toBe(false)
       })
 
@@ -132,16 +132,16 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('update')
-            .with({ requester: 1, user: { id: 1 } })
-            .on('user').granted
+            .with({ username: 'uno', requester: { username: 'uno' } })
+            .on('User').granted
         ).toBe(true)
 
         expect(
           acl
             .can(role)
             .execute('delete')
-            .with({ requester: 1, user: { id: 1 } })
-            .on('user').granted
+            .with({ username: 'uno', requester: { username: 'uno' } })
+            .on('User').granted
         ).toBe(true)
       })
 
@@ -150,7 +150,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('update')
-            .on('user').granted
+            .on('User').granted
         ).toBe(false)
       })
     })
@@ -163,8 +163,8 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .with({ requester: 1, user: { id: 1 } })
-            .on('user')
+            .with({ username: 'uno', requester: { username: 'uno' } })
+            .on('User')
             .filter({ email: true }).email
         ).toBe(true)
       })
@@ -175,7 +175,7 @@ describe('access control', () => {
             .can(role)
             .execute('update')
             .with({ role: 'user' })
-            .on('user').granted
+            .on('User').granted
         ).toBe(true)
 
         expect(
@@ -183,7 +183,7 @@ describe('access control', () => {
             .can(role)
             .execute('update')
             .with({ role: 'admin' })
-            .on('user').attributes
+            .on('User').attributes
         ).toContain('!role')
       })
     })
