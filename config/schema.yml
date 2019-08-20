@@ -13,6 +13,7 @@ user:
       type: string
       minLength: 8
       maxLength: 60
+      writeOnly: true
     verified:
       type: boolean
       default: false
