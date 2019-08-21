@@ -85,7 +85,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .with({ username: 'hasan', requester: { username: 'minaj' } })
+            .with({ username: 'hasan', req: { user: { username: 'minaj' } } })
             .on('User')
             .filter({ email: true }).email
         ).toBeUndefined()
@@ -96,7 +96,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .with({ username: 'uno', requester: { username: 'uno' } })
+            .with({ username: 'uno', req: { user: { username: 'uno' } } })
             .on('User')
             .filter({ email: true }).email
         ).toBe(true)
@@ -127,20 +127,22 @@ describe('access control', () => {
         ).toBe(false)
       })
 
-      test('can update/delete self', () => {
+      test('can update self', () => {
         expect(
           acl
             .can(role)
             .execute('update')
-            .with({ username: 'uno', requester: { username: 'uno' } })
+            .with({ username: 'uno', req: { user: { username: 'uno' } } })
             .on('User').granted
         ).toBe(true)
+      })
 
+      test('can only delete self with confirmation', () => {
         expect(
           acl
             .can(role)
             .execute('delete')
-            .with({ username: 'uno', requester: { username: 'uno' } })
+            .with({ username: 'uno', req: { body: { username: 'uno' } } })
             .on('User').granted
         ).toBe(true)
       })
@@ -163,7 +165,7 @@ describe('access control', () => {
           acl
             .can(role)
             .execute('read')
-            .with({ username: 'uno', requester: { username: 'uno' } })
+            .with({ username: 'uno', req: { user: { username: 'uno' } } })
             .on('User')
             .filter({ email: true }).email
         ).toBe(true)

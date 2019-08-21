@@ -1,9 +1,9 @@
-const app = require('../server')
-const session = require('supertest-session')
+// const app = require('../server')
+// const session = require('supertest-session')
 
-describe('session routes', () => {
+describe.skip('session routes', () => {
   describe('POST /login', () => {
-    //
+    // TODO:
   })
 
   // tests written after revamp of active sessions
