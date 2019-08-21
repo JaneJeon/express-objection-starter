@@ -2,7 +2,7 @@ const { Router } = require('express')
 const passport = require('passport')
 const redis = require('../lib/redis')
 const pick = require('lodash/pick')
-const { ensureIsSignedIn } = require('../middlewares/auth')
+const requireAuthN = require('../middlewares/require-authentication')
 const parser = require('ua-parser-js')
 const config = require('../config')
 
@@ -11,9 +11,7 @@ module.exports = Router()
     if (req.body.rememberMe)
       req.session.cookie.maxAge = config.get('session:cookie:rememberMe')
 
-    const ua = parser(
-      req.headers['x-ucbrowser-ua'] || req.headers['user-agent']
-    )
+    const ua = parser(req.header('x-ucbrowser-ua') || req.header('user-agent'))
 
     req.session.ip = req.ip
     req.session.browser = ua.browser.name
@@ -31,8 +29,7 @@ module.exports = Router()
       next()
     })
   })
-  .use(ensureIsSignedIn)
-  .get('/sessions', async (req, res) => {
+  .get('/sessions', requireAuthN, async (req, res) => {
     const sessPrefix = req.user.getSession()
     const sessPattern = req.user.getSession('*')
     const keys = new Set()
@@ -57,7 +54,7 @@ module.exports = Router()
 
     res.send(sessions)
   })
-  .delete('/sessions/:sessId', async (req, res) => {
+  .delete('/sessions/:sessId', requireAuthN, async (req, res) => {
     await redis.del(req.user.getSession(req.params.sessId))
 
     res.sendStatus(204)

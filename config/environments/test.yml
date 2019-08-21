@@ -1,8 +1,8 @@
 logger:
-  destination: ../logs/test-output.log
-
-ratelimit:
-  max: 0
+  options:
+    prettyPrint:
+      colorize: false
+  destination: logs/test-output.log
 
 database:
   debug: false

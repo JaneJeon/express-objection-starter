@@ -32,8 +32,7 @@ session:
   saveUninitialized: false # GDPR compliance
 
 ratelimit:
-  windowMs: 900000 # 15 minutes, in milliseconds
-  max: 100
+  max: 0
 
 redis:
   url: redis://localhost
@@ -48,6 +47,8 @@ queue:
 
 database:
   # available clients: https://knexjs.org/#Installation-node
+  # note that while you *can* use other clients, some of the base class's "magic methods"
+  # that utilize .returning('*') will NOT be available on anything other than pg
   client: pg
   connection: postgres://localhost/app
   debug: true
