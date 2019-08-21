@@ -68,21 +68,21 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
     return class extends Model.QueryBuilder {
       // wrappers around acl, querybuilder, and model
       getAccess(action, body) {
-        const { body: requestBody, requester, resource } = this.context()
-        body = body || requestBody // prioritize fn input
-        if (!(requester && resource)) return // body may be empty
+        const { req, resource } = this.context()
+        req.body = body || req.body // prioritize fn input
+        if (!(req && resource)) return
 
         return acl
-          .can(requester.role)
+          .can(req.user.role)
           .execute(action)
-          .with(Object.assign(resource, { requester, body }))
+          .with(Object.assign(resource, { req }))
           .on(this.modelClass().name)
       }
 
       checkAccess(access) {
-        const requester = this.context().requester
+        const req = this.context().req
         if (access)
-          assert(access.granted, requester.role == 'anonymous' ? 401 : 403)
+          assert(access.granted, req.user.role == 'anonymous' ? 401 : 403)
 
         return this
       }
@@ -92,13 +92,13 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       authorize(req, resource) {
         if (!req) throw new Error('authorization failed: no request specified')
 
-        const requester = req.user || { role: 'anonymous' }
+        req.user = req.user || { role: 'anonymous' }
         resource = resource || this.context().instance || req.body
 
         if (!resource)
           throw new Error('authorization failed: no resource specified')
 
-        this.mergeContext({ body: req.body, requester, resource })
+        this.mergeContext({ req, resource })
 
         const access = this.getAccess('read')
 
