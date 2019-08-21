@@ -1,5 +1,15 @@
 logger:
-  destination: ../logs/test-output.log
+  options:
+    prettyPrint:
+      colorize: false
+  serializers:
+    req:
+      - id
+      - method
+      - url
+      - user
+      # skip body because body.req exists for some stupid reason
+  destination: logs/test-output.log
 
 database:
   debug: false

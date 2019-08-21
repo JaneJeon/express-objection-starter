@@ -69,8 +69,8 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       // wrappers around acl, querybuilder, and model
       getAccess(action, body) {
         const { req, resource } = this.context()
-        req.body = body || req.body // prioritize fn input
         if (!(req && resource)) return
+        if (body) req.body = body // prioritize fn input
 
         return acl
           .can(req.user.role)
@@ -92,13 +92,15 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       authorize(req, resource) {
         if (!req) throw new Error('authorization failed: no request specified')
 
-        req.user = req.user || { role: 'anonymous' }
+        const user = req.user || { role: 'anonymous' }
         resource = resource || this.context().instance || req.body
 
         if (!resource)
           throw new Error('authorization failed: no resource specified')
 
-        this.mergeContext({ req, resource })
+        // limit the amount of context to body and user to hopefully reduce
+        // the amount of shit that needs to be deep cloned. See #56
+        this.mergeContext({ req: { user, body: req.body }, resource })
 
         const access = this.getAccess('read')
 
@@ -109,12 +111,11 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       }
 
       insert(body) {
-        const access = this.getAccess('insert', body)
+        const access = this.getAccess('create', body)
+        this.checkAccess(access)
+        if (access) body = access.filter(body)
 
-        let q = super
-          .checkAccess(access)
-          .insert(access.filter(body))
-          .returning('*')
+        let q = super.insert(body).returning('*')
         if (!Array.isArray(body)) q = q.first()
 
         return q
@@ -122,11 +123,10 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
       patch(body) {
         const access = this.getAccess('update', body)
+        this.checkAccess(access)
+        if (access) body = access.filter(body)
 
-        let q = super
-          .checkAccess(access)
-          .patch(access.filter(body))
-          .returning('*')
+        let q = super.patch(access.filter(body)).returning('*')
         if (!Array.isArray(body)) q = q.first()
 
         return q
@@ -134,8 +134,9 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
       delete() {
         const access = this.getAccess('delete')
+        this.checkAccess(access)
 
-        return super.checkAccess(access).delete()
+        return super.delete()
       }
 
       findById(id) {

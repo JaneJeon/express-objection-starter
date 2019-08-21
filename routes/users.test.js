@@ -3,6 +3,7 @@
 
 describe.skip('user routes', () => {
   describe('GET /users/:username', () => {
+    it('works')
     // TODO:
   })
 
