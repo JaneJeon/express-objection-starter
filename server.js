@@ -11,7 +11,7 @@ if (config.get('proxy'))
   app
     .set('trust proxy', config.get('proxy:trust'))
     .use(require('express-sslify').HTTPS(config.get('proxy:enforceHTTPS')))
-else app.use(require('morgan')('dev'))
+if (process.env.NODE_ENV == 'development') app.use(require('morgan')('dev'))
 
 app
   .use(require('./middlewares/request-id'))
