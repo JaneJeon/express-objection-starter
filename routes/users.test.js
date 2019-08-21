@@ -14,7 +14,7 @@ describe('user routes', () => {
     // TODO:
   })
 
-  describe('DELETE /users/:username', () => {
+  describe('DELETE /account', () => {
     // TODO:
   })
 })

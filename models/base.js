@@ -90,10 +90,13 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       // a magic method that schedules the actual authorization logic to be called
       // later down the line when the "action method" (insert/patch/delete) is called
       authorize(req, resource) {
-        if (!req) throw new Error('request to authorize not specified')
+        if (!req) throw new Error('authorization failed: no request specified')
 
         const requester = req.user || { role: 'anonymous' }
-        const resource = resource || this.context().instance || req.body || {}
+        resource = resource || this.context().instance || req.body
+
+        if (!resource)
+          throw new Error('authorization failed: no resource specified')
 
         this.mergeContext({ body: req.body, requester, resource })
 
@@ -112,7 +115,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
           .checkAccess(access)
           .insert(access.filter(body))
           .returning('*')
-        if (!Array.isArray(obj)) q = q.first()
+        if (!Array.isArray(body)) q = q.first() // only pg can batch insert
 
         return q
       }
