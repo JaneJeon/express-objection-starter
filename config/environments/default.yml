@@ -1,5 +1,5 @@
 port: 3000
-timeout: 60000 # 1 minute, in milliseconds
+timeout: 60e+3 # 1 minute, in milliseconds
 requestIdHeader: X-Request-Id
 proxy: false
 
@@ -25,8 +25,8 @@ session:
   secret: nyaa
   cookie:
     sameSite: lax # CSRF protection
-    maxAge: 86400000 # 1 day, in milliseconds
-    rememberMe: 2592000000 # 30 days, in milliseconds
+    maxAge: 86400e+3 # 1 day, in milliseconds
+    rememberMe: 2.592e+9 # 30 days, in milliseconds
   resave: false
   rolling: true
   saveUninitialized: false # GDPR compliance
@@ -43,7 +43,7 @@ queue:
     removeOnComplete: true
     backoff:
       type: exponential
-      delay: 15000 # 15 seconds, in milliseconds
+      delay: 15e+3 # 15 seconds, in milliseconds
 
 database:
   # available clients: https://knexjs.org/#Installation-node
