@@ -70,7 +70,11 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       getAccess(action, body) {
         const { req, resource } = this.context()
         if (!(req && resource)) return
-        if (body) req.body = body // prioritize fn input
+
+        // prioritize the body that's passed in.
+        // Additionally, since we constructed a new "req" object in authorize(),
+        // messing with req's properties won't affect the "actual" request object
+        if (body) req.body = body
 
         return acl
           .can(req.user.role)
@@ -89,14 +93,14 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
       // a magic method that schedules the actual authorization logic to be called
       // later down the line when the "action method" (insert/patch/delete) is called
-      authorize(req, resource) {
+      authorize(req, resource, skipFilter) {
         if (!req) throw new Error('authorization failed: no request specified')
 
         const user = req.user || { role: 'anonymous' }
-        resource = resource || this.context().instance || req.body
 
-        if (!resource)
-          throw new Error('authorization failed: no resource specified')
+        // in case of create, resource is necessarily empty, and we don't want
+        // to assign it req.body since it will repeat indefinitely!!!
+        resource = resource || this.context().instance || {}
 
         // limit the amount of context to body and user to hopefully reduce
         // the amount of shit that needs to be deep cloned. See #56
@@ -104,15 +108,37 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
         const access = this.getAccess('read')
 
-        // check if you're even allowed to read, then filter result later
-        return this.checkAccess(access).runAfter(result =>
-          result.map(model => access.filter(model.toJSON()))
-        )
+        // you generally don't want to skip filter
+        if (!skipFilter)
+          this.runAfter(result =>
+            // if we're fetching multiple resources, the result will be an array.
+            // While access.filter() accepts arrays, we need to invoke any $formatJson()
+            // hooks by individually calling toJSON() on individual models since:
+            // 1. arrays don't have toJSON() method,
+            // 2. objection-visibility doesn't work without calling $formatJson()
+            Array.isArray(result)
+              ? result.map(model => access.filter(model.toJSON()))
+              : // when doing DELETE operations, the result will be a number,
+              // in which case access.filter balks so we just return that number instead.
+              // Note that we're assuming if the result is an object, then it must be
+              // an instance of Model, 'cause otherwise toJSON() won't be defined!!
+              typeof result === 'object'
+              ? access.filter(result.toJSON())
+              : result
+          )
+
+        // check if you're even allowed to read
+        return this.checkAccess(access)
       }
 
       insert(body) {
         const access = this.getAccess('create', body)
+
+        // we have to check access first on "this" and THEN override insert()
+        // on super, since checkAccess() isn't defined in super!
         this.checkAccess(access)
+
+        // when authorize() isn't called, access will be empty
         if (access) body = access.filter(body)
 
         let q = super.insert(body).returning('*')

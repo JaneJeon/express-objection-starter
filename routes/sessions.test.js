@@ -10,13 +10,10 @@ describe('session routes', () => {
   const email = 'test.sessions@gmail.com'
 
   beforeAll(async () => {
-    await User.query().insert({ username, password, email })
-  })
-
-  afterAll(async () => {
     await User.query()
       .delete()
       .where({ username })
+    await User.query().insert({ username, password, email })
   })
 
   describe('POST /login', () => {

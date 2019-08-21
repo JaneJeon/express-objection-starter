@@ -12,7 +12,9 @@ module.exports = Router()
   })
   .post('/users', async (req, res) => {
     const user = await User.query()
-      .authorize(req)
+      // we need the id field to serialize req.user (as defined in config/passport.js)
+      // since username can change while id is immutable
+      .authorize(req, null, true)
       .insert(req.body)
 
     req.login(user, err => {

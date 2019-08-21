@@ -8,12 +8,13 @@ module.exports = (err, req, res, next) => {
     else if (err instanceof DBError)
       err.statusCode = (() => {
         switch (err.name) {
-          case ('NotNullViolationError',
-          'CheckViolationError',
-          'DataError',
-          'ConstraintViolationError'):
+          case 'NotNullViolationError':
+          case 'CheckViolationError':
+          case 'DataError':
+          case 'ConstraintViolationError':
             return 400
-          case ('UniqueViolationError', 'ForeignKeyViolationError'):
+          case 'UniqueViolationError':
+          case 'ForeignKeyViolationError':
             return 409
           default:
             return 500
@@ -28,5 +29,5 @@ module.exports = (err, req, res, next) => {
   })
 
   const level = err.statusCode >= 500 ? 'error' : 'warn'
-  req.log[level]({ req, err }, 'Request failed')
+  req.log[level]({ req, err, res }, 'Request failed')
 }
