@@ -28,6 +28,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
     this.relationMappings = config.get(`relations:${name}`)
 
     return new AjvValidator({
+      onCreateAjv: ajv => {}, // need an empty function
       options: {
         // mutating inputs
         removeAdditional: true,
@@ -53,48 +54,93 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
     return 15
   }
 
+  // inject instance context
+  $query(trx) {
+    return super.$query(trx).mergeContext({ instance: this })
+  }
+
+  $relatedQuery(relation, trx) {
+    return super.$relatedQuery(relation, trx).mergeContext({ instance: this })
+  }
+
+  // I'm in awe and in disgust at the same time
   static get QueryBuilder() {
     return class extends Model.QueryBuilder {
-      authorize(requester = { role: 'anonymous' }, resource = {}, action) {
-        let queryAction
-        if (this.isFind()) queryAction = 'read'
-        else if (this.isInsert()) queryAction = 'create'
-        else if (this.isUpdate()) queryAction = 'update'
-        else if (this.isDelete()) queryAction = 'delete'
+      // wrappers around acl, querybuilder, and model
+      getAccess(action, body) {
+        const { body: requestBody, requester, resource } = this.context()
+        body = body || requestBody // prioritize fn input
+        if (!(requester && resource)) return // body may be empty
 
-        if (!(action || queryAction)) throw new Error('need to specify action!')
-
-        const access = acl
+        return acl
           .can(requester.role)
-          .execute(action || queryAction)
-          .with(Object.assign(resource, { requester }))
+          .execute(action)
+          .with(Object.assign(resource, { requester, body }))
           .on(this.modelClass().name)
+      }
 
-        assert(access.granted, requester.role == 'anonymous' ? 401 : 403)
+      checkAccess(access) {
+        const requester = this.context().requester
+        if (access)
+          assert(access.granted, requester.role == 'anonymous' ? 401 : 403)
 
-        return this.runAfter(result => access.filter(result))
+        return this
+      }
+
+      // a magic method that schedules the actual authorization logic to be called
+      // later down the line when the "action method" (insert/patch/delete) is called
+      authorize(req, resource) {
+        if (!req) throw new Error('request to authorize not specified')
+
+        const requester = req.user || { role: 'anonymous' }
+        const resource = resource || this.context().instance || req.body || {}
+
+        this.mergeContext({ body: req.body, requester, resource })
+
+        const access = this.getAccess('read')
+
+        // check if you're even allowed to read, then filter result later
+        return this.checkAccess(access).runAfter(result =>
+          access.filter(result)
+        )
+      }
+
+      insert(body) {
+        const access = this.getAccess('insert', body)
+
+        let q = super
+          .checkAccess(access)
+          .insert(access.filter(body))
+          .returning('*')
+        if (!Array.isArray(obj)) q = q.first()
+
+        return q
+      }
+
+      patch(body) {
+        const access = this.getAccess('update', body)
+
+        return super
+          .checkAccess(access)
+          .patch(access.filter(body))
+          .returning('*')
+      }
+
+      delete() {
+        const access = this.getAccess('delete')
+
+        return super.checkAccess(access).delete()
       }
 
       findById(id) {
         return super.findById(id).throwIfNotFound()
       }
 
-      paginate(after, sortField = 'id') {
+      paginate(after, sortField = 'id', direction = 'desc') {
         return this.skipUndefined()
           .where(sortField, '<', after)
-          .orderBy(sortField, 'desc')
+          .orderBy(sortField, direction)
           .limit(this.modelClass().pageSize)
-      }
-
-      insert(obj) {
-        let q = super.insert(obj).returning('*')
-        if (!Array.isArray(obj)) q = q.first()
-
-        return q
-      }
-
-      patch(obj) {
-        return super.patch(obj).returning('*')
       }
     }
   }

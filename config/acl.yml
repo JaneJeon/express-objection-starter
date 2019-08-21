@@ -20,12 +20,18 @@ user:
         args:
           username: $.requester.username
     - resource: User
-      action: [update, delete]
+      action: update
       attributes: ['*', '!role']
       condition:
         Fn: EQUALS
         args:
           username: $.requester.username
+    - resource: User
+      action: delete
+      condition:
+        Fn: EQUALS
+        args:
+          username: $.body.username
 
 admin:
   extends:
