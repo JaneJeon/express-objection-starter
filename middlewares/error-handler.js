@@ -19,6 +19,7 @@ module.exports = (err, req, res, next) => {
             return 500
         }
       })()
+    else err.statusCode = 500
   }
 
   res.status(err.statusCode).send({

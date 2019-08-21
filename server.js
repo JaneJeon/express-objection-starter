@@ -11,7 +11,7 @@ if (config.get('proxy'))
   app
     .set('trust proxy', config.get('proxy:trust'))
     .use(require('express-sslify').HTTPS(config.get('proxy:enforceHTTPS')))
-else app.use(require('morgan')('combined'))
+else app.use(require('morgan')('dev'))
 
 app
   .use(require('./middlewares/request-id'))
@@ -19,7 +19,7 @@ app
   .use(require('helmet')())
   .use(require('cors')({ origin: true }))
   .use(require('./middlewares/session'))
-  .use(require('csurf')({ cookie: true }))
+  .use(require('csurf')())
   .use((req, res, next) => {
     res.cookie('XSRF-TOKEN', req.csrfToken())
     next()

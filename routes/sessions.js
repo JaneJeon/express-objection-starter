@@ -29,8 +29,7 @@ module.exports = Router()
       next()
     })
   })
-  .use(requireAuthN)
-  .get('/sessions', async (req, res) => {
+  .get('/sessions', requireAuthN, async (req, res) => {
     const sessPrefix = req.user.getSession()
     const sessPattern = req.user.getSession('*')
     const keys = new Set()
@@ -55,7 +54,7 @@ module.exports = Router()
 
     res.send(sessions)
   })
-  .delete('/sessions/:sessId', async (req, res) => {
+  .delete('/sessions/:sessId', requireAuthN, async (req, res) => {
     await redis.del(req.user.getSession(req.params.sessId))
 
     res.sendStatus(204)

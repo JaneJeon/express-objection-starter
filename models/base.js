@@ -104,7 +104,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
 
         // check if you're even allowed to read, then filter result later
         return this.checkAccess(access).runAfter(result =>
-          access.filter(result)
+          result.map(model => access.filter(model.toJSON()))
         )
       }
 
@@ -115,7 +115,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
           .checkAccess(access)
           .insert(access.filter(body))
           .returning('*')
-        if (!Array.isArray(body)) q = q.first() // only pg can batch insert
+        if (!Array.isArray(body)) q = q.first()
 
         return q
       }
@@ -123,10 +123,13 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       patch(body) {
         const access = this.getAccess('update', body)
 
-        return super
+        let q = super
           .checkAccess(access)
           .patch(access.filter(body))
           .returning('*')
+        if (!Array.isArray(body)) q = q.first()
+
+        return q
       }
 
       delete() {
