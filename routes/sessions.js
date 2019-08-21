@@ -11,9 +11,7 @@ module.exports = Router()
     if (req.body.rememberMe)
       req.session.cookie.maxAge = config.get('session:cookie:rememberMe')
 
-    const ua = parser(
-      req.headers['x-ucbrowser-ua'] || req.headers['user-agent']
-    )
+    const ua = parser(req.header('x-ucbrowser-ua') || req.header('user-agent'))
 
     req.session.ip = req.ip
     req.session.browser = ua.browser.name
