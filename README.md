@@ -13,6 +13,6 @@ Thus, based on my experience building production-level systems, I built a compre
 - secure authentication system with Active Session management features
 - fine-grained role-based authorization to control access down to the field level, that seamlessly integrates with the query builder
 - a scalable, fault-tolerant queuing system that takes advantage of multi-core CPUs
-- fully-loaded development environment with git and npm hooks (automated testing/migration/dependencies/linting), development-purpose mail servers, and even automatic type generation for models!
+- fully-loaded development environment with automated testing/migration/dependencies/linting via git & npm hooks, development-purpose mail server, and even automatic type generation!
 
-To get started, [check out the wiki](https://github.com/JaneJeon/express-objection-starter/wiki) for more details!
+To get started, [check out the documentation](https://github.com/JaneJeon/express-objection-starter/wiki) for more details!
