@@ -67,7 +67,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
   static get QueryBuilder() {
     return class extends Model.QueryBuilder {
       // wrappers around acl, querybuilder, and model
-      getAccess(action, body) {
+      _getAccess(action, body) {
         const { req, resource } = this.context()
         if (!(req && resource)) return
 
@@ -83,7 +83,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
           .on(this.modelClass().name)
       }
 
-      checkAccess(access) {
+      _checkAccess(access) {
         const req = this.context().req
         if (access)
           assert(access.granted, req.user.role == 'anonymous' ? 401 : 403)
@@ -106,7 +106,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
         // the amount of shit that needs to be deep cloned. See #56
         this.mergeContext({ req: { user, body: req.body }, resource })
 
-        const access = this.getAccess('read')
+        const access = this._getAccess('read')
 
         // you generally don't want to skip filter
         if (!skipFilter)
@@ -128,15 +128,15 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
           )
 
         // check if you're even allowed to read
-        return this.checkAccess(access)
+        return this._checkAccess(access)
       }
 
       insert(body) {
-        const access = this.getAccess('create', body)
+        const access = this._getAccess('create', body)
 
         // we have to check access first on "this" and THEN override insert()
-        // on super, since checkAccess() isn't defined in super!
-        this.checkAccess(access)
+        // on super, since _checkAccess() isn't defined in super!
+        this._checkAccess(access)
 
         // when authorize() isn't called, access will be empty
         if (access) body = access.filter(body)
@@ -148,8 +148,8 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       }
 
       patch(body) {
-        const access = this.getAccess('update', body)
-        this.checkAccess(access)
+        const access = this._getAccess('update', body)
+        this._checkAccess(access)
         if (access) body = access.filter(body)
 
         let q = super.patch(access.filter(body)).returning('*')
@@ -159,8 +159,8 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
       }
 
       delete() {
-        const access = this.getAccess('delete')
-        this.checkAccess(access)
+        const access = this._getAccess('delete')
+        this._checkAccess(access)
 
         return super.delete()
       }
