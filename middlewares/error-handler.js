@@ -2,6 +2,11 @@ const { ValidationError, NotFoundError } = require('objection')
 const { DBError } = require('objection-db-errors')
 
 module.exports = (err, req, res, next) => {
+  if (res.headersSent) {
+    req.log.error({ req, err, res }, 'an error occurred after request was sent')
+    return
+  }
+
   if (!err.statusCode) {
     if (err instanceof ValidationError) err.statusCode = 400
     else if (err instanceof NotFoundError) err.statusCode = 404

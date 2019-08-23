@@ -21,7 +21,7 @@ module.exports = Router()
 
     res.status(201).send(req.user)
   })
-  .delete('/logout', (req, res, next) => {
+  .delete('/logout', requireAuthN, (req, res, next) => {
     req.session.destroy(err => {
       if (err) next(err)
 

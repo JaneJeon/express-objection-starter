@@ -17,9 +17,11 @@ module.exports = Router()
       .authorize(req, null, true)
       .insert(req.body)
 
-    req.login(user, err => {
+    req.login(user, async err => {
       if (err) throw err
       res.status(201).send(req.user)
+
+      // TODO:
     })
   })
   .patch('/users/:username', async (req, res) => {

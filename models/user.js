@@ -2,6 +2,7 @@ const BaseModel = require('./base')
 const password = require('objection-password')()
 const checkBlacklist = require('../lib/domain-checker')
 const normalize = require('normalize-email')
+const mail = require('../lib/mail')
 
 class User extends password(BaseModel) {
   static get hidden() {
@@ -30,6 +31,12 @@ class User extends password(BaseModel) {
 
   getSession(id = '') {
     return `sess:${this.id}:${id}`
+  }
+
+  async sendMail(template, data) {
+    return mail.sendMail({
+      to: this.email
+    })
   }
 }
 
