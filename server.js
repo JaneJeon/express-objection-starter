@@ -11,7 +11,6 @@ if (config.get('proxy'))
   app
     .set('trust proxy', config.get('proxy:trust'))
     .use(require('express-sslify').HTTPS(config.get('proxy:enforceHTTPS')))
-if (process.env.NODE_ENV == 'development') app.use(require('morgan')('dev'))
 
 app
   .use(require('./middlewares/request-id'))
@@ -29,7 +28,7 @@ app
   .use(require('./middlewares/error-handler'))
 
 // jest runs multiple instances of the server, so it results in port conflict
-if (process.env.NODE_ENV != 'test')
+if (config.get('node:env') != 'test')
   app
     .listen(config.get('port'), function(err) {
       if (err) throw err
