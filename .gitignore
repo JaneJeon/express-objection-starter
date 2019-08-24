@@ -85,5 +85,8 @@ sw.*
 # Mac OSX
 .DS_Store
 
+# automatically generated files
 config/**/*.json
 models/*.ts
+views/**/html.hbs
+views/index.js

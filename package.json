@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -16,22 +16,28 @@
     "redis",
     "api",
     "backend",
-    "jsonschema",
-    "validation"
+    "json schema",
+    "validation",
+    "email",
+    "template",
+    "handlebars",
+    "mjml",
+    "access control",
+    "ACL",
+    "RBAC",
+    "roles"
   ],
   "repository": "JaneJeon/express-objection-starter",
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn setup",
     "start": "pm2 start pm2.config.js",
     "start:web": "pm2-runtime start pm2.config.js --only server",
     "start:worker": "pm2-runtime start pm2.config.js --only worker",
-    "dev": "run-p dev:*",
+    "dev": "run-p dev:* watch",
     "dev:web": "nodemon server",
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
-    "dev:yaml": "yarn lint:all:yaml --watch",
     "pretest": "is-ci || yarn setup",
     "test": "run-p dev:mail test:* --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
@@ -42,27 +48,22 @@
     "seed:make": "knex seed:make",
     "lint": "run-p lint:all:*",
     "lint:prettier": "prettier --write",
-    "lint:yaml": "yaml2json --save",
     "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,md,html,css}'",
-    "lint:all:yaml": "yarn lint:yaml config --recursive",
-    "lint:all:types": "node scripts/generate-types",
-    "setup": "yarn lint:all:yaml && yarn migrate"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "*.test.js",
-      "migrations/",
-      "seeds/"
-    ],
-    "env": {
-      "NODE_ENV": "development"
-    }
+    "build": "run-s build:*",
+    "build:yaml": "yaml2json config --save --recursive",
+    "build:types": "node scripts/generate-types",
+    "build:mjml": "node scripts/generate-templates",
+    "build:hbs": "handlebars views/emails -e hbs -f views/index.js",
+    "watch": "run-p watch:*",
+    "watch:yaml": "yarn build:yaml --watch",
+    "setup": "run-s build migrate"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "yarn test",
-      "post-merge": "yarn && yarn setup"
+      "post-merge": "yarn && yarn setup",
+      "post-receive": "yarn install --production && yarn setup"
     }
   },
   "lint-staged": {
@@ -75,6 +76,16 @@
     "semi": false,
     "singleQuote": true,
     "proseWrap": "never"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.test.js",
+      "migrations/",
+      "seeds/"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    }
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
@@ -93,12 +104,15 @@
     "express-session": "^1.16.1",
     "express-sslify": "^1.2.0",
     "express-ws": "^4.0.0",
+    "handlebars": "^4.1.2",
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
+    "husky": "^3.0.3",
     "ioredis": "^4.9.5",
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
     "mailchecker": "^3.2.35",
+    "mjml": "^4.4.1",
     "mssql": "^5.1.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
@@ -106,6 +120,7 @@
     "nconf": "^0.10.0",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
+    "npm-run-all": "^4.1.5",
     "objection": "^1.6.9",
     "objection-db-errors": "^1.1.1",
     "objection-password": "^2.0.0",
@@ -130,19 +145,20 @@
   "devDependencies": {
     "@types/jest": "^24.0.17",
     "cross-env": "^5.2.0",
-    "husky": "^3.0.3",
+    "dotenv": "^8.1.0",
+    "glob": "^7.1.4",
     "is-ci": "^2.0.0",
     "jest": "^24.8.0",
     "json-schema-to-typescript": "^7.0.0",
     "lint-staged": "^9.2.1",
     "maildev": "^1.1.0",
     "nodemon": "^1.19.1",
-    "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
+    "vuepress": "^1.0.3",
     "wait-on": "^3.3.0"
   }
 }

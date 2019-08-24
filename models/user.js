@@ -35,7 +35,9 @@ class User extends password(BaseModel) {
 
   async sendMail(template, data) {
     return mail.sendMail({
-      to: this.email
+      to: this.email,
+      subject: '',
+      text: ''
     })
   }
 }

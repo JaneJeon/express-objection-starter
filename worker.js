@@ -1,5 +1,5 @@
-const queue = require('./lib/queue')
 const fs = require('fs')
+const queue = require('./lib/queue')
 
 // https://stackoverflow.com/a/44987701
 fs.readdirSync(`${__dirname}/jobs`)
