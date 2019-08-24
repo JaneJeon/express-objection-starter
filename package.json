@@ -38,7 +38,7 @@
     "dev:web": "nodemon server",
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
-    "pretest": "is-ci || yarn setup",
+    "pretest": "yarn setup",
     "test": "run-p dev:mail test:* --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
     "migrate": "knex migrate:latest",
