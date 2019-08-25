@@ -6739,9 +6739,9 @@ rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.3:
     glob "^7.1.3"
 
 role-acl@^3.3.5:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/role-acl/-/role-acl-3.3.5.tgz#f6bcbf1d95d87bdf6f3d3ed4ce3d0044de4f072e"
-  integrity sha512-xjhLo8rvK9Vz6Wk6ENtfD40Ut2shnC+O8pEW/2WhoeAeE83+rNb1R/pvgG9uIIzZC7qhn+ivv0qUFYxPDfNnHw==
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/role-acl/-/role-acl-3.3.6.tgz#bab09ee44e15879ff20f9639083298acb3ddfb65"
+  integrity sha512-5N+hHM/CecGeLZ/15LtPZ6z3ZbsbWgC6cyXxQjRhramGqvwVF/vnLW07lHyQMJv2blDJ566CYDSPNMrLjXHPCg==
   dependencies:
     jsonpath-plus "^0.18.0"
     matcher "^1.0.0"
