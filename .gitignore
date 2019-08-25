@@ -89,4 +89,4 @@ sw.*
 config/**/*.json
 models/*.ts
 views/**/html.hbs
-views/index.js
+views/emails/index.js
