@@ -96,7 +96,7 @@
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
     "ioredis": "^4.9.5",
-    "knex": "^0.17.2",
+    "knex": "^0.19.2",
     "lodash": "^4.17.11",
     "mailchecker": "^3.2.35",
     "mssql": "^5.1.0",
