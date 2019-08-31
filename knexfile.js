@@ -16,6 +16,7 @@ module.exports = Object.assign(config.get('database'), {
   log: {
     warn: msg => log.warn(msg),
     deprecate: msg => log.warn(msg),
-    error: msg => log.error(msg)
+    error: msg => log.error(msg),
+    debug: msg => log.debug(msg)
   }
 })
