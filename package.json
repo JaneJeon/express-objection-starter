@@ -46,7 +46,7 @@
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "seed:make": "knex seed:make",
-    "build": "run-s build:*",
+    "build": "run-s build:* lint:all:prettier",
     "build:yaml": "yaml2json config --save --recursive",
     "build:types": "node scripts/generate-types",
     "build:mjml": "node scripts/generate-templates",
