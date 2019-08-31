@@ -1,0 +1,40 @@
+{
+  "port": 3000,
+  "timeout": 60000,
+  "requestIdHeader": "X-Request-Id",
+  "proxy": false,
+  "logger": {
+    "options": { "level": "debug", "prettyPrint": { "translateTime": true } },
+    "serializers": {
+      "req": ["id", "method", "url", "user", "body"],
+      "res": ["statusCode", "statusMessage"]
+    }
+  },
+  "session": {
+    "secret": "nyaa",
+    "cookie": {
+      "sameSite": "lax",
+      "maxAge": 86400000,
+      "rememberMe": 2592000000
+    },
+    "resave": false,
+    "rolling": true,
+    "saveUninitialized": false
+  },
+  "ratelimit": { "max": 0 },
+  "redis": { "url": "redis://localhost" },
+  "queue": { "defaultJobOptions": { "removeOnComplete": true } },
+  "mailQueue": {
+    "defaultJobOptions": { "removeOnFail": true },
+    "limiter": { "max": 14, "duration": 1 }
+  },
+  "database": {
+    "client": "pg",
+    "connection": "postgres://localhost/app",
+    "debug": true
+  },
+  "mail": {
+    "smtp": { "service": "maildev" },
+    "defaults": { "from": "test@example.com" }
+  }
+}

@@ -3,6 +3,7 @@ const password = require('objection-password')()
 const checkBlacklist = require('../lib/domain-checker')
 const normalize = require('normalize-email')
 const Mailer = require('../jobs/mailer')
+const redis = require('../lib/redis')
 
 class User extends password(BaseModel) {
   static get hidden() {
@@ -33,8 +34,15 @@ class User extends password(BaseModel) {
     return `sess:${this.id}:${id}`
   }
 
+  // data: https://nodemailer.com/message/
   async sendMail(template, data = {}) {
-    return Mailer.add(Object.assign(data, { template, to: this.email }))
+    return Mailer.add(
+      Object.assign(data, { template, to: this.email, user: this })
+    )
+  }
+
+  async generateToken(namespace, expires) {
+    //
   }
 }
 

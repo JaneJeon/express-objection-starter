@@ -7,6 +7,7 @@ const parser = require('ua-parser-js')
 const config = require('../config')
 
 module.exports = Router()
+  // TODO: short circuit 200 when logged in?
   .post('/login', passport.authenticate('local'), (req, res) => {
     if (req.body.rememberMe)
       req.session.cookie.maxAge = config.get('session:cookie:rememberMe')

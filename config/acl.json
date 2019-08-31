@@ -1,0 +1,50 @@
+{
+  "anonymous": {
+    "grants": [
+      { "resource": "User", "action": "read", "attributes": ["*", "!email"] },
+      { "resource": "User", "action": "create", "attributes": ["*", "!role"] }
+    ]
+  },
+  "user": {
+    "grants": [
+      { "resource": "User", "action": "read", "attributes": ["*", "!email"] },
+      {
+        "resource": "User",
+        "action": "read",
+        "attributes": ["email"],
+        "condition": {
+          "Fn": "EQUALS",
+          "args": { "username": "$.req.user.username" }
+        }
+      },
+      {
+        "resource": "User",
+        "action": "update",
+        "attributes": ["*", "!role"],
+        "condition": {
+          "Fn": "EQUALS",
+          "args": { "username": "$.req.user.username" }
+        }
+      },
+      {
+        "resource": "User",
+        "action": "delete",
+        "condition": {
+          "Fn": "EQUALS",
+          "args": { "username": "$.req.body.username" }
+        }
+      }
+    ]
+  },
+  "admin": {
+    "extends": { "role": "user" },
+    "grants": [
+      {
+        "resource": "User",
+        "action": "update",
+        "attributes": ["role"],
+        "condition": { "Fn": "NOT_EQUALS", "args": { "role": "admin" } }
+      }
+    ]
+  }
+}

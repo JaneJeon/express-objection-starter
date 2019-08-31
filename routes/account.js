@@ -1,8 +1,7 @@
 const { Router } = require('express')
 const requireAuthN = require('../middlewares/require-authentication')
 const User = require('../models/user')
-const VerifyEmailJob = require('../jobs/verify-email')
-const PasswordResetJob = require('../jobs/password-reset')
+const Mailer = require('../jobs/mailer')
 
 module.exports = Router()
   .get('/account', requireAuthN, (req, res) =>
@@ -20,23 +19,24 @@ module.exports = Router()
       res.status(201).send(req.user)
 
       // the row is already added, so we don't want to fail the request if this fails
-      await VerifyEmailJob.add({ email: req.user.email })
+      // TODO: link
+      await req.user.sendMail('verify-email', {})
     })
   })
   .post('/account/verify', requireAuthN, async (req, res) => {
-    await VerifyEmailJob.add({ email: req.user.email })
+    await Mailer.runOrCreate()
 
     res.end()
   })
-  .post('/account/verify/:token', requireAuthN, async (req, res) => {
+  .patch('/account/verify/:token', requireAuthN, async (req, res) => {
     //
   })
   .post('/account/reset', requireAuthN, async (req, res) => {
-    await PasswordResetJob.add({ email: req.user.email })
+    await req.user.sendMail('verify-email', {})
 
     res.end()
   })
-  .post('/account/reset/:token', requireAuthN, async (req, res) => {
+  .patch('/account/reset/:token', requireAuthN, async (req, res) => {
     //
   })
   .delete('/account', requireAuthN, async (req, res) => {

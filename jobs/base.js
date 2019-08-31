@@ -6,6 +6,7 @@ class BaseJob {
     return queue
   }
 
+  // TODO: memoize this?
   static get log() {
     return logger.child({ task: this.name })
   }

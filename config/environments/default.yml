@@ -8,7 +8,6 @@ logger:
     level: debug
     prettyPrint:
       translateTime: true
-      ignore: pid,hostname,boot
   # https://github.com/fastify/fastify/blob/master/lib/logger.js
   serializers:
     req:
@@ -46,10 +45,10 @@ queue:
 mailQueue:
   defaultJobOptions:
     removeOnFail: true # we don't need to store failed email "jobs"
-  # this is just a SendGrid example. modify as you see fit for your service (especially SES)
+  # this is just an SES example. modify as you see fit for your service (especially Sendgrid)
   limiter:
-    max: 100
-    duration: 86400e+3 # 1 day in millis
+    max: 14
+    duration: 1 # 1 sec in millis
 
 database:
   # available clients: https://knexjs.org/#Installation-node

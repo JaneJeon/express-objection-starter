@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -40,36 +40,42 @@
     "dev:web": "nodemon server",
     "dev:worker": "nodemon worker",
     "dev:mail": "maildev",
-    "pretest": "yarn setup",
-    "test": "run-p dev:mail test:* --race",
-    "test:unit": "wait-on http://localhost:1080 && jest",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "seed:make": "knex seed:make",
-    "lint": "run-p lint:all:*",
-    "lint:prettier": "prettier --write",
-    "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,md,html,css}'",
-    "build": "run-s build:*",
+    "build": "is-ci || run-s build:*",
     "build:yaml": "yaml2json config --save --recursive",
     "build:types": "node scripts/generate-types",
     "build:mjml": "node scripts/generate-templates",
     "build:hbs": "handlebars views/emails -e hbs -f views/emails/index.js",
     "watch": "run-p watch:*",
     "watch:yaml": "yarn build:yaml --watch",
-    "setup": "run-s build migrate"
+    "watch:types": "nodemon config/schema.json -x 'yarn build:types'",
+    "watch:mjml": "nodemon -e mjml -x 'yarn build:mjml'",
+    "watch:hbs": "nodemon -e hbs -x 'yarn build:hbs'",
+    "setup": "run-s build migrate",
+    "pretest": "yarn setup",
+    "test": "run-p dev:mail test:* --race",
+    "test:unit": "wait-on http://localhost:1080 && jest",
+    "lint": "run-p lint:all:*",
+    "lint:prettier": "prettier --write",
+    "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,md,html,css}'",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:serve": "serve docs/.vuepress/dist"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "yarn test",
       "post-merge": "yarn && yarn setup",
-      "post-receive": "yarn install --production && yarn setup"
+      "post-receive": "yarn install --production && yarn migrate"
     }
   },
   "lint-staged": {
-    "*.{js,css,json,md,yml,yaml}": [
+    "*.{js,ts,mjml,json,md,yml,yaml}": [
       "yarn lint:prettier",
       "git add"
     ]
@@ -114,7 +120,7 @@
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
     "mailchecker": "^3.2.35",
-    "mjml": "^4.4.1",
+    "ms": "^2.1.2",
     "mssql": "^5.1.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
@@ -137,8 +143,7 @@
     "role-acl": "^3.3.5",
     "sharp": "^0.22.1",
     "sqlite3": "^4.1.0",
-    "ua-parser-js": "^0.7.20",
-    "yamljs": "^0.3.0"
+    "ua-parser-js": "^0.7.20"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
@@ -154,13 +159,16 @@
     "json-schema-to-typescript": "^7.0.0",
     "lint-staged": "^9.2.1",
     "maildev": "^1.1.0",
+    "mjml": "^4.4.1",
     "nodemon": "^1.19.1",
     "objection-gen": "^0.5.2",
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
+    "serve": "^11.1.0",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
     "vuepress": "^1.0.3",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "yamljs": "^0.3.0"
   }
 }

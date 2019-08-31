@@ -12,9 +12,8 @@ class Mailer extends BaseJob {
     return mail.sendMail(job)
   }
 
-  // TODO: prefix
-  static async runOrCreate(jobId, data, opts) {
-    const job = await this.queue.getJob(jobId)
+  static async runOrCreate(id, data, opts) {
+    const job = await this.queue.getJob(this.jobId(id))
 
     return job ? job.promote() : this.add(data, opts)
   }
