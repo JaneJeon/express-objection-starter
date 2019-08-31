@@ -1,6 +1,7 @@
 const { ValidationError, NotFoundError } = require('objection')
 const { DBError } = require('objection-db-errors')
 
+// eslint-disable-next-line no-unused-vars
 module.exports = (err, req, res, next) => {
   if (res.headersSent) {
     req.log.error({ req, err, res }, 'an error occurred after request was sent')

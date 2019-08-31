@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const BaseModel = require('./base')
 const password = require('objection-password')()
 const checkBlacklist = require('../lib/domain-checker')

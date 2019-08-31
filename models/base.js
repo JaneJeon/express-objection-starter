@@ -28,6 +28,7 @@ class BaseModel extends visibility(DbErrors(tableName(Model))) {
     this.relationMappings = config.get(`relations:${name}`)
 
     return new AjvValidator({
+      // eslint-disable-next-line no-unused-vars
       onCreateAjv: ajv => {}, // need an empty function
       options: {
         // mutating inputs

@@ -24,6 +24,7 @@ app
   .use(passport.initialize())
   .use(passport.session())
   .use(require('./routes'))
+  // eslint-disable-next-line no-unused-vars
   .use((req, res, next) => res.sendStatus(404))
   .use(require('./middlewares/error-handler'))
 

@@ -33,6 +33,7 @@
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "setup": "run-s build migrate",
     "start": "pm2 start pm2.config.js",
     "start:web": "pm2-runtime start pm2.config.js --only server",
     "start:worker": "pm2-runtime start pm2.config.js --only worker",
@@ -55,12 +56,13 @@
     "watch:types": "nodemon config/schema.json -x 'yarn build:types'",
     "watch:mjml": "nodemon -e mjml -x 'yarn build:mjml'",
     "watch:hbs": "nodemon -e hbs -x 'yarn build:hbs'",
-    "setup": "run-s build migrate",
     "pretest": "yarn setup",
     "test": "run-p dev:mail test:* --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
-    "lint": "run-p lint:all:*",
+    "lint": "run-s lint:all:*",
+    "lint:eslint": "eslint --fix",
     "lint:prettier": "prettier --write",
+    "lint:all:eslint": "yarn lint:eslint --ext .js .",
     "lint:all:prettier": "yarn lint:prettier '**/*.{js,ts,mjml,html,css,json,md,yml,yaml}'",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
@@ -75,11 +77,33 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,mjml,html,css,json,md,yml,yaml}": [
+    "*.{ts,mjml,html,css,json,md,yml,yaml}": [
+      "yarn lint:prettier",
+      "git add"
+    ],
+    "*.js": [
+      "yarn lint:eslint",
       "yarn lint:prettier",
       "git add"
     ]
   },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "extends": [
+      "plugin:prettier/recommended",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018
+    }
+  },
+  "eslintIgnore": [
+    "views/emails/index.js"
+  ],
   "prettier": {
     "semi": false,
     "singleQuote": true,
@@ -102,13 +126,16 @@
     "axios": "^0.19.0",
     "bull": "^3.10.0",
     "cloudinary": "^1.14.0",
+    "compression": "^1.7.4",
     "connect-redis": "^3.4.2",
     "cors": "^2.8.5",
     "dayjs": "^1.8.14",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "express-list-endpoints": "^4.0.1",
     "express-query-boolean": "^2.0.0",
     "express-rate-limit": "^4.0.4",
+    "express-request-id": "^1.4.1",
     "express-session": "^1.16.1",
     "express-sslify": "^1.2.0",
     "express-ws": "^4.0.0",
@@ -120,6 +147,7 @@
     "knex": "^0.17.2",
     "lodash": "^4.17.11",
     "mailchecker": "^3.2.35",
+    "morgan": "^1.9.1",
     "ms": "^2.1.2",
     "mssql": "^5.1.0",
     "mysql": "^2.17.1",
@@ -128,7 +156,6 @@
     "nconf": "^0.10.0",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
-    "npm-run-all": "^4.1.5",
     "objection": "^1.6.9",
     "objection-db-errors": "^1.1.1",
     "objection-password": "^2.0.0",
@@ -140,6 +167,7 @@
     "pino": "^5.13.1",
     "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
+    "restana": "^3.3.1",
     "role-acl": "^3.3.5",
     "sharp": "^0.22.1",
     "sqlite3": "^4.1.0",
@@ -153,6 +181,9 @@
     "@types/jest": "^24.0.17",
     "cross-env": "^5.2.0",
     "dotenv": "^8.1.0",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "glob": "^7.1.4",
     "is-ci": "^2.0.0",
     "jest": "^24.8.0",
@@ -161,6 +192,7 @@
     "maildev": "^1.1.0",
     "mjml": "^4.4.1",
     "nodemon": "^1.19.1",
+    "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",

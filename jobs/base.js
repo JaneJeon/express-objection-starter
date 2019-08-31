@@ -32,6 +32,7 @@ class BaseJob {
     )
   }
 
+  // eslint-disable-next-line no-unused-vars
   static async process(job, data) {
     throw new Error('job processing function not implemented!')
   }
