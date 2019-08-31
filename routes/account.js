@@ -24,6 +24,8 @@ module.exports = Router()
       await req.user.sendMail('verify-email', {})
     })
   })
+  .post('/forgot')
+  .post('/reset')
   .post('/account/verify', requireAuthN, async (req, res) => {
     await Mailer.runOrCreate()
 

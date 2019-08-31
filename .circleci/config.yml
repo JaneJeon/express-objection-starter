@@ -30,14 +30,14 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           paths:
-            - node_modules
+            - ~/.cache/yarn
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn test --ci --runInBand
+      - run: yarn test:ci
 
       - store_test_results:
           path: junit.xml
