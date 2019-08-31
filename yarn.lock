@@ -9401,6 +9401,13 @@ object.values@^1.1.0:
     function-bind "^1.1.1"
     has "^1.0.3"
 
+objection-authorize@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/objection-authorize/-/objection-authorize-0.2.4.tgz#1cb6bf65348aa32d1871fbc14d3abe70dff11289"
+  integrity sha512-dW3GI2pa7J1FEmUYyO16LoHV4l7aiIwXpgcjavrDG6eCpcMNPoHv3K0N4MH0bUG3zcvd6dBawcqQWoZZ2mlygA==
+  dependencies:
+    http-assert "^1.4.1"
+
 objection-db-errors@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/objection-db-errors/-/objection-db-errors-1.1.1.tgz#27ebd44bfc0a6dae112f65a830a86947c670704b"
