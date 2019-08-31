@@ -46,7 +46,7 @@
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "seed:make": "knex seed:make",
-    "build": "run-s build:* lint:all:prettier",
+    "build": "is-ci || run-s build:* lint:all:prettier",
     "build:yaml": "yaml2json config --save --recursive",
     "build:types": "node scripts/generate-types",
     "build:mjml": "node scripts/generate-templates",
@@ -57,8 +57,7 @@
     "watch:mjml": "nodemon -e mjml -x 'yarn build:mjml'",
     "watch:hbs": "nodemon -e hbs -x 'yarn build:hbs'",
     "pretest": "yarn setup",
-    "test": "run-p dev:mail test:unit --race",
-    "test:ci": "run-p dev:mail test:unit:ci --race",
+    "test": "run-p dev:mail test:unit\"$(is-ci && ':ci')\" --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
     "test:unit:ci": "yarn test:unit --coverage --ci --reporters=default --reporters=jest-junit",
     "coverage": "cat ./coverage/lcov.info | coveralls",
@@ -69,7 +68,8 @@
     "lint:all:prettier": "yarn lint:prettier '**/*.{js,ts,mjml,html,css,json,md,yml,yaml}'",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:serve": "serve docs/.vuepress/dist"
+    "docs:serve": "serve docs/.vuepress/dist",
+    "docs:deploy": "surge docs/.vuepress/dist"
   },
   "husky": {
     "hooks": {
