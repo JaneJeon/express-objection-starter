@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { compile } = require('json-schema-to-typescript')
 const schema = require('../config/schema')
 const { writeFileSync } = require('fs')

@@ -50,6 +50,7 @@
     "build:types": "node scripts/generate-types",
     "build:mjml": "node scripts/generate-templates",
     "build:hbs": "handlebars views/emails -e hbs -f views/emails/index.js",
+    "build:add": "sh ./scripts/add-generated-files.sh",
     "watch": "run-p watch:*",
     "watch:yaml": "yarn build:yaml --watch",
     "watch:types": "nodemon config/schema.json -x 'yarn build:types'",
