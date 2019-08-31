@@ -182,6 +182,8 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",
+    "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
+    "@vuepress/plugin-nprogress": "^1.0.0-rc.1",
     "coveralls": "^3.0.6",
     "cross-env": "^5.2.0",
     "dotenv": "^8.1.0",
@@ -204,6 +206,7 @@
     "serve": "^11.1.0",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
+    "surge": "^0.21.3",
     "vuepress": "^1.0.3",
     "wait-on": "^3.3.0",
     "yamljs": "^0.3.0"
