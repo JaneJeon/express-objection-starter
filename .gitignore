@@ -84,3 +84,6 @@ sw.*
 
 # Mac OSX
 .DS_Store
+
+# I only use junit reporter for circleci
+junit.xml
