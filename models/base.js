@@ -55,7 +55,7 @@ class BaseModel extends authorize(visibility(DbErrors(tableName(Model)))) {
   }
 
   static get QueryBuilder() {
-    return class extends Model.QueryBuilder {
+    return class extends super.QueryBuilder {
       insert(body) {
         const q = super.insert(body).returning('*')
 

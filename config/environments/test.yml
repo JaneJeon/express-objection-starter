@@ -2,7 +2,8 @@ logger:
   options:
     prettyPrint:
       colorize: false
-  destination: logs/test-output.log
+  # the %s is replaced with new Date()
+  destination: logs/test-%s-output.log
 
 database:
   debug: false
