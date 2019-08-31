@@ -61,7 +61,7 @@
     "test:unit": "wait-on http://localhost:1080 && jest",
     "lint": "run-p lint:all:*",
     "lint:prettier": "prettier --write",
-    "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,md,html,css}'",
+    "lint:all:prettier": "yarn lint:prettier '**/*.{js,ts,mjml,html,css,json,md,yml,yaml}'",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:serve": "serve docs/.vuepress/dist"
@@ -75,7 +75,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,mjml,json,md,yml,yaml}": [
+    "*.{js,ts,mjml,html,css,json,md,yml,yaml}": [
       "yarn lint:prettier",
       "git add"
     ]
