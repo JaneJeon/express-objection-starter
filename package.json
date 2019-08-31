@@ -73,7 +73,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "yarn build && lint-staged",
       "pre-push": "yarn test",
       "post-merge": "yarn && yarn setup",
       "post-receive": "yarn install --production && yarn migrate"
