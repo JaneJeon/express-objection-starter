@@ -60,7 +60,7 @@
     "test": "run-p dev:mail test:unit --race",
     "test:ci": "npm-run-all pretest -p dev:mail test:*:ci --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
-    "test:unit:ci": "yarn test:unit --coverage --ci --runInBand --reporters=default --reporters=jest-junit",
+    "test:unit:ci": "yarn test:unit --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit",
     "test:watch": "yarn test:unit --watch",
     "coverage": "if is-ci; then cat ./coverage/lcov.info | coveralls; fi",
     "lint": "run-s lint:all:*",
