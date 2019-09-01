@@ -17,7 +17,7 @@ module.exports = Router()
       .authorize(req.user)
       .insert(req.body)
 
-    req.login(user, async err => {
+    req.login(user, err => {
       if (err) throw err
       res.status(201).send(req.user)
 
