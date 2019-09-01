@@ -37,10 +37,15 @@ jobs:
             - ~/.cache/yarn
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn test:ci
+      - run: yarn lint:check
+
+      - run:
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+          command: yarn test:ci
 
       - store_test_results:
-          path: junit.xml
+          path: reports/junit
 
       - run: yarn coverage
 #
