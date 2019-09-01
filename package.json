@@ -57,25 +57,23 @@
     "watch:mjml": "nodemon -e mjml -x 'yarn build:mjml'",
     "watch:hbs": "nodemon -e hbs -x 'yarn build:hbs'",
     "pretest": "yarn migrate",
-    "test": "run-p dev:mail test:unit --race",
-    "test:ci": "npm-run-all pretest -p dev:mail test:*:ci --race",
+    "test": "run-p dev:mail 'test:unit {@}' --race",
     "test:unit": "wait-on http://localhost:1080 && jest",
-    "test:unit:ci": "yarn test:unit --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit",
-    "test:watch": "yarn test:unit --watch",
+    "test:watch": "yarn test -- -- --watch",
     "coverage": "if is-ci; then cat ./coverage/lcov.info | coveralls; fi",
     "lint": "run-s lint:all:*",
     "lint:eslint": "eslint --fix --cache",
     "lint:prettier": "prettier --write",
     "lint:all:eslint": "yarn lint:eslint --ext .js .",
-    "lint:all:prettier": "yarn lint:prettier '**/*.{js,ts,mjml,html,css,json,md,yml,yaml}'",
-    "lint:check": "run-s lint:check:*",
-    "lint:check:eslint": "eslint . --format junit -o reports/junit/js-lint-results.xml",
-    "lint:check:prettier": "prettier --check '**/*.{js,ts,mjml,html,css,json,md,yml,yaml}'",
+    "lint:all:prettier": "yarn lint:prettier '**/*.{js,ts,html,css,json,md,yml,yaml}'",
+    "lint:check": "run-s 'lint:check:* {@}'",
+    "lint:check:eslint": "eslint .",
+    "lint:check:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:serve": "serve docs/.vuepress/dist",
     "docs:deploy": "surge docs/.vuepress/dist",
-    "clean": "rm -f logs/*.log && rm -rf docs/.vuepress/dist"
+    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage"
   },
   "husky": {
     "hooks": {
@@ -86,7 +84,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts,mjml,html,css,json,md,yml,yaml}": [
+    "*.{ts,html,css,json,md,yml,yaml}": [
       "yarn lint:prettier",
       "git add"
     ],
@@ -210,6 +208,7 @@
     "objection-gen": "^0.5.2",
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
+    "rimraf": "^3.0.0",
     "serve": "^11.1.0",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",

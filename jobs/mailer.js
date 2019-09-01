@@ -12,8 +12,9 @@ class Mailer extends BaseJob {
     return mail.sendMail(job)
   }
 
-  static async runOrCreate(id, data, opts) {
-    const job = await this.queue.getJob(this.jobId(id))
+  static async runOrAdd(data, opts = {}) {
+    if (!opts.id) throw new Error('required parameter: opts.id')
+    const job = await this.getJob(opts.id)
 
     return job ? job.promote() : this.add(data, opts)
   }

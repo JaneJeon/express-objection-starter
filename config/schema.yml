@@ -17,7 +17,7 @@ user:
     verified:
       type: boolean
       default: false
-      readOnly: true
+      # readOnly: true
     role:
       type: string
       enum:

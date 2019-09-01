@@ -15,7 +15,7 @@
         "maxLength": 60,
         "writeOnly": true
       },
-      "verified": { "type": "boolean", "default": false, "readOnly": true },
+      "verified": { "type": "boolean", "default": false },
       "role": { "type": "string", "enum": ["user", "admin"], "default": "user" }
     },
     "required": ["username", "email", "password"],

@@ -1,5 +1,6 @@
 const queue = require('../lib/queue')
 const logger = require('../lib/logger')
+const nanoid = require('nanoid/non-secure')
 
 class BaseJob {
   static get queue() {
@@ -15,21 +16,26 @@ class BaseJob {
     return {}
   }
 
-  static jobId(id) {
-    return `${this.name}-${id}`
+  static _jobId(id) {
+    return `${this.name}:${id}`
   }
 
   static async add(data, opts = {}) {
     // prefix jobId to fetch it later
-    if (opts.jobId) opts.jobId = this.jobId(opts.jobId)
+    if (!opts.id) opts.id = nanoid()
+    opts.jobId = this._jobId(opts.id)
 
     this.log.info('adding job', opts.jobId)
 
     return this.queue.add(
       this.name,
       data,
-      Object.assign(opts, this.defaultOptions)
+      Object.assign(this.defaultOptions, opts)
     )
+  }
+
+  static getJob(id) {
+    return this.queue.getJob(this._jobId(id))
   }
 
   // eslint-disable-next-line no-unused-vars

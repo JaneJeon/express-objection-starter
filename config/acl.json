@@ -1,8 +1,13 @@
 {
+  "aliases": [["*", "!email"], ["*", "!role", "!verified"]],
   "anonymous": {
     "grants": [
       { "resource": "User", "action": "read", "attributes": ["*", "!email"] },
-      { "resource": "User", "action": "create", "attributes": ["*", "!role"] }
+      {
+        "resource": "User",
+        "action": "create",
+        "attributes": ["*", "!role", "!verified"]
+      }
     ]
   },
   "user": {
@@ -20,7 +25,7 @@
       {
         "resource": "User",
         "action": "update",
-        "attributes": ["*", "!role"],
+        "attributes": ["*", "!role", "!verified"],
         "condition": {
           "Fn": "EQUALS",
           "args": { "username": "$.req.user.username" }
