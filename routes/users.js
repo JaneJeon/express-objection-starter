@@ -35,10 +35,9 @@ module.exports = Router()
     res.send(user)
   })
   .delete('/account', async (req, res) => {
-    const user = req.user || {}
     await User.query()
-      .authorize(req.user, { username: user.username })
-      .deleteById(user.id)
+      .authorize(req.user, { username: (req.user || {}).username })
+      .deleteById((req.user || {}).id)
 
     res.sendStatus(204)
   })
