@@ -9,7 +9,7 @@ class Mailer extends BaseJob {
 
   // TODO: should we handle err.responseCode == 429?
   static async process(job) {
-    return mail.sendMail(job)
+    return mail.sendMail(job.data)
   }
 
   static async runOrAdd(data, opts = {}) {

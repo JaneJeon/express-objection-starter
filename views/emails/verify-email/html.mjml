@@ -8,7 +8,8 @@
     <mj-section>
       <mj-column>
         <mj-text>
-          Hi {{user.username}}, thanks for signing up! To finish setting up your account, we just need you to verify your email address by clicking this button:
+          Hi {{user.username}}, thanks for signing up! <br/>
+          To finish setting up your account, we just need you to verify your email address by clicking this button:
         </mj-text>
         <mj-button href="{{{link}}}">
           Verify Email

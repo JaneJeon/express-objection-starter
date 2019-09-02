@@ -7,7 +7,9 @@
   <mj-body>
     <mj-section>
       <mj-column>
-        <mj-text>Hi {{user.username}}, We received a request to reset your password. To set a new password, click this button:</mj-text>
+        <mj-text>Hi {{user.username}}, We received a request to reset your password. <br/>
+        To set a new password, click this button:
+        </mj-text>
         <mj-button href="{{{link}}}">
           Reset Password
         </mj-button>

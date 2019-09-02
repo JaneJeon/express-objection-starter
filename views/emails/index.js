@@ -16,7 +16,7 @@
             depth0
           )
         ) +
-        ', We received a request to reset your password. To set a new password, click this button:</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">\n                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">\n                        <tr>\n                          <td align="center" bgcolor="#414141" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#414141;" valign="middle">\n                            <a href="' +
+        ', We received a request to reset your password. <br /> To set a new password, click this button:</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">\n                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">\n                        <tr>\n                          <td align="center" bgcolor="#414141" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#414141;" valign="middle">\n                            <a href="' +
         ((stack1 =
           ((helper =
             (helper =
@@ -93,7 +93,7 @@
             depth0
           )
         ) +
-        ', thanks for signing up! To finish setting up your account, we just need you to verify your email address by clicking this button:</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">\n                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">\n                        <tr>\n                          <td align="center" bgcolor="#414141" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#414141;" valign="middle">\n                            <a href="' +
+        ', thanks for signing up! <br /> To finish setting up your account, we just need you to verify your email address by clicking this button:</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">\n                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">\n                        <tr>\n                          <td align="center" bgcolor="#414141" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#414141;" valign="middle">\n                            <a href="' +
         ((stack1 =
           ((helper =
             (helper =

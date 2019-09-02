@@ -30,7 +30,7 @@ class BaseJob {
     return this.queue.add(
       this.name,
       data,
-      Object.assign(this.defaultOptions, opts)
+      Object.assign({}, this.defaultOptions, opts)
     )
   }
 
@@ -38,8 +38,7 @@ class BaseJob {
     return this.queue.getJob(this._jobId(id))
   }
 
-  // eslint-disable-next-line no-unused-vars
-  static async process(job, data) {
+  static async process() {
     throw new Error('job processing function not implemented!')
   }
 }

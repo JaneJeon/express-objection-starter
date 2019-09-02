@@ -1,5 +1,5 @@
 port: 3000
-timeout: 60e+3 # 1 minute, in milliseconds
+timeout: 6e+3 # 6 seconds, in milliseconds
 requestIdHeader: X-Request-Id
 proxy: false
 

@@ -9279,10 +9279,10 @@ object.values@^1.1.0:
     function-bind "^1.1.1"
     has "^1.0.3"
 
-objection-authorize@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/objection-authorize/-/objection-authorize-0.3.1.tgz#41d6eaff50bdcb3582a5f9b2bb7c744749827ad1"
-  integrity sha512-kzOhH2kTwviolki0gQmKw31fYWajcAI8acM62Lvguqwxx1jWB4BANOHQNQiyqwP8saQbergwiuznxPHdUfPGng==
+objection-authorize@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/objection-authorize/-/objection-authorize-0.5.3.tgz#893e3b4b5ef75d766e0a5accee5228a42b7af166"
+  integrity sha512-gyyaXTjVHthsfGukl8bGHzd40TJjnc+xD7mYfHfpvi4aFG1sT4JLrhXfYGXCQvTSV/pDT4rIUHqjM54dQYnv6g==
   dependencies:
     http-assert "^1.4.1"
 
