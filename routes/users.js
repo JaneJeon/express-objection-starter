@@ -10,20 +10,6 @@ module.exports = Router()
 
     res.send(user)
   })
-  .post('/users', async (req, res) => {
-    const user = await User.query()
-      // we need the id field to serialize req.user (as defined in config/passport.js)
-      // since username can change while id is immutable
-      .authorize(req.user)
-      .insert(req.body)
-
-    req.login(user, err => {
-      if (err) throw err
-      res.status(201).send(req.user)
-
-      // TODO:
-    })
-  })
   .patch('/users/:username', async (req, res) => {
     const username = req.params.username.toLowerCase()
     let user = await User.query().findByUsername(username)
@@ -33,11 +19,4 @@ module.exports = Router()
       .patch(req.body)
 
     res.send(user)
-  })
-  .delete('/account', async (req, res) => {
-    await User.query()
-      .authorize(req.user, { username: (req.user || {}).username })
-      .deleteById((req.user || {}).id)
-
-    res.sendStatus(204)
   })

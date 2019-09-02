@@ -5,9 +5,6 @@ const token = require('../lib/token')
 const config = require('../config')
 
 module.exports = Router()
-  .get('/account', requireAuthN, (req, res) =>
-    res.redirect(`/users/${req.user.username}`)
-  )
   .post('/account', async (req, res) => {
     const user = await User.query()
       .authorize(req.user)
@@ -63,9 +60,10 @@ module.exports = Router()
     })
   })
   .delete('/account', requireAuthN, async (req, res) => {
-    await User.query()
-      .authorize(req.user, req.user)
-      .deleteById(req.user.id)
+    await req.user
+      .$query()
+      .authorize(req.user)
+      .delete()
 
     res.sendStatus(204)
   })

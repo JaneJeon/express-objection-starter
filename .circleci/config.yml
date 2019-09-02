@@ -47,6 +47,9 @@ jobs:
       - store_test_results:
           path: reports/junit
 
+      - store_artifacts:
+          path: reports/junit
+
       - run: yarn coverage
 #
 #   deploy:

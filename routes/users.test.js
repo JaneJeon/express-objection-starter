@@ -15,10 +15,10 @@ describe('user routes', () => {
       .where({ username })
   })
 
-  describe('POST /users', () => {
+  describe('POST /account', () => {
     it('should work', async () => {
       const res = await request
-        .post('/users')
+        .post('/account')
         .send({ username, password, email })
       expect(res.status).toBe(201)
     })
