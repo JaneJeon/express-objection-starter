@@ -88,3 +88,6 @@ sw.*
 # CI reports
 reports
 junit.xml
+
+# Local Netlify folder
+.netlify

@@ -71,6 +71,7 @@
     "lint:check:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "docs:deploy": "surge docs/.vuepress/dist https://objection.surge.sh",
     "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage"
   },
   "husky": {
@@ -204,6 +205,7 @@
     "string-natural-compare": "^2.0.3",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
+    "surge": "^0.21.3",
     "vuepress": "^1.0.3",
     "wait-on": "^3.3.0",
     "yamljs": "^0.3.0"

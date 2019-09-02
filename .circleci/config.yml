@@ -17,8 +17,7 @@ aliases:
   - &install
     run: yarn install --frozen-lockfile
 
-  - &test
-    command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+  - &test yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
 
   - &master-branch-only
     branches:
@@ -66,19 +65,9 @@ jobs:
           command: *test
       - store_test_results:
           path: reports/junit
-
-  coverage:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node
-    steps:
-      - checkout
-      - *restore-cache
-      - *install
-      - *save-cache
       - run: yarn coverage
 
-  github-docs:
+  docs-deploy:
     working_directory: ~/repo
     docker:
       - image: circleci/node
@@ -87,7 +76,8 @@ jobs:
       - *restore-cache
       - *install
       - *save-cache
-      - run: sh ./scripts/github-pages-deploy.sh
+      - run: yarn docs:deploy
+
 #
 #   deploy:
 #     docker:
@@ -102,10 +92,7 @@ workflows:
     jobs:
       - lint
       - test
-      - coverage:
-          requires:
-            - test
-      - github-docs:
+      - docs-deploy:
           requires:
             - lint
           filters: *master-branch-only
