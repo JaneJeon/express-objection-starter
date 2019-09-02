@@ -1,4 +1,3 @@
-/node_modules/**
-/dist/**
-/tests/unit/coverage/**
-/config/**/*.json
+coverage
+reports
+docs/.vuepress/dist

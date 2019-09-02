@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -17,36 +17,104 @@
     "api",
     "backend",
     "jsonschema",
-    "validation"
+    "validation",
+    "email",
+    "template",
+    "handlebars",
+    "mjml",
+    "access-control",
+    "ACL",
+    "RBAC",
+    "roles",
+    "policy",
+    "nodemailer"
   ],
   "repository": "JaneJeon/express-objection-starter",
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn setup",
     "start": "pm2 start pm2.config.js",
     "start:web": "pm2-runtime start pm2.config.js --only server",
     "start:worker": "pm2-runtime start pm2.config.js --only worker",
-    "dev": "run-p dev:*",
+    "dev": "run-p dev:* watch",
     "dev:web": "nodemon server",
-    "dev:worker": "nodemon worker",
+    "dev:worker": "wait-on http://localhost:1080 && nodemon worker",
     "dev:mail": "maildev",
-    "dev:yaml": "yarn lint:all:yaml --watch",
-    "pretest": "is-ci || yarn setup",
-    "test": "run-p dev:mail test:* --race",
-    "test:unit": "wait-on http://localhost:1080 && jest",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "seed:make": "knex seed:make",
-    "lint": "run-p lint:all:*",
+    "build": "run-s build:*",
+    "build:yaml": "yaml2json config --save --recursive",
+    "build:types": "node scripts/generate-types",
+    "build:mjml": "node scripts/generate-templates",
+    "build:hbs": "handlebars views/emails -e hbs -f views/emails/index.js",
+    "build:add": "sh ./scripts/add-generated-files.sh",
+    "watch": "run-p watch:*",
+    "watch:yaml": "yarn build:yaml --watch",
+    "watch:types": "nodemon config/schema.json -x 'yarn build:types'",
+    "watch:mjml": "nodemon -e mjml -x 'yarn build:mjml'",
+    "watch:hbs": "nodemon -e hbs -x 'yarn build:hbs'",
+    "pretest": "yarn migrate",
+    "test": "run-p dev:mail 'test:unit {@}' --race",
+    "test:unit": "wait-on http://localhost:1080 && jest",
+    "test:watch": "run-p watch 'test -- -- --watch'",
+    "coverage": "if is-ci; then cat ./coverage/lcov.info | coveralls; fi",
+    "lint": "run-s lint:all:*",
+    "lint:eslint": "eslint --fix --cache",
     "lint:prettier": "prettier --write",
-    "lint:yaml": "yaml2json --save",
-    "lint:all:prettier": "yarn lint:prettier '**/*.{js,json,md,html,css}'",
-    "lint:all:yaml": "yarn lint:yaml config --recursive",
-    "lint:all:types": "node scripts/generate-types",
-    "setup": "yarn lint:all:yaml && yarn migrate"
+    "lint:all:eslint": "yarn lint:eslint .",
+    "lint:all:prettier": "yarn lint:prettier '**/*.{js,ts,html,css,json,md,yml,yaml}'",
+    "lint:check": "run-s 'lint:check:* {@}'",
+    "lint:check:eslint": "eslint .",
+    "lint:check:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:serve": "serve docs/.vuepress/dist",
+    "docs:deploy": "surge docs/.vuepress/dist",
+    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn build && lint-staged",
+      "pre-push": "yarn test",
+      "post-merge": "yarn && yarn migrate",
+      "post-receive": "yarn install --production && yarn migrate"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,html,css,json,md,yml,yaml}": [
+      "yarn lint:prettier",
+      "git add"
+    ],
+    "*.js": [
+      "yarn lint:eslint",
+      "yarn lint:prettier",
+      "git add"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "extends": [
+      "plugin:prettier/recommended",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018
+    }
+  },
+  "eslintIgnore": [
+    "views/emails/index.js"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "proseWrap": "never"
   },
   "nodemonConfig": {
     "ignore": [
@@ -58,24 +126,6 @@
       "NODE_ENV": "development"
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test",
-      "post-merge": "yarn && yarn setup"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,json,md,yml,yaml}": [
-      "yarn lint:prettier",
-      "git add"
-    ]
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "proseWrap": "never"
-  },
   "dependencies": {
     "@elastic/elasticsearch": "^7.2.0",
     "algoliasearch": "^3.33.0",
@@ -83,22 +133,29 @@
     "axios": "^0.19.0",
     "bull": "^3.10.0",
     "cloudinary": "^1.14.0",
+    "compression": "^1.7.4",
     "connect-redis": "^3.4.2",
     "cors": "^2.8.5",
     "dayjs": "^1.8.14",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "express-list-endpoints": "^4.0.1",
     "express-query-boolean": "^2.0.0",
     "express-rate-limit": "^5.0.0",
+    "express-request-id": "^1.4.1",
     "express-session": "^1.16.1",
     "express-sslify": "^1.2.0",
     "express-ws": "^4.0.0",
+    "handlebars": "^4.1.2",
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
+    "husky": "^3.0.3",
     "ioredis": "^4.9.5",
     "knex": "^0.19.2",
     "lodash": "^4.17.11",
     "mailchecker": "^3.2.35",
+    "morgan": "^1.9.1",
+    "ms": "^2.1.2",
     "mssql": "^5.1.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
@@ -107,6 +164,7 @@
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
     "objection": "^1.6.9",
+    "objection-authorize": "^0.5.3",
     "objection-db-errors": "^1.1.1",
     "objection-password": "^2.0.0",
     "objection-table-name": "^1.0.0",
@@ -117,11 +175,11 @@
     "pino": "^5.13.1",
     "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
+    "restana": "^3.3.1",
     "role-acl": "^3.3.5",
     "sharp": "^0.23.0",
     "sqlite3": "^4.1.0",
-    "ua-parser-js": "^0.7.20",
-    "yamljs": "^0.3.0"
+    "ua-parser-js": "^0.7.20"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
@@ -129,20 +187,34 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",
+    "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
+    "@vuepress/plugin-nprogress": "^1.0.0-rc.1",
+    "coveralls": "^3.0.6",
     "cross-env": "^5.2.0",
-    "husky": "^3.0.3",
+    "dotenv": "^8.1.0",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "glob": "^7.1.4",
     "is-ci": "^2.0.0",
     "jest": "^24.8.0",
+    "jest-junit": "^8.0.0",
     "json-schema-to-typescript": "^7.0.0",
     "lint-staged": "^9.2.1",
     "maildev": "^1.1.0",
+    "mjml": "^4.4.1",
     "nodemon": "^1.19.1",
     "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
+    "rimraf": "^3.0.0",
+    "serve": "^11.1.0",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
-    "wait-on": "^3.3.0"
+    "surge": "^0.21.3",
+    "vuepress": "^1.0.3",
+    "wait-on": "^3.3.0",
+    "yamljs": "^0.3.0"
   }
 }

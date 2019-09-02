@@ -1,0 +1,20 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="Helvetica" font-size="18px" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text>Hi {{user.username}}, We received a request to reset your password. <br/>
+        To set a new password, click this button:
+        </mj-text>
+        <mj-button href="{{{link}}}">
+          Reset Password
+        </mj-button>
+        <mj-text>If you did not request this, ignore this email and the link will expire on its own.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

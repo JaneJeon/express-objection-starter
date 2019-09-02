@@ -1,14 +1,16 @@
 port: 3000
-timeout: 60e+3 # 1 minute, in milliseconds
+timeout: 6e+3 # 6 seconds, in milliseconds
 requestIdHeader: X-Request-Id
 proxy: false
+
+frontend:
+  url: localhost:3000
 
 logger:
   options:
     level: debug
     prettyPrint:
       translateTime: true
-      ignore: pid,hostname,boot
   # https://github.com/fastify/fastify/blob/master/lib/logger.js
   serializers:
     req:
@@ -37,18 +39,24 @@ ratelimit:
 redis:
   url: redis://localhost
 
+# https://github.com/OptimalBits/bull/blob/develop/REFERENCE.md#queue
 queue:
   defaultJobOptions:
-    attempts: 3
     removeOnComplete: true
-    backoff:
-      type: exponential
-      delay: 15e+3 # 15 seconds, in milliseconds
+
+# extends queue
+mailQueue:
+  defaultJobOptions:
+    removeOnFail: true # we don't need to store failed email "jobs"
+  # this is just an SES example. modify as you see fit for your service (especially Sendgrid)
+  limiter:
+    max: 14
+    duration: 1 # 1 sec in millis
 
 database:
   # available clients: https://knexjs.org/#Installation-node
   # note that while you *can* use other clients, some of the base class's "magic methods"
-  # that utilize .returning('*') will NOT be available on anything other than pg
+  # that utilize .returning('*') will NOT be available on anything other than pg/mssql
   client: pg
   connection: postgres://localhost/app
   debug: true
@@ -57,5 +65,6 @@ mail:
   # for maildev, we don't need credentials
   smtp:
     service: maildev
+  # https://nodemailer.com/message
   defaults:
     from: test@example.com

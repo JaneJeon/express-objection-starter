@@ -85,5 +85,6 @@ sw.*
 # Mac OSX
 .DS_Store
 
-config/**/*.json
-models/*.ts
+# CI reports
+reports
+junit.xml

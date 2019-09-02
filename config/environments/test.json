@@ -1,0 +1,7 @@
+{
+  "logger": {
+    "options": { "prettyPrint": { "colorize": false } },
+    "destination": "logs/test-%s-output.log"
+  },
+  "database": { "debug": false }
+}

@@ -1,0 +1,20 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="Helvetica" font-size="18px" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text>
+          Hi {{user.username}}, thanks for signing up! <br/>
+          To finish setting up your account, we just need you to verify your email address by clicking this button:
+        </mj-text>
+        <mj-button href="{{{link}}}">
+          Verify Email
+        </mj-button>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

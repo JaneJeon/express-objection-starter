@@ -30,14 +30,27 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           paths:
-            - node_modules
+            - ~/.cache/yarn
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn test
+      - run: yarn lint:check -- -- --format junit -o reports/junit/js-lint-results.xml
+
+      - run:
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+          command: yarn test -- -- --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+
+      - store_test_results:
+          path: reports/junit
+
+      - store_artifacts:
+          path: reports/junit
+
+      - run: yarn coverage
 #
 #   deploy:
 #     docker:

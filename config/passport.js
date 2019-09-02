@@ -5,7 +5,12 @@ const { Strategy: LocalStrategy } = require('passport-local')
 
 passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser(async (id, done) => {
-  done(null, await User.query().findById(id))
+  try {
+    const user = await User.query().findById(id)
+    done(null, user)
+  } catch (err) {
+    err instanceof NotFoundError ? done(null, false) : done(err)
+  }
 })
 
 passport.use(

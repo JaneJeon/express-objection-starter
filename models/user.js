@@ -1,7 +1,8 @@
 const BaseModel = require('./base')
 const password = require('objection-password')()
-const checkBlacklist = require('../lib/domain-checker')
+const checkDomain = require('../lib/domain-checker')
 const normalize = require('normalize-email')
+const mailer = require('../jobs/mailer')
 
 class User extends password(BaseModel) {
   static get hidden() {
@@ -11,7 +12,7 @@ class User extends password(BaseModel) {
   processInput() {
     if (this.username) this.username = this.username.toLowerCase()
     if (this.email) {
-      checkBlacklist(this.email)
+      checkDomain(this.email)
       this.email = normalize(this.email)
     }
   }
@@ -30,6 +31,16 @@ class User extends password(BaseModel) {
 
   getSession(id = '') {
     return `sess:${this.id}:${id}`
+  }
+
+  // data: https://nodemailer.com/message/
+  async sendMail(template, data = {}, dedup = false) {
+    if (!template) throw new Error('required parameter: template')
+
+    Object.assign(data, { template, to: this.email, user: this })
+    const opts = { id: `${template}:${this.email}` }
+
+    return dedup ? mailer.runOrAdd(data, opts) : mailer.add(data, opts)
   }
 }
 

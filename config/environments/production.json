@@ -1,0 +1,17 @@
+{
+  "proxy": { "trust": true, "enforceHTTPS": { "trustProtoHeader": true } },
+  "logger": {
+    "options": { "level": "info", "prettyPrint": false },
+    "serializers": { "req": ["id", "method", "url", "user"] }
+  },
+  "session": { "secret": null },
+  "ratelimit": { "windowMs": 900000, "max": 100 },
+  "database": { "debug": false },
+  "mail": {
+    "smtp": {
+      "service": "sendgrid",
+      "auth": { "user": "apikey", "pass": null }
+    },
+    "defaults": { "from": "production@example.com" }
+  }
+}

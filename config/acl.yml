@@ -1,17 +1,21 @@
+aliases:
+  - &defaultUserReadAccess ['*', '!email']
+  - &defaultUserWriteAccess ['*', '!role', '!verified']
+
 anonymous:
   grants:
     - resource: User
       action: read
-      attributes: ['*', '!email']
+      attributes: *defaultUserReadAccess
     - resource: User
       action: create
-      attributes: ['*', '!role']
+      attributes: *defaultUserWriteAccess
 
 user:
   grants:
     - resource: User
       action: read
-      attributes: ['*', '!email']
+      attributes: *defaultUserReadAccess
     - resource: User
       action: read
       attributes: ['email']
@@ -21,7 +25,7 @@ user:
           username: $.req.user.username
     - resource: User
       action: update
-      attributes: ['*', '!role']
+      attributes: *defaultUserWriteAccess
       condition:
         Fn: EQUALS
         args:
