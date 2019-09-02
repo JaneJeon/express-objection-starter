@@ -1,56 +1,93 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2
+# most of this is ripped straight from Jest's config, since I'm sure they know their shit:
+# https://github.com/facebook/jest/blob/master/.circleci/config.yml
+aliases:
+  - &restore-cache
+    restore-cache:
+      keys:
+        - v1-dependencies-{{ checksum "yarn.lock" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
 
+  - &save-cache
+    save-cache:
+      paths:
+        - node_modules
+      key: v1-dependencies-{{ checksum "yarn.lock" }}
+
+  - &install
+    run: yarn install --frozen-lockfile
+
+  - &test
+    command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+
+  - &master-branch-only
+    branches:
+      only:
+        - master
+
+  # - &store-test-results
+  #   store_test_results:
+  #     path: reports/junit
+
+  - &test-db app
+
+version: 2
 jobs:
-  build:
+  lint:
+    working_directory: ~/repo
     docker:
-      # specify the version you desire here
       - image: circleci/node
-        environment:
-          PGHOST: 127.0.0.1
-          PGUSER: knex
+    steps:
+      - checkout
+      - *restore-cache
+      - *install
+      - *save-cache
+      - run: yarn lint:check --format junit -o reports/junit/eslint/results.xml
+      - store_test_results:
+          path: reports/junit
+
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node
       - image: circleci/redis
       - image: circleci/postgres
         environment:
           POSTGRES_USER: knex
-          POSTGRES_DB: app
-
-    working_directory: ~/repo
-
+          POSTGRES_DB: *test-db
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: yarn install --frozen-lockfile
-
-      - save_cache:
-          paths:
-            - ~/.cache/yarn
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-
-      - run: yarn lint:check --format junit -o reports/junit/js-lint-results.xml
-
+      - *restore-cache
+      - *install
+      - *save-cache
       - run:
           environment:
-            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
-          command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
-
+            JEST_JUNIT_OUTPUT: reports/junit/jest/results.xml
+          command: *test
       - store_test_results:
           path: reports/junit
 
-      - store_artifacts:
-          path: reports/junit
-
+  coverage:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - *restore-cache
+      - *install
+      - *save-cache
       - run: yarn coverage
+
+  github-docs:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - *restore-cache
+      - *install
+      - *save-cache
+      - run: sh ./scripts/github-pages-deploy.sh
 #
 #   deploy:
 #     docker:
@@ -58,15 +95,23 @@ jobs:
 #     steps:
 #       - checkout
 #       - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-#
-# workflows:
-#   version: 2
-#   build-deploy:
-#     jobs:
-#       - build
-#       - deploy:
-#           requires:
-#             - build
-#           filters:
-#             branches:
-#               only: master
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - lint
+      - test
+      - coverage:
+          requires:
+            - test
+      - github-docs:
+          requires:
+            - lint
+          filters: *master-branch-only
+      # - deploy:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         only: master

@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -69,10 +69,8 @@
     "lint:check": "run-s 'lint:check:* {@}' -- --",
     "lint:check:eslint": "eslint .",
     "lint:check:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
-    "docs:dev": "vuepress dev docs",
+    "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:serve": "serve docs/.vuepress/dist",
-    "docs:deploy": "surge docs/.vuepress/dist",
     "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage"
   },
   "husky": {
@@ -127,12 +125,7 @@
     }
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.2.0",
-    "algoliasearch": "^3.33.0",
-    "aws-sdk": "^2.466.0",
-    "axios": "^0.19.0",
     "bull": "^3.10.0",
-    "cloudinary": "^1.14.0",
     "compression": "^1.7.4",
     "connect-redis": "^3.4.2",
     "cors": "^2.8.5",
@@ -146,6 +139,7 @@
     "express-session": "^1.16.1",
     "express-sslify": "^1.2.0",
     "express-ws": "^4.0.0",
+    "got": "^9.6.0",
     "handlebars": "^4.1.2",
     "helmet": "^3.18.0",
     "http-assert": "^1.4.1",
@@ -177,7 +171,6 @@
     "rate-limit-redis": "^1.6.0",
     "restana": "^3.3.1",
     "role-acl": "^3.3.5",
-    "sharp": "^0.23.0",
     "sqlite3": "^4.1.0",
     "ua-parser-js": "^0.7.20"
   },
@@ -187,8 +180,6 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",
-    "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
-    "@vuepress/plugin-nprogress": "^1.0.0-rc.1",
     "coveralls": "^3.0.6",
     "cross-env": "^5.2.0",
     "dotenv": "^8.1.0",
@@ -210,9 +201,9 @@
     "prettier": "^1.17.1",
     "rimraf": "^3.0.0",
     "serve": "^11.1.0",
+    "string-natural-compare": "^2.0.3",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
-    "surge": "^0.21.3",
     "vuepress": "^1.0.3",
     "wait-on": "^3.3.0",
     "yamljs": "^0.3.0"

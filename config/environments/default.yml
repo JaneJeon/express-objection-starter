@@ -60,7 +60,8 @@ database:
   # note that while you *can* use other clients, some of the base class's "magic methods"
   # that utilize .returning('*') will NOT be available on anything other than pg/mssql
   client: pg
-  connection: postgres://localhost/app
+  connection:
+    database: app
   debug: true
 
 mail:

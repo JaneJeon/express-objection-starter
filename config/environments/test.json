@@ -3,5 +3,5 @@
     "options": { "prettyPrint": { "colorize": false } },
     "destination": "logs/test-%s-output.log"
   },
-  "database": { "connection": { "database": "test" }, "debug": false }
+  "database": { "debug": false }
 }
