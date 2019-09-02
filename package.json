@@ -142,6 +142,7 @@
     "express-list-endpoints": "^4.0.1",
     "express-query-boolean": "^2.0.0",
     "express-rate-limit": "^5.0.0",
+    "express-recaptcha": "^5.0.1",
     "express-request-id": "^1.4.1",
     "express-session": "^1.16.1",
     "express-sslify": "^1.2.0",
