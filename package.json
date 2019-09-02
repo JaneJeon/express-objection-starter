@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -57,7 +57,7 @@
     "watch:mjml": "nodemon -e mjml -x 'yarn build:mjml'",
     "watch:hbs": "nodemon -e hbs -x 'yarn build:hbs'",
     "pretest": "yarn migrate",
-    "test": "run-p dev:mail 'test:unit {@}' --race",
+    "test": "run-p dev:mail 'test:unit {@}' --race -- --",
     "test:unit": "wait-on http://localhost:1080 && jest",
     "test:watch": "run-p watch 'test -- -- --watch'",
     "coverage": "if is-ci; then cat ./coverage/lcov.info | coveralls; fi",
@@ -66,7 +66,7 @@
     "lint:prettier": "prettier --write",
     "lint:all:eslint": "yarn lint:eslint .",
     "lint:all:prettier": "yarn lint:prettier '**/*.{js,ts,html,css,json,md,yml,yaml}'",
-    "lint:check": "run-s 'lint:check:* {@}'",
+    "lint:check": "run-s 'lint:check:* {@}' -- --",
     "lint:check:eslint": "eslint .",
     "lint:check:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
     "docs:dev": "vuepress dev docs",
