@@ -30,7 +30,7 @@
   },
   "database": {
     "client": "pg",
-    "connection": "postgres://localhost/app",
+    "connection": { "database": "app" },
     "debug": true
   },
   "mail": {
