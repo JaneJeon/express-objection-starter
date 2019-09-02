@@ -4,7 +4,8 @@ const naturalSort = require('string-natural-compare')
 module.exports = {
   title: 'Express Objection Starter',
   description: 'an express.js app template with objection.js integration',
-  base: '/express-objection-starter',
+  // fuck this, I'm not deploying to github pages
+  // base: '/express-objection-starter',
 
   themeConfig: {
     repo: 'JaneJeon/express-objection-starter',

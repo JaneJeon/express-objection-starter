@@ -69,9 +69,11 @@
     "lint:check": "run-s 'lint:check:* {@}' -- --",
     "lint:check:eslint": "eslint .",
     "lint:check:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
-    "docs": "vuepress dev docs",
+    "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "surge docs/.vuepress/dist https://objection.surge.sh",
+    "docs:serve": "serve docs/.vuepress/dist",
+    "docs:deploy": "npm-run-all docs:build -p docs:deploy:*",
+    "docs:deploy:surge": "surge docs/.vuepress/dist https://objection.surge.sh",
     "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage"
   },
   "husky": {
@@ -195,6 +197,7 @@
     "lint-staged": "^9.2.1",
     "maildev": "^1.1.0",
     "mjml": "^4.4.1",
+    "netlify-cli": "^2.13.1",
     "nodemon": "^1.19.1",
     "npm-run-all": "^4.1.5",
     "objection-gen": "^0.5.2",
