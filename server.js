@@ -13,7 +13,7 @@ if (config.get('proxy'))
     .use(require('express-sslify').HTTPS(config.get('proxy:enforceHTTPS')))
 
 app
-  .use(require('./middlewares/request-id'))
+  .use(require('express-request-id')(config.get('requestId')))
   .use(require('./middlewares/request-logger'))
   .use(require('helmet')())
   .use(require('cors')({ origin: true }))

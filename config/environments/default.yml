@@ -1,7 +1,9 @@
 port: 3000
 timeout: 6e+3 # 6 seconds, in milliseconds
-requestIdHeader: X-Request-Id
 proxy: false
+# for CloudFlare: https://support.cloudflare.com/hc/en-us/articles/200170986-How-does-Cloudflare-handle-HTTP-Request-headers-
+# requestId:
+#   headerName: Cf-Ray
 
 frontend:
   url: localhost:3000
