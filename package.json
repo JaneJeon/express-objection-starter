@@ -177,7 +177,7 @@
     "rate-limit-redis": "^1.6.0",
     "restana": "^3.3.1",
     "role-acl": "^3.3.5",
-    "sharp": "^0.22.1",
+    "sharp": "^0.23.0",
     "sqlite3": "^4.1.0",
     "ua-parser-js": "^0.7.20"
   },
