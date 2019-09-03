@@ -1,6 +1,6 @@
 const config = require('./config')
 
-if (config.get('database:client') == 'pg') {
+if (config.get('knex:client') == 'pg') {
   const { types } = require('pg')
   const dayjs = require('dayjs')
   types.setTypeParser(20, parseInt) // cast SELECT COUNT(*) to integer
@@ -11,7 +11,7 @@ if (config.get('database:client') == 'pg') {
 const { knexSnakeCaseMappers } = require('objection')
 const log = require('./lib/logger')
 
-module.exports = Object.assign(config.get('database'), {
+module.exports = Object.assign(config.get('knex'), {
   ...knexSnakeCaseMappers(),
   log: {
     warn: msg => log.warn(msg),
