@@ -1,8 +1,9 @@
 const fs = require('fs')
 const naturalSort = require('string-natural-compare')
+const { version } = require('../../package')
 
 module.exports = {
-  title: 'Express Objection Starter',
+  title: 'Express Objection Starter v' + version,
   description: 'an express.js app template with objection.js integration',
   // fuck this, I'm not deploying to github pages
   // base: '/express-objection-starter',
