@@ -58,6 +58,7 @@ jobs:
       - image: circleci/redis
       - image: circleci/postgres
         environment:
+          POSTGRES_USER: *test-user
           POSTGRES_DB: *test-db
     steps:
       - checkout
