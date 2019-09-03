@@ -15,4 +15,4 @@ Thus, based on my experience building production-level systems, I built a compre
 - a scalable, fault-tolerant queuing system that takes advantage of multi-core CPUs
 - fully-loaded development environment with automated testing/migration/dependencies/linting via git & npm hooks, development-purpose mail server, and even automatic type generation!
 
-To get started, [check out the documentation](https://github.com/JaneJeon/express-objection-starter/wiki) for more details!
+To get started, [check out the documentation](https://objection.netlify.com) for more details!
