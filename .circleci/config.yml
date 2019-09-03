@@ -49,9 +49,9 @@ jobs:
     working_directory: ~/repo
     docker:
       - image: circleci/node
-      # environment:
-      #   PGHOST: 127.0.0.1
-      #   PGUSER: knex
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: knex
       - image: circleci/redis
       - image: circleci/postgres
         environment:
