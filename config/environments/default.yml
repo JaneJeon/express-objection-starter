@@ -35,6 +35,9 @@ session:
   rolling: true
   saveUninitialized: false # GDPR compliance
 
+jwt:
+  secret: aayn
+
 ratelimit:
   max: 0
 

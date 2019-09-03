@@ -20,12 +20,15 @@ class BaseModel extends authorize(visibility(DbErrors(tableName(Model)))) {
     return Model.JoinEagerAlgorithm
   }
 
-  static createValidator() {
-    // yes, I'm using this as a static one-time hook
-    const name = this.name.toLowerCase()
-    this.jsonSchema = config.get(`schema:${name}`)
-    this.relationMappings = config.get(`relations:${name}`)
+  static get jsonSchema() {
+    return config.get(`schema:${this.name}`)
+  }
 
+  static get relationMappings() {
+    return config.get(`relations:${this.name}`)
+  }
+
+  static createValidator() {
     return new AjvValidator({
       // eslint-disable-next-line no-unused-vars
       onCreateAjv: ajv => {}, // need an empty function

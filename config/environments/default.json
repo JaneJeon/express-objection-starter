@@ -21,6 +21,7 @@
     "rolling": true,
     "saveUninitialized": false
   },
+  "jwt": { "secret": "aayn" },
   "ratelimit": { "max": 0 },
   "redis": { "url": "redis://localhost" },
   "queue": { "defaultJobOptions": { "removeOnComplete": true } },

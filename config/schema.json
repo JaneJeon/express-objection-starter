@@ -1,5 +1,5 @@
 {
-  "user": {
+  "User": {
     "type": "object",
     "properties": {
       "username": {
