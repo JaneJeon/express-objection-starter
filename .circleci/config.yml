@@ -28,7 +28,12 @@ aliases:
   #   store_test_results:
   #     path: reports/junit
 
-  - &test-db app
+  - &test-db test
+  - &test-user knex
+
+  - &base-env
+    KNEX_CONNECTION_USER: *test-user
+    KNEX_CONNECTION_DATABASE: *test-db
 
 version: 2
 jobs:
@@ -49,14 +54,10 @@ jobs:
     working_directory: ~/repo
     docker:
       - image: circleci/node
-        environment:
-          KNEX_CONNECTION_USER: knex
-          # PGHOST: 127.0.0.1
-          # PGUSER: knex
+        environment: *base-env
       - image: circleci/redis
       - image: circleci/postgres
         environment:
-          POSTGRES_USER: knex
           POSTGRES_DB: *test-db
     steps:
       - checkout
@@ -88,7 +89,6 @@ jobs:
       - run: yarn docs:build
       - run: yarn docs:deploy
 
-#
 #   deploy:
 #     docker:
 #       - image: buildpack-deps:trusty
