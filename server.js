@@ -7,15 +7,12 @@ const express = require('express')
 const app = express()
 require('express-ws')(app)
 
-if (config.get('proxy'))
-  app
-    .set('trust proxy', config.get('proxy:trust'))
-    .use(require('express-sslify').HTTPS(config.get('proxy:enforceHTTPS')))
+require('./middlewares').forEach(middleware => app.use(middleware))
+
+if (config.get('proxy')) app.set('trust proxy', config.get('proxy:trust'))
 
 app
-  .use(require('express-request-id')(config.get('requestId')))
   .use(require('./middlewares/request-logger'))
-  .use(require('helmet')())
   .use(require('cors')({ origin: true }))
   .use(require('./middlewares/session'))
   .use(require('./middlewares/ratelimiter'))

@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -183,7 +183,6 @@
     "@types/jest": "^24.0.17",
     "coveralls": "^3.0.6",
     "cross-env": "^5.2.0",
-    "dotenv": "^8.1.0",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-prettier": "^3.1.0",
