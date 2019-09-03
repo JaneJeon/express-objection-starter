@@ -17,7 +17,7 @@ nconf
 
 // mappings
 if (process.env.DATABASE_URL)
-  nconf.set('database:connection', process.env.DATABASE_URL)
+  nconf.set('knex:connection', process.env.DATABASE_URL)
 // TODO: bonsai_url
 
 module.exports = nconf

@@ -55,12 +55,13 @@ mailQueue:
     max: 14
     duration: 1 # 1 sec in millis
 
-database:
+knex:
   # available clients: https://knexjs.org/#Installation-node
   # note that while you *can* use other clients, some of the base class's "magic methods"
   # that utilize .returning('*') will NOT be available on anything other than pg/mssql
   client: pg
-  connection: postgres://localhost/app
+  connection:
+    database: app
   debug: true
 
 mail:

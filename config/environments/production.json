@@ -6,7 +6,7 @@
   },
   "session": { "secret": null },
   "ratelimit": { "windowMs": 900000, "max": 100 },
-  "database": { "debug": false },
+  "knex": { "debug": false },
   "mail": {
     "smtp": {
       "service": "sendgrid",

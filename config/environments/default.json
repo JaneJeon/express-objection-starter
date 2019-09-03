@@ -28,9 +28,9 @@
     "defaultJobOptions": { "removeOnFail": true },
     "limiter": { "max": 14, "duration": 1 }
   },
-  "database": {
+  "knex": {
     "client": "pg",
-    "connection": "postgres://localhost/app",
+    "connection": { "database": "app" },
     "debug": true
   },
   "mail": {

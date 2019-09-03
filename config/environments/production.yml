@@ -25,7 +25,7 @@ ratelimit:
   windowMs: 900e+3 # 15 minutes, in milliseconds
   max: 100
 
-database:
+knex:
   debug: false
 
 mail:

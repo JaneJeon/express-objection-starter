@@ -1,1 +1,1 @@
-{ "database": { "debug": false } }
+{ "knex": { "debug": false } }

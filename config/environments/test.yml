@@ -5,5 +5,5 @@ logger:
   # the %s is replaced with new Date()
   destination: logs/test-%s-output.log
 
-database:
+knex:
   debug: false
