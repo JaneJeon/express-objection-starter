@@ -49,15 +49,24 @@ jobs:
     working_directory: ~/repo
     docker:
       - image: circleci/node
+      # environment:
+      #   PGHOST: 127.0.0.1
+      #   PGUSER: knex
       - image: circleci/redis
       - image: circleci/postgres
         environment:
+          # POSTGRES_USER: knex
           POSTGRES_DB: *test-db
     steps:
       - checkout
       - *restore-cache
       - *install
       - *save-cache
+      - run:
+          name: wait for dbs
+          command: |
+            dockerize -wait tcp://localhost:5432 -timeout 1m # postgres
+            dockerize -wait tcp://localhost:6379 -timeout 1m # redis
       - run:
           environment:
             JEST_JUNIT_OUTPUT: reports/junit/jest/results.xml
