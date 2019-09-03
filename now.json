@@ -1,0 +1,3 @@
+{
+  "builds": [{ "src": "docs/.vuepress/dist", "use": "@now/static" }]
+}
