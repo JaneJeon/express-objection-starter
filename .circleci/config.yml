@@ -55,7 +55,7 @@ jobs:
       - image: circleci/redis
       - image: circleci/postgres
         environment:
-          # POSTGRES_USER: knex
+          POSTGRES_USER: knex
           POSTGRES_DB: *test-db
     steps:
       - checkout
