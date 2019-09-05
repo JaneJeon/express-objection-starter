@@ -25,7 +25,7 @@ module.exports = Router()
 
       const token = jwt.sign({}, JWT_SECRET, {
         subject,
-        audience: req.user.hashid,
+        audience: req.user.hashId,
         expiresIn: '1d'
       })
       const data = { link: `${FRONTEND_URL}/account/verify/${token}` }
@@ -37,7 +37,7 @@ module.exports = Router()
 
     const token = jwt.sign({}, JWT_SECRET, {
       subject,
-      audience: req.user.hashid,
+      audience: req.user.hashId,
       expiresIn: '1d'
     })
     const data = { link: `${FRONTEND_URL}/account/verify/${token}` }
@@ -65,7 +65,7 @@ module.exports = Router()
     const user = await User.query().findByEmail(req.params.email)
     const token = jwt.sign({}, JWT_SECRET, {
       subject,
-      audience: user.hashid,
+      audience: user.hashId,
       expiresIn: '1d'
     })
     const data = { link: `${FRONTEND_URL}/account/reset/${token}` }
