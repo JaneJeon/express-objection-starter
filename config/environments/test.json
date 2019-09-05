@@ -1,7 +1,0 @@
-{
-  "logger": {
-    "options": { "prettyPrint": { "colorize": false } },
-    "destination": "logs/test-%s-output.log"
-  },
-  "knex": { "debug": false }
-}

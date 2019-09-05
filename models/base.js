@@ -1,13 +1,16 @@
 const { Model, AjvValidator } = require('objection')
 const tableName = require('objection-table-name')()
 const { DbErrors } = require('objection-db-errors')
-const visibility = require('objection-visibility').default
 const authorize = require('objection-authorize')(require('../lib/acl'))
+const visibility = require('objection-visibility').default
+const hashId = require('objection-hashid')
 const config = require('../config')
 
 Model.knex(require('knex')(require('../knexfile')))
 
-class BaseModel extends authorize(visibility(DbErrors(tableName(Model)))) {
+class BaseModel extends hashId(
+  visibility(authorize(DbErrors(tableName(Model))))
+) {
   static get modelPaths() {
     return [__dirname]
   }
@@ -20,11 +23,17 @@ class BaseModel extends authorize(visibility(DbErrors(tableName(Model)))) {
     return Model.JoinEagerAlgorithm
   }
 
+  static get pageSize() {
+    return 15
+  }
+
+  static get hashIdMinLength() {
+    return 5
+  }
+
   static createValidator() {
-    // yes, I'm using this as a static one-time hook
-    const name = this.name.toLowerCase()
-    this.jsonSchema = config.get(`schema:${name}`)
-    this.relationMappings = config.get(`relations:${name}`)
+    this.jsonSchema = config.get(`schema:${this.name}`)
+    this.relationMappings = config.get(`relations:${this.name}`)
 
     return new AjvValidator({
       // eslint-disable-next-line no-unused-vars
@@ -48,10 +57,6 @@ class BaseModel extends authorize(visibility(DbErrors(tableName(Model)))) {
   async $beforeUpdate(opt, queryContext) {
     await super.$beforeUpdate(opt, queryContext)
     await this.processInput(opt, queryContext)
-  }
-
-  static get pageSize() {
-    return 15
   }
 
   static get QueryBuilder() {

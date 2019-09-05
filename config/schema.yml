@@ -1,6 +1,9 @@
-user:
+User:
   type: object
   properties:
+    id:
+      type: integer
+      readOnly: true
     username:
       type: string
       minLength: 4

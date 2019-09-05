@@ -35,6 +35,9 @@ session:
   rolling: true
   saveUninitialized: false # GDPR compliance
 
+jwt:
+  secret: aayn
+
 ratelimit:
   max: 0
 
@@ -49,11 +52,11 @@ queue:
 # extends queue
 mailQueue:
   defaultJobOptions:
-    removeOnFail: true # we don't need to store failed email "jobs"
+    removeOnFail: 3000 # we don't need to store too many failed email "jobs"
   # this is just an SES example. modify as you see fit for your service (especially Sendgrid)
   limiter:
-    max: 14
-    duration: 1 # 1 sec in millis
+    max: 10000
+    duration: 86400000 # 1 day in millis
 
 knex:
   # available clients: https://knexjs.org/#Installation-node

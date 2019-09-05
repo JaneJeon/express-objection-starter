@@ -91,3 +91,8 @@ junit.xml
 
 # Local Netlify folder
 .netlify
+
+# Built files
+config/**/*.json
+views/**/html.hbs
+views/emails/index.js
