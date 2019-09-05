@@ -101,6 +101,9 @@
     "proseWrap": "never"
   },
   "nodemonConfig": {
+    "events": {
+      "start": "cls || clear"
+    },
     "ignore": [
       "*.test.js",
       "migrations/",
