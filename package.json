@@ -58,7 +58,7 @@
     "test": "run-p dev:mail 'test:unit {@}' --race -- --",
     "test:watch": "run-p watch 'test --watch'",
     "test:unit": "wait-on http://localhost:1080 && jest",
-    "coverage": "if is-ci; then cat ./coverage/lcov.info | coveralls; fi",
+    "coverage": "is-ci && codecov",
     "lint": "run-s 'lint:all:* {@}' -- --",
     "lint:all:eslint": "eslint --cache .",
     "lint:all:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
@@ -171,7 +171,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",
-    "coveralls": "^3.0.6",
+    "codecov": "^3.5.0",
     "cross-env": "^5.2.0",
     "dotenv": "^8.1.0",
     "eslint": "^6.3.0",
