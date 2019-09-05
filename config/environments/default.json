@@ -26,8 +26,8 @@
   "redis": { "url": "redis://localhost" },
   "queue": { "defaultJobOptions": { "removeOnComplete": true } },
   "mailQueue": {
-    "defaultJobOptions": { "removeOnFail": true },
-    "limiter": { "max": 14, "duration": 1 }
+    "defaultJobOptions": { "removeOnFail": 3000 },
+    "limiter": { "max": 10000, "duration": 86400000 }
   },
   "knex": {
     "client": "pg",

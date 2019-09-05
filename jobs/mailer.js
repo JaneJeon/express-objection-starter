@@ -11,13 +11,6 @@ class Mailer extends BaseJob {
   static async process(job) {
     return mail.sendMail(job.data)
   }
-
-  static async runOrAdd(data, opts = {}) {
-    if (!opts.id) throw new Error('required parameter: opts.id')
-    const job = await this.getJob(opts.id)
-
-    return job ? job.promote() : this.add(data, opts)
-  }
 }
 
 module.exports = Mailer

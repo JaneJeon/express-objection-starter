@@ -25,7 +25,7 @@ module.exports = Router()
 
       const token = jwt.sign({}, JWT_SECRET, {
         subject,
-        audience: req.user.id,
+        audience: req.user.hashid,
         expiresIn: '1d'
       })
       const data = { link: `${FRONTEND_URL}/account/verify/${token}` }
@@ -37,7 +37,7 @@ module.exports = Router()
 
     const token = jwt.sign({}, JWT_SECRET, {
       subject,
-      audience: req.user.id,
+      audience: req.user.hashid,
       expiresIn: '1d'
     })
     const data = { link: `${FRONTEND_URL}/account/verify/${token}` }
@@ -50,7 +50,7 @@ module.exports = Router()
 
     const { aud } = jwt.verify(req.params.token, JWT_SECRET, { subject })
     const user = await User.query()
-      .findById(aud)
+      .findByHashId(aud)
       .patch({ verified: true })
 
     // automatically log in user since we know they own the account
@@ -65,7 +65,7 @@ module.exports = Router()
     const user = await User.query().findByEmail(req.params.email)
     const token = jwt.sign({}, JWT_SECRET, {
       subject,
-      audience: user.id,
+      audience: user.hashid,
       expiresIn: '1d'
     })
     const data = { link: `${FRONTEND_URL}/account/reset/${token}` }
@@ -78,7 +78,7 @@ module.exports = Router()
 
     const { aud } = jwt.verify(req.params, JWT_SECRET, { subject })
     const user = await User.query()
-      .findById(aud)
+      .findByHashId(aud)
       .patch({ verified: true })
 
     // automatically log in user since we know they own the account

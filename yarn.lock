@@ -5622,6 +5622,11 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
+hashids@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/hashids/-/hashids-2.0.0.tgz#8a3ad77598233e399594b73ad5fdb3c2c880528e"
+  integrity sha512-URg7dQlk6wQS9WqhQwKBC0cT/G0JMaEcwlHTvtRNB45JcIrr6mxY7dXiCUJwESf+tXnyaFdz7C8ETDYrQsyY1A==
+
 he@1.2.x, he@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
@@ -9206,6 +9211,14 @@ objection-gen@^0.5.2:
     json-schema-faker "^0.5.0-rc16"
     lodash.camelcase "^4.3.0"
     objection "^1.4.0"
+
+objection-hashid@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/objection-hashid/-/objection-hashid-0.2.1.tgz#99249ff5bb082a769d5edf66d2929c90be869bde"
+  integrity sha512-rMYUQksSkW4UqeuaCyREgykVNmY23HRcQ/v9WD5Lc15Mr8GBAZx8ZgQY9ZDSM7FJ49CHG2tocCKTKdxlPFhOUQ==
+  dependencies:
+    hashids "^2.0.0"
+    lodash.memoize "^4.1.2"
 
 objection-password@^2.0.0:
   version "2.0.0"

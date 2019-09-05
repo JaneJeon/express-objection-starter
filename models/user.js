@@ -6,7 +6,7 @@ const mailer = require('../jobs/mailer')
 
 class User extends password(BaseModel) {
   static get hidden() {
-    return ['id', 'password']
+    return ['id', 'password', 'hashid']
   }
 
   processInput() {
@@ -34,13 +34,13 @@ class User extends password(BaseModel) {
   }
 
   // data: https://nodemailer.com/message/
-  async sendMail(template, data = {}, dedup = false) {
+  async sendMail(template, data = {}) {
     if (!template) throw new Error('required parameter: template')
 
     Object.assign(data, { template, to: this.email, user: this })
     const opts = { id: `${template}:${this.email}` }
 
-    return dedup ? mailer.runOrAdd(data, opts) : mailer.add(data, opts)
+    return mailer.add(data, opts)
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -162,6 +162,7 @@
     "objection": "^1.6.9",
     "objection-authorize": "^0.5.3",
     "objection-db-errors": "^1.1.1",
+    "objection-hashid": "^0.2.1",
     "objection-password": "^2.0.0",
     "objection-table-name": "^1.0.0",
     "objection-visibility": "^0.4.0",
