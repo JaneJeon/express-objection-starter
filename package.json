@@ -1,6 +1,6 @@
 {
   "name": "express-objection-starter",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "an opinionated, production-ready express/knex/objection starter",
   "keywords": [
     "express",
@@ -80,17 +80,9 @@
   },
   "eslintConfig": {
     "env": {
-      "node": true,
-      "es6": true,
       "jest": true
     },
-    "extends": [
-      "plugin:prettier/recommended",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2018
-    }
+    "extends": "standard"
   },
   "eslintIgnore": [
     "views/emails/index.js"
@@ -176,7 +168,12 @@
     "dotenv": "^8.1.0",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.1.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "express-list-endpoints": "^4.0.1",
     "is-ci": "^2.0.0",
     "jest": "^24.8.0",

@@ -10,10 +10,10 @@ module.exports = (err, req, res, next) => {
   }
 
   if (!err.statusCode) {
-    if (err instanceof ValidationError || err instanceof JsonWebTokenError)
+    if (err instanceof ValidationError || err instanceof JsonWebTokenError) {
       err.statusCode = 400
-    else if (err instanceof NotFoundError) err.statusCode = 404
-    else if (err instanceof DBError)
+    } else if (err instanceof NotFoundError) err.statusCode = 404
+    else if (err instanceof DBError) {
       err.statusCode = (() => {
         switch (err.name) {
           case 'NotNullViolationError':
@@ -28,7 +28,7 @@ module.exports = (err, req, res, next) => {
             return 500
         }
       })()
-    else err.statusCode = 500
+    } else err.statusCode = 500
   }
 
   res.status(err.statusCode).send({

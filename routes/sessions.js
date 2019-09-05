@@ -9,8 +9,9 @@ const config = require('../config')
 module.exports = Router()
   // TODO: short circuit 200 when logged in?
   .post('/login', passport.authenticate('local'), (req, res) => {
-    if (req.body.rememberMe)
+    if (req.body.rememberMe) {
       req.session.cookie.maxAge = config.get('session:cookie:rememberMe')
+    }
 
     const ua = parser(req.header('x-ucbrowser-ua') || req.header('user-agent'))
 
@@ -39,7 +40,7 @@ module.exports = Router()
     const scan = async cursor => {
       const result = await redis.scan(cursor, 'match', sessPattern)
       result[1].forEach(key => keys.add(key))
-      if (result[0] != 0) return scan(result[0])
+      if (result[0] !== 0) return scan(result[0])
     }
     await scan(0)
 
@@ -48,7 +49,7 @@ module.exports = Router()
       .filter(x => x)
       .map(sess =>
         Object.assign(pick(sess, ['id', 'ip', 'useragent']), {
-          self: sess.id == req.session.id,
+          self: sess.id === req.session.id,
           id: sess.id.substr(sessPrefix.length)
         })
       )

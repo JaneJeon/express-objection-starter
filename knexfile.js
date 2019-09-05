@@ -1,6 +1,6 @@
 const config = require('./config')
 
-if (config.get('knex:client') == 'pg') {
+if (config.get('knex:client') === 'pg') {
   const { types } = require('pg')
   const dayjs = require('dayjs')
   types.setTypeParser(20, parseInt) // cast SELECT COUNT(*) to integer

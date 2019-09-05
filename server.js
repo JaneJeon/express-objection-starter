@@ -26,7 +26,7 @@ app
   .use(require('./middlewares/error-handler'))
 
 // jest runs multiple instances of the server, so it results in port conflict
-if (config.get('node:env') != 'test')
+if (config.get('node:env') !== 'test') {
   app
     .listen(config.get('port'), function(err) {
       if (err) throw err
@@ -34,5 +34,6 @@ if (config.get('node:env') != 'test')
       log.info('Server listening on port', this.address().port)
     })
     .setTimeout(config.get('timeout'))
+}
 
 module.exports = app
