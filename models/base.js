@@ -11,27 +11,27 @@ Model.knex(require('knex')(require('../knexfile')))
 class BaseModel extends hashId(
   visibility(authorize(DbErrors(tableName(Model))))
 ) {
-  static get modelPaths() {
+  static get modelPaths () {
     return [__dirname]
   }
 
-  static get useLimitInFirst() {
+  static get useLimitInFirst () {
     return true
   }
 
-  static get defaultEagerAlgorithm() {
+  static get defaultEagerAlgorithm () {
     return Model.JoinEagerAlgorithm
   }
 
-  static get pageSize() {
+  static get pageSize () {
     return 15
   }
 
-  static get hashIdMinLength() {
+  static get hashIdMinLength () {
     return 5
   }
 
-  static createValidator() {
+  static createValidator () {
     this.jsonSchema = config.get(`schema:${this.name}`)
     this.relationMappings = config.get(`relations:${this.name}`)
 
@@ -47,37 +47,37 @@ class BaseModel extends hashId(
     })
   }
 
-  processInput() {}
+  processInput () {}
 
-  async $beforeInsert(queryContext) {
+  async $beforeInsert (queryContext) {
     await super.$beforeInsert(queryContext)
     await this.processInput(queryContext)
   }
 
-  async $beforeUpdate(opt, queryContext) {
+  async $beforeUpdate (opt, queryContext) {
     await super.$beforeUpdate(opt, queryContext)
     await this.processInput(opt, queryContext)
   }
 
-  static get QueryBuilder() {
+  static get QueryBuilder () {
     return class extends super.QueryBuilder {
-      insert(body) {
+      insert (body) {
         const q = super.insert(body).returning('*')
 
         return Array.isArray(body) ? q : q.first()
       }
 
-      patch(body) {
+      patch (body) {
         const q = super.patch(body).returning('*')
 
         return Array.isArray(body) ? q : q.first()
       }
 
-      findById(id) {
+      findById (id) {
         return super.findById(id).throwIfNotFound()
       }
 
-      paginate(after, sortField = 'id', direction = 'desc') {
+      paginate (after, sortField = 'id', direction = 'desc') {
         return this.skipUndefined()
           .where(sortField, '<', after)
           .orderBy(sortField, direction)

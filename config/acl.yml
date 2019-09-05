@@ -1,6 +1,6 @@
 aliases:
-  - &defaultUserReadAccess ['*', '!email']
-  - &defaultUserWriteAccess ['*', '!role', '!verified']
+  - &defaultUserReadAccess ["*", "!email"]
+  - &defaultUserWriteAccess ["*", "!role", "!verified"]
 
 anonymous:
   grants:
@@ -18,7 +18,7 @@ user:
       attributes: *defaultUserReadAccess
     - resource: User
       action: read
-      attributes: ['email']
+      attributes: ["email"]
       condition:
         Fn: EQUALS
         args:
@@ -43,7 +43,7 @@ admin:
   grants:
     - resource: User
       action: update
-      attributes: ['role']
+      attributes: ["role"]
       condition:
         Fn: NOT_EQUALS
         args:

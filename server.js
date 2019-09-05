@@ -28,7 +28,7 @@ app
 // jest runs multiple instances of the server, so it results in port conflict
 if (config.get('node:env') !== 'test') {
   app
-    .listen(config.get('port'), function(err) {
+    .listen(config.get('port'), function (err) {
       if (err) throw err
       const log = require('./lib/logger')
       log.info('Server listening on port', this.address().port)

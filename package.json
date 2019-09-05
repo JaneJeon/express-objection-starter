@@ -59,11 +59,11 @@
     "test:watch": "run-p watch 'test --watch'",
     "test:unit": "wait-on http://localhost:1080 && jest",
     "coverage": "is-ci && codecov",
-    "lint": "run-s 'lint:all:* {@}' -- --",
-    "lint:all:eslint": "eslint --cache .",
-    "lint:all:prettier": "prettier --check '**/*.{js,ts,html,css,json,md,yml,yaml}'",
+    "lint": "run-s lint:all:*",
+    "lint:all:eslint": "standard | snazzy",
+    "lint:all:prettier": "prettier --check '**/*.{ts,html,css,json,md,yml,yaml}'",
     "lint:fix": "run-s lint:fix:*",
-    "lint:fix:eslint": "yarn lint:all:eslint --fix",
+    "lint:fix:eslint": "standard --fix | snazzy",
     "lint:fix:prettier": "yarn lint:all:prettier --write",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
@@ -78,20 +78,14 @@
       "post-receive": "yarn --production && yarn setup"
     }
   },
-  "eslintConfig": {
+  "standard": {
     "env": {
       "jest": true
-    },
-    "extends": "standard"
+    }
   },
   "eslintIgnore": [
     "views/emails/index.js"
   ],
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "proseWrap": "never"
-  },
   "nodemonConfig": {
     "events": {
       "start": "cls || clear"
@@ -166,14 +160,6 @@
     "codecov": "^3.5.0",
     "cross-env": "^5.2.0",
     "dotenv": "^8.1.0",
-    "eslint": "^6.3.0",
-    "eslint-config-prettier": "^6.1.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
     "express-list-endpoints": "^4.0.1",
     "is-ci": "^2.0.0",
     "jest": "^24.8.0",
@@ -185,6 +171,8 @@
     "pino-pretty": "^3.2.0",
     "prettier": "^1.17.1",
     "rimraf": "^3.0.0",
+    "snazzy": "^8.0.0",
+    "standard": "^14.1.0",
     "string-natural-compare": "^2.0.3",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",

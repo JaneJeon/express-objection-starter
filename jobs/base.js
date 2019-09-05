@@ -3,24 +3,24 @@ const logger = require('../lib/logger')
 const nanoid = require('nanoid/non-secure')
 
 class BaseJob {
-  static get queue() {
+  static get queue () {
     return queue
   }
 
   // TODO: memoize this?
-  static get log() {
+  static get log () {
     return logger.child({ task: this.name })
   }
 
-  static get defaultOptions() {
+  static get defaultOptions () {
     return {}
   }
 
-  static _jobId(id) {
+  static _jobId (id) {
     return `${this.name}:${id}`
   }
 
-  static async add(data, opts = {}) {
+  static async add (data, opts = {}) {
     // prefix jobId to fetch it later
     if (!opts.id) opts.id = nanoid()
     opts.jobId = this._jobId(opts.id)
@@ -34,11 +34,11 @@ class BaseJob {
     )
   }
 
-  static getJob(id) {
+  static getJob (id) {
     return this.queue.getJob(this._jobId(id))
   }
 
-  static async process() {
+  static async process () {
     throw new Error('job processing function not implemented!')
   }
 }

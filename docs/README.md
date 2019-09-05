@@ -6,17 +6,17 @@ actionText: Get Started →
 actionLink: /guide/
 features:
   - title: Objection + Knex.js Integration
-    details: 'TODO:'
+    details: "TODO:"
   - title: Powerful Configuration
     details: sensible defaults, 'TODO:'
   - title: Production-Ready
     details: easy deployment, 'TODO:'
   - title: Developer Ergonomics
-    details: 'TODO:'
+    details: "TODO:"
   - title: Secure Authentication & Authorization
-    details: 'TODO:'
+    details: "TODO:"
   - title: Single Source of Truth
-    details: 'TODO:'
+    details: "TODO:"
 footer: MIT Licensed | Copyright © 2019-present Jane Jeon
 ---
 

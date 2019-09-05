@@ -46,9 +46,7 @@ jobs:
       - *restore-cache
       - *install
       - *save-cache
-      - run: yarn lint --format junit -o reports/junit/eslint/results.xml
-      - store_test_results:
-          path: reports/junit
+      - run: yarn lint
 
   test:
     working_directory: ~/repo
