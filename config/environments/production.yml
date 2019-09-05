@@ -1,9 +1,5 @@
 # https://expressjs.com/en/guide/behind-proxies.html
-# https://github.com/florianheinemann/express-sslify
-proxy:
-  trust: true
-  enforceHTTPS:
-    trustProtoHeader: true
+proxy: true
 
 logger:
   options:
