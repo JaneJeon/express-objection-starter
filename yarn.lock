@@ -4464,11 +4464,6 @@ express-session@^1.16.1:
     safe-buffer "5.1.2"
     uid-safe "~2.1.5"
 
-express-sslify@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/express-sslify/-/express-sslify-1.2.0.tgz#30e84bceed1557eb187672bbe1430a0a2a100d9c"
-  integrity sha1-MOhLzu0VV+sYdnK74UMKCioQDZw=
-
 express-ws@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/express-ws/-/express-ws-4.0.0.tgz#dabd8dc974516418902a41fe6e30ed949b4d36c4"
@@ -8787,10 +8782,10 @@ objection-gen@^0.5.2:
     lodash.camelcase "^4.3.0"
     objection "^1.4.0"
 
-objection-hashid@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/objection-hashid/-/objection-hashid-0.2.1.tgz#99249ff5bb082a769d5edf66d2929c90be869bde"
-  integrity sha512-rMYUQksSkW4UqeuaCyREgykVNmY23HRcQ/v9WD5Lc15Mr8GBAZx8ZgQY9ZDSM7FJ49CHG2tocCKTKdxlPFhOUQ==
+objection-hashid@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/objection-hashid/-/objection-hashid-0.2.2.tgz#9449df72d939e354ce22c4a4c1df77c86dd13f78"
+  integrity sha512-+L+/8fzMmyHbqgwCDtAg3qoJrsiM4tLkoxTgxeutpedK0KoYodDZeUQ4h0JaP6/rAHmd7c16kBTBu9dS9hyntg==
   dependencies:
     hashids "^2.0.0"
     lodash.memoize "^4.1.2"
