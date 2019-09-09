@@ -8948,9 +8948,9 @@ object.values@^1.1.0:
     has "^1.0.3"
 
 objection-authorize@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/objection-authorize/-/objection-authorize-0.5.3.tgz#893e3b4b5ef75d766e0a5accee5228a42b7af166"
-  integrity sha512-gyyaXTjVHthsfGukl8bGHzd40TJjnc+xD7mYfHfpvi4aFG1sT4JLrhXfYGXCQvTSV/pDT4rIUHqjM54dQYnv6g==
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/objection-authorize/-/objection-authorize-0.5.14.tgz#54b6b4d8a0bb637b97dbf54a1039700287f8cc9d"
+  integrity sha512-ZxBrrho3uZVu7qBvDNLuA82gvUN6+dQKFNrardRZL845awKX04qUYmQnZXcKLUt9qGSq3P8EqKrrFQTfU4aPBg==
   dependencies:
     http-assert "^1.4.1"
 
