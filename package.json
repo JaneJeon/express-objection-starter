@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "bull": "^3.10.0",
-    "connect-redis": "^3.4.2",
+    "connect-redis": "^4.0.2",
     "cors": "^2.8.5",
     "dayjs": "^1.8.14",
     "express": "^4.17.1",
