@@ -8970,10 +8970,10 @@ objection-gen@^0.5.2:
     lodash.camelcase "^4.3.0"
     objection "^1.4.0"
 
-objection-hashid@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/objection-hashid/-/objection-hashid-0.2.2.tgz#9449df72d939e354ce22c4a4c1df77c86dd13f78"
-  integrity sha512-+L+/8fzMmyHbqgwCDtAg3qoJrsiM4tLkoxTgxeutpedK0KoYodDZeUQ4h0JaP6/rAHmd7c16kBTBu9dS9hyntg==
+objection-hashid@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/objection-hashid/-/objection-hashid-0.3.2.tgz#22ed14d8c1f1658265a4e1a8b9eaddb26b2493bb"
+  integrity sha512-pFn+RQ3jI6yseExhItTzVh395Kouw+tkCH5FQBXptIWoJtLcVgf6j94PL4JH8UErfbS22bx27KP4iZj3MvI17A==
   dependencies:
     hashids "^2.0.0"
     lodash.memoize "^4.1.2"
