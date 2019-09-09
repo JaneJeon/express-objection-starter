@@ -11016,9 +11016,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     inherits "^2.0.1"
 
 role-acl@^3.3.5:
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/role-acl/-/role-acl-3.3.6.tgz#bab09ee44e15879ff20f9639083298acb3ddfb65"
-  integrity sha512-5N+hHM/CecGeLZ/15LtPZ6z3ZbsbWgC6cyXxQjRhramGqvwVF/vnLW07lHyQMJv2blDJ566CYDSPNMrLjXHPCg==
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/role-acl/-/role-acl-3.3.7.tgz#24354857df6f3444934a9ce1194a3107e585537c"
+  integrity sha512-bWY4T2/JKVMVjRrVccAvka7tqqaghzCSNk3evoo4pzzUrlYprKdn2MpiFZsBAt3QpODzUsejgMpJ8XFyAItA+Q==
   dependencies:
     jsonpath-plus "^0.18.0"
     matcher "^1.0.0"
