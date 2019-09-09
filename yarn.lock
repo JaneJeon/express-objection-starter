@@ -8986,11 +8986,12 @@ objection-password@^2.0.0:
     bcrypt "^3.0.0"
 
 objection-table-name@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/objection-table-name/-/objection-table-name-1.0.1.tgz#7fb83db65c23b947a42ed4b7ff40bf5e8da07885"
-  integrity sha512-LriKzMsOC2iD5eWlQ+zmekPHRwk5SpjuhvcSYhoOuCZcHvnimfccx8LLWltXxQJqx1nPwnTC2vnhTOVcalYfkA==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/objection-table-name/-/objection-table-name-1.0.8.tgz#1046980cdd76ddda4b0add138790952480bacf2f"
+  integrity sha512-oi0BQHSHBe7c3CikHPgVi9QizmgHaCv5YSLy+c8RV80jJwHW5f9Un+xm0qWR6sQo0Il+ZcnUHxsuWG8FPnAhdA==
   dependencies:
-    lodash "^4.17.11"
+    lodash.camelcase "^4.3.0"
+    lodash.memoize "^4.1.2"
     pluralize "^8.0.0"
 
 objection-visibility@^0.4.0:
