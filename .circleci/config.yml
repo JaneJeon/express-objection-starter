@@ -20,7 +20,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-      - run: yarn lint
+      - run: yarn lint --format junit -o reports/junit/eslint/results.xml
       - &store-test-results
         store_test_results:
           path: reports/junit
