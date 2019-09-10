@@ -131,7 +131,7 @@
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
     "objection": "^1.6.9",
-    "objection-authorize": "^0.5.14",
+    "objection-authorize": "^0.6.1",
     "objection-db-errors": "^1.1.1",
     "objection-hashid": "^0.3.2",
     "objection-password": "^2.0.0",

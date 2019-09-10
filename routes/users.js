@@ -8,6 +8,9 @@ const JWT_SECRET = config.get('jwt:secret')
 const jwt = require('jsonwebtoken')
 
 module.exports = Router()
+  .get('/account', requireAuthN, (req, res) => {
+    res.send(req.user)
+  })
   .post('/account', async (req, res) => {
     const user = await User.query()
       .authorize(req.user, null, {
@@ -98,7 +101,7 @@ module.exports = Router()
   .get('/users/:username', async (req, res) => {
     const username = req.params.username.toLowerCase()
     const user = await User.query()
-      .authorize(req.user, { username }) // only need to check username
+      .authorize(req.user)
       .findByUsername(username)
 
     res.send(user)
