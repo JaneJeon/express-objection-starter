@@ -5,11 +5,11 @@ const normalize = require('normalize-email')
 const mailer = require('../jobs/mailer')
 
 class User extends password(BaseModel) {
-  static get hidden () {
+  static get hidden() {
     return ['id', 'password']
   }
 
-  processInput () {
+  processInput() {
     if (this.username) this.username = this.username.toLowerCase()
     if (this.email) {
       checkDomain(this.email)
@@ -17,24 +17,24 @@ class User extends password(BaseModel) {
     }
   }
 
-  static get QueryBuilder () {
+  static get QueryBuilder() {
     return class extends super.QueryBuilder {
-      findByUsername (username) {
+      findByUsername(username) {
         return this.findOne({ username }).throwIfNotFound()
       }
 
-      findByEmail (email) {
+      findByEmail(email) {
         return this.findOne({ email: normalize(email) }).throwIfNotFound()
       }
     }
   }
 
-  getSession (id = '') {
+  getSession(id = '') {
     return `sess:${this.id}:${id}`
   }
 
   // data: https://nodemailer.com/message/
-  async sendMail (template, data = {}) {
+  async sendMail(template, data = {}) {
     if (!template) throw new Error('required parameter: template')
 
     Object.assign(data, { template, to: this.email, user: this })
