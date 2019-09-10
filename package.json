@@ -51,7 +51,7 @@
       "pre-commit": "lint-staged",
       "pre-push": "yarn test",
       "post-merge": "yarn && yarn setup",
-      "post-receive": "yarn --production && yarn setup"
+      "post-receive": "yarn --production --frozen-lockfile && yarn setup"
     }
   },
   "jest": {

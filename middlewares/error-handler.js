@@ -1,3 +1,4 @@
+// istanbul ignore file
 const { ValidationError, NotFoundError } = require('objection')
 const { DBError } = require('objection-db-errors')
 const { JsonWebTokenError } = require('jsonwebtoken')

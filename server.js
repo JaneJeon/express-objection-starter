@@ -1,3 +1,4 @@
+// istanbul ignore file
 const config = require('./config')
 require('./config/passport')
 require('express-async-errors')

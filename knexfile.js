@@ -1,3 +1,4 @@
+// istanbul ignore file
 const config = require('./config')
 
 if (config.get('knex:client') === 'pg') {

@@ -11,6 +11,8 @@ Model.knex(require('knex')(require('../knexfile')))
 class BaseModel extends hashId(
   visibility(authorize(DbErrors(tableName(Model))))
 ) {
+  // TODO: test these once I have actual relations
+  // istanbul ignore next
   static get modelPaths() {
     return [__dirname]
   }
@@ -19,10 +21,12 @@ class BaseModel extends hashId(
     return true
   }
 
+  // istanbul ignore next
   static get defaultEagerAlgorithm() {
     return Model.JoinEagerAlgorithm
   }
 
+  // istanbul ignore next
   static get pageSize() {
     return 15
   }
@@ -77,6 +81,8 @@ class BaseModel extends hashId(
         return super.findById(id).throwIfNotFound()
       }
 
+      // TODO:
+      // istanbul ignore next
       paginate(after, sortField = 'id', direction = 'desc') {
         return this.skipUndefined()
           .where(sortField, '<', after)

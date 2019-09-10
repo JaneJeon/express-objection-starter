@@ -58,6 +58,7 @@ module.exports = Router()
 
     // automatically log in user since we know they own the account
     req.login(user, async err => {
+      // istanbul ignore next
       if (err) throw err
       res.send(req.user)
     })
@@ -86,6 +87,7 @@ module.exports = Router()
 
     // automatically log in user since we know they own the account
     req.login(user, async err => {
+      // istanbul ignore next
       if (err) throw err
       res.send(req.user)
     })
