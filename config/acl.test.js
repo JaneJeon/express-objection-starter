@@ -137,7 +137,8 @@ describe('access control', () => {
         ).toBe(true)
       })
 
-      test('can only delete self with confirmation', () => {
+      // this only works with objection-authorize plugin hydrating true/false values
+      test.skip('can only delete self with confirmation', () => {
         expect(
           acl
             .can(role)

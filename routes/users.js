@@ -94,7 +94,7 @@ module.exports = Router()
     await req.user
       .$query()
       .authorize(req.user, null, { unauthorizedErrorCode: 400 })
-      .delete()
+      .delete(req.body)
 
     res.sendStatus(204)
   })

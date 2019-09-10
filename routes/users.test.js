@@ -42,7 +42,7 @@ describe('user routes', () => {
 
   describe('DELETE /account', () => {
     it('should work', async () => {
-      const res = await request.delete('/account').send({ username })
+      const res = await request.delete('/account').send({ confirm: true })
       expect(res.status).toBe(204)
     })
   })
