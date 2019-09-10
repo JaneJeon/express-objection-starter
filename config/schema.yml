@@ -1,9 +1,9 @@
 User:
   type: object
   properties:
-    id:
-      type: integer
-      readOnly: true
+    # id: # the hashid
+    #   type: string
+    #   readOnly: true
     username:
       type: string
       minLength: 4

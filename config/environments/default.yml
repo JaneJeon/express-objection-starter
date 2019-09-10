@@ -55,8 +55,8 @@ mailQueue:
     removeOnFail: 3000 # we don't need to store too many failed email "jobs"
   # this is just an SES example. modify as you see fit for your service (especially Sendgrid)
   limiter:
-    max: 10000
-    duration: 86400000 # 1 day in millis
+    max: 14
+    duration: 1e+3 # 1 second in millis
 
 knex:
   # available clients: https://knexjs.org/#Installation-node

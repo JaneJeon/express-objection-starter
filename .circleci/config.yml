@@ -1,58 +1,36 @@
 # most of this is ripped straight from Jest's config, since I'm sure they know their shit:
 # https://github.com/facebook/jest/blob/master/.circleci/config.yml
-aliases:
-  - &restore-cache
-    restore-cache:
-      keys:
-        - v1-dependencies-{{ checksum "yarn.lock" }}
-        # fallback to using the latest cache if no exact match is found
-        - v1-dependencies-
-
-  - &save-cache
-    save-cache:
-      paths:
-        - node_modules
-      key: v1-dependencies-{{ checksum "yarn.lock" }}
-
-  - &install
-    run: yarn install --frozen-lockfile
-
-  - &test yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
-
-  - &master-branch-only
-    branches:
-      only:
-        - master
-
-  # - &store-test-results
-  #   store_test_results:
-  #     path: reports/junit
-
-  - &test-db test
-  - &test-user knex
-
-  - &base-env
-    KNEX_CONNECTION_USER: *test-user
-    KNEX_CONNECTION_DATABASE: *test-db
-
 version: 2
 jobs:
   lint:
-    working_directory: ~/repo
     docker:
       - image: circleci/node
     steps:
       - checkout
-      - *restore-cache
-      - *install
-      - *save-cache
+      - &restore-cache
+        restore-cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - &install
+        run: yarn install --frozen-lockfile
+      - &save-cache
+        save-cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn lint
+      - &store-test-results
+        store_test_results:
+          path: reports/junit
 
   test:
-    working_directory: ~/repo
     docker:
       - image: circleci/node
-        environment: *base-env
+        environment: &base-env
+          KNEX_CONNECTION_USER: &test-user knex
+          KNEX_CONNECTION_DATABASE: &test-db test
       - image: circleci/redis
       - image: circleci/postgres
         environment:
@@ -63,21 +41,17 @@ jobs:
       - *restore-cache
       - *install
       - *save-cache
-      - run:
-          name: wait for dbs
-          command: |
-            dockerize -wait tcp://localhost:5432 -timeout 1m # postgres
-            dockerize -wait tcp://localhost:6379 -timeout 1m # redis
+      - &wait-for-redis
+        run: dockerize -wait tcp://localhost:6379 -timeout 1m
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m # postgres
       - run:
           environment:
             JEST_JUNIT_OUTPUT: reports/junit/jest/results.xml
-          command: *test
-      - store_test_results:
-          path: reports/junit
+          command: &test yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+      - *store-test-results
       - run: yarn coverage
 
   docs-deploy:
-    working_directory: ~/repo
     docker:
       - image: circleci/node
     steps:
@@ -88,13 +62,6 @@ jobs:
       - run: yarn docs:build
       - run: yarn docs:deploy
 
-#   deploy:
-#     docker:
-#       - image: buildpack-deps:trusty
-#     steps:
-#       - checkout
-#       - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
 workflows:
   version: 2
   build-deploy:
@@ -104,10 +71,7 @@ workflows:
       - docs-deploy:
           requires:
             - lint
-          filters: *master-branch-only
-      # - deploy:
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         only: master
+          filters: &master-branch-only
+            branches:
+              only:
+                - master

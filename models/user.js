@@ -6,7 +6,7 @@ const mailer = require('../jobs/mailer')
 
 class User extends password(BaseModel) {
   static get hidden () {
-    return ['id', 'password', 'hashid']
+    return ['id', 'password']
   }
 
   processInput () {

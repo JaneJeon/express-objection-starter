@@ -1,15 +1,16 @@
-aliases:
-  - &defaultUserReadAccess ["*", "!email"]
-  - &defaultUserWriteAccess ["*", "!role", "!verified"]
-
 anonymous:
   grants:
     - resource: User
       action: read
-      attributes: *defaultUserReadAccess
+      attributes: &defaultUserReadAccess
+        - '*'
+        - '!email'
     - resource: User
       action: create
-      attributes: *defaultUserWriteAccess
+      attributes: &defaultUserWriteAccess
+        - '*'
+        - '!role'
+        - '!verified'
 
 user:
   grants:
@@ -18,24 +19,22 @@ user:
       attributes: *defaultUserReadAccess
     - resource: User
       action: read
-      attributes: ["email"]
-      condition:
+      attributes:
+        - email
+      condition: &is-self
         Fn: EQUALS
         args:
           username: $.req.user.username
     - resource: User
       action: update
       attributes: *defaultUserWriteAccess
-      condition:
-        Fn: EQUALS
-        args:
-          username: $.req.user.username
+      condition: *is-self
     - resource: User
       action: delete
       condition:
         Fn: EQUALS
         args:
-          username: $.req.body.username
+          true: $.req.body.confirm
 
 admin:
   extends:
@@ -43,7 +42,8 @@ admin:
   grants:
     - resource: User
       action: update
-      attributes: ["role"]
+      attributes:
+        - role
       condition:
         Fn: NOT_EQUALS
         args:

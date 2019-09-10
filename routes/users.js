@@ -41,7 +41,7 @@ module.exports = Router()
       expiresIn: '1d'
     })
     const data = { link: `${FRONTEND_URL}/account/verify/${token}` }
-    await req.user.sendMail(subject, data, true)
+    await req.user.sendMail(subject, data)
 
     res.end()
   })
@@ -69,7 +69,7 @@ module.exports = Router()
       expiresIn: '1d'
     })
     const data = { link: `${FRONTEND_URL}/account/reset/${token}` }
-    await user.sendMail(subject, data, true)
+    await user.sendMail(subject, data)
 
     res.end()
   })
