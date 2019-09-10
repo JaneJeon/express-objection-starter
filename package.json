@@ -37,7 +37,7 @@
     "coverage": "is-ci && codecov || echo 'coverage only runs on CI!'",
     "lint": "run-s lint:all:*",
     "lint:fix": "run-s lint:fix:*",
-    "lint:all:eslint": "eslint .",
+    "lint:all:eslint": "eslint . --format junit -o reports/junit/eslint/results.xml",
     "lint:all:prettier": "prettier --check '**/*.{js,md,json,yml,yaml,mjml}'",
     "lint:fix:eslint": "yarn lint:all:eslint --fix",
     "lint:fix:prettier": "yarn lint:all:prettier --write",

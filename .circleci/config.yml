@@ -41,12 +41,9 @@ jobs:
       - *restore-cache
       - *install
       - *save-cache
-      - &wait-for-redis
-        run: dockerize -wait tcp://localhost:6379 -timeout 1m
-      - run: dockerize -wait tcp://localhost:5432 -timeout 1m # postgres
       - run:
           environment:
-            JEST_JUNIT_OUTPUT: reports/junit/jest/results.xml
+            JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/results.xml
           command: &test yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
       - *store-test-results
       - run: yarn coverage
