@@ -24,6 +24,7 @@ logger:
     res:
       - statusCode
       - statusMessage
+      - headers
 
 session:
   secret: nyaa
