@@ -32,12 +32,9 @@ user:
     - resource: User
       action: delete
       condition:
-        Fn: AND
+        Fn: EQUALS
         args:
-          - *is-self
-          - Fn: EQUALS
-            args:
-              true: $.req.body.confirm
+          true: $.req.body.confirm
 
 admin:
   extends:
