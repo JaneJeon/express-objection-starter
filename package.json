@@ -34,7 +34,7 @@
     "test": "run-p dev:mail 'test:unit {@}' --race -- --",
     "test:watch": "run-p watch 'test --watch'",
     "test:unit": "wait-on http://localhost:1080 && jest",
-    "coverage": "is-ci && codecov",
+    "coverage": "is-ci && codecov || echo 'coverage only runs on CI!'",
     "lint": "run-s lint:all:*",
     "lint:fix": "run-s lint:fix:*",
     "lint:all:eslint": "eslint .",
@@ -53,6 +53,12 @@
       "post-merge": "yarn && yarn setup",
       "post-receive": "yarn --production && yarn setup"
     }
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "views/emails/index.js"
+    ]
   },
   "lint-staged": {
     "*.js": [
