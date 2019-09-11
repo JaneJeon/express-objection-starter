@@ -10,7 +10,7 @@
     "start": "pm2 start pm2.config.js",
     "start:web": "pm2-runtime start pm2.config.js --only server",
     "start:worker": "pm2-runtime start pm2.config.js --only worker",
-    "dev": "run-p dev:* watch",
+    "dev": "cross-env NODE_ENV=development run-p dev:* watch",
     "dev:web": "nodemon server",
     "dev:worker": "wait-on http://localhost:1080 && nodemon worker",
     "dev:mail": "maildev",
@@ -44,7 +44,7 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "surge docs/.vuepress/dist \"$SURGE_URL\"",
-    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json views/**/html.hbs views/emails/index.js"
+    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js"
   },
   "husky": {
     "hooks": {
@@ -109,10 +109,7 @@
       "*.test.js",
       "migrations/",
       "seeds/"
-    ],
-    "env": {
-      "NODE_ENV": "development"
-    }
+    ]
   },
   "dependencies": {
     "bull": "^3.10.0",

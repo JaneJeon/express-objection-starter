@@ -21,8 +21,11 @@ ratelimit:
   windowMs: 900e+3 # 15 minutes, in milliseconds
   max: 100
 
-knex:
-  debug: false
+mailQueue:
+  # this is just an SES example. modify as you see fit for your service (especially Sendgrid)
+  limiter:
+    max: 14
+    duration: 1e+3 # 1 second in millis
 
 mail:
   # services available at: https://nodemailer.com/smtp/well-known

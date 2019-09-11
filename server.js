@@ -3,6 +3,7 @@ const config = require('./config')
 require('./config/passport')
 require('express-async-errors')
 
+const log = require('./lib/logger')
 const passport = require('passport')
 const express = require('express')
 const app = express()
@@ -31,8 +32,10 @@ if (config.get('node:env') !== 'test') {
   app
     .listen(config.get('port'), function(err) {
       if (err) throw err
-      const log = require('./lib/logger')
       log.info('Server listening on port', this.address().port)
+
+      if (config.get('node:env') === 'development')
+        log.debug(require('express-list-endpoints')(app))
     })
     .setTimeout(config.get('timeout'))
 }

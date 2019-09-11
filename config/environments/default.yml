@@ -54,10 +54,6 @@ queue:
 mailQueue:
   defaultJobOptions:
     removeOnFail: 3000 # we don't need to store too many failed email "jobs"
-  # this is just an SES example. modify as you see fit for your service (especially Sendgrid)
-  limiter:
-    max: 14
-    duration: 1e+3 # 1 second in millis
 
 knex:
   # available clients: https://knexjs.org/#Installation-node
@@ -66,7 +62,6 @@ knex:
   client: pg
   connection:
     database: app
-  debug: true
 
 mail:
   # for maildev, we don't need credentials
