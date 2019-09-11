@@ -137,19 +137,16 @@ workflows:
       - install-active-lts
       - lint:
           requires:
-            - install-maintenance-lts
             - install-active-lts
       - build:
           requires:
             - install-maintenance-lts
-            - install-active-lts
+            - lint
       - test-node-maintenance-lts:
           requires:
-            - lint
             - build
       - test-node-active-lts:
           requires:
-            - lint
             - build
       - coverage:
           requires:

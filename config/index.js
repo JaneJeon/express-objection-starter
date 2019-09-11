@@ -16,6 +16,7 @@ nconf
   .file('default', path.resolve(__dirname, 'environments', 'default.json'))
 
 // mappings
+// istanbul ignore next
 if (process.env.DATABASE_URL) {
   nconf.set('knex:connection', process.env.DATABASE_URL)
 }
