@@ -1,28 +1,45 @@
-# most of this is ripped straight from Jest's config, since I'm sure they know their shit:
-# https://github.com/facebook/jest/blob/master/.circleci/config.yml
-aliases:
-  - &node-maintenance-lts
-    image: circleci/node:8 # to be updated to 10 once 2020 hits
-
 version: 2
 jobs:
-  install-and-lint:
+  install-maintenance-lts:
     docker:
-      - &node-active-lts
-        image: circleci/node:lts
+      - &node-maintenance-lts
+        image: circleci/node:8 # to be updated to 10 once 2020 hits
     steps:
       - checkout
-      - &restore-cache
+      - &restore-maintenance-lts-cache
         restore-cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v1-node-8-dependencies-{{ checksum "yarn.lock" }}
+            - v1-node-8-dependencies-
       - run: yarn install --frozen-lockfile
       - save-cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1-node-8-dependencies-{{ checksum "yarn.lock" }}
+
+  install-active-lts:
+    docker:
+      - &node-active-lts
+        image: circleci/node:10 # to be updated to 12 once 2020 hits
+    steps:
+      - checkout
+      - &restore-active-lts-cache
+        restore-cache:
+          keys:
+            - v1-node-10-dependencies-{{ checksum "yarn.lock" }}
+            - v1-node-10-dependencies-
+      - run: yarn install --frozen-lockfile
+      - save-cache:
+          paths:
+            - node_modules
+          key: v1-node-10-dependencies-{{ checksum "yarn.lock" }}
+
+  lint:
+    docker:
+      - *node-active-lts
+    steps:
+      - checkout
+      - *restore-active-lts-cache
       - run: yarn lint --format junit -o reports/junit/eslint/results.xml
       - &store-test-results
         store_test_results:
@@ -43,7 +60,7 @@ jobs:
           POSTGRES_DB: *test-db
     steps:
       - checkout
-      - *restore-cache
+      - *restore-maintenance-lts-cache
       - &build
         run: yarn build
       - run:
@@ -61,7 +78,7 @@ jobs:
       - *postgres
     steps:
       - checkout
-      - *restore-cache
+      - *restore-active-lts-cache
       - *build
       - run:
           environment:
@@ -75,7 +92,7 @@ jobs:
       - *node-active-lts
     steps:
       - checkout
-      - *restore-cache
+      - *restore-active-lts-cache
       - run: yarn docs:build
       - run: yarn docs:deploy
 
@@ -83,16 +100,21 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - install-and-lint
+      - install-maintenance-lts
+      - install-active-lts
+      - lint:
+          requires:
+            - install-maintenance-lts
+            - install-active-lts
       - test-node-maintenance-lts:
           requires:
-            - install-and-lint
+            - lint
       - test-node-active-lts:
           requires:
-            - install-and-lint
+            - lint
       - deploy-docs:
           requires:
-            - install-and-lint
+            - lint
           filters: &master-branch-only
             branches:
               only:
