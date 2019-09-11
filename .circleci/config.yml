@@ -85,6 +85,17 @@ jobs:
             JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/node-active-lts.xml
           command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
       - *store-test-results
+      - persist_to_workspace:
+          paths:
+            - coverage
+
+  coverage:
+    docker:
+      - *node-active-lts
+    steps:
+      - checkout
+      - *restore-active-lts-cache
+      - attach_workspace
       - run: yarn coverage
 
   deploy-docs:
@@ -98,7 +109,7 @@ jobs:
 
 workflows:
   version: 2
-  build-deploy:
+  default:
     jobs:
       - install-maintenance-lts
       - install-active-lts
@@ -112,6 +123,10 @@ workflows:
       - test-node-active-lts:
           requires:
             - lint
+      - coverage:
+          requires:
+            - test-node-maintenance-lts
+            - test-node-active-lts
       - deploy-docs:
           requires:
             - lint
