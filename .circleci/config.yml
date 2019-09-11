@@ -2,9 +2,10 @@
 # https://github.com/facebook/jest/blob/master/.circleci/config.yml
 version: 2
 jobs:
-  lint:
+  install-and-lint:
     docker:
-      - image: circleci/node
+      - &node-active-lts
+        image: circleci/node:lts
     steps:
       - checkout
       - &restore-cache
@@ -13,10 +14,8 @@ jobs:
             - v1-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - &install
-        run: yarn install --frozen-lockfile
-      - &save-cache
-        save-cache:
+      - run: yarn install --frozen-lockfile
+      - save-cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
@@ -25,37 +24,52 @@ jobs:
         store_test_results:
           path: reports/junit
 
-  test:
+  test-node-maintenance-lts:
     docker:
-      - image: circleci/node
+      - &node-maintenance-lts
+        image: circleci/node:8 # to be updated to 10 once 2020 hits
         environment: &base-env
           KNEX_CONNECTION_USER: &test-user knex
           KNEX_CONNECTION_DATABASE: &test-db test
-      - image: circleci/redis
-      - image: circleci/postgres
+      - &redis
+        image: circleci/redis
+      - &postgres
+        image: circleci/postgres
         environment:
           POSTGRES_USER: *test-user
           POSTGRES_DB: *test-db
     steps:
       - checkout
       - *restore-cache
-      - *install
-      - *save-cache
       - run:
           environment:
-            JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/results.xml
-          command: &test yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+            JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/node-maintenance-lts.xml
+          command: &test yarn test --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
       - *store-test-results
-      - run: yarn coverage
 
-  docs-deploy:
+  # only this one gets to report coverage
+  test-node-active-lts:
     docker:
-      - image: circleci/node
+      - <<: *node-active-lts
+        environment: *base-env
+      - *redis
+      - *postgres
     steps:
       - checkout
       - *restore-cache
-      - *install
-      - *save-cache
+      - run:
+          environment:
+            JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/node-active-lts.xml
+          command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+      - *store-test-results
+      - run: yarn coverage
+
+  deploy-docs:
+    docker:
+      - *node-active-lts
+    steps:
+      - checkout
+      - *restore-cache
       - run: yarn docs:build
       - run: yarn docs:deploy
 
@@ -63,11 +77,16 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - lint
-      - test
-      - docs-deploy:
+      - install-and-lint
+      - test-node-maintenance-lts:
           requires:
-            - lint
+            - install-and-lint
+      - test-node-active-lts:
+          requires:
+            - install-and-lint
+      - deploy-docs:
+          requires:
+            - install-and-lint
           filters: &master-branch-only
             branches:
               only:

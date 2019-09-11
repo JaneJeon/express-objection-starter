@@ -1,5 +1,5 @@
 port: 3000
-timeout: 6e+3 # 6 seconds, in milliseconds
+timeout: 6e+3 # 6 seconds, in milliseconds. Default Heroku is 30s
 proxy: false
 # for CloudFlare: https://support.cloudflare.com/hc/en-us/articles/200170986-How-does-Cloudflare-handle-HTTP-Request-headers-
 # requestId:
