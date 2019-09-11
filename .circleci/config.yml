@@ -140,11 +140,11 @@ workflows:
             - install-active-lts
       - build:
           requires:
-            - install-maintenance-lts
             - lint
       - test-node-maintenance-lts:
           requires:
             - build
+            - install-maintenance-lts
       - test-node-active-lts:
           requires:
             - build

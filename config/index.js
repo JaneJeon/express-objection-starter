@@ -16,8 +16,8 @@ nconf
   .file('default', path.resolve(__dirname, 'environments', 'default.json'))
 
 // mappings
-// istanbul ignore next
 if (process.env.DATABASE_URL) {
+  // istanbul ignore next
   nconf.set('knex:connection', process.env.DATABASE_URL)
 }
 // TODO: bonsai_url
