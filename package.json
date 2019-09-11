@@ -6,7 +6,7 @@
   "author": "Jane Jeon <JaneJeon9719@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "setup": "is-ci && 'skipping build...' || yarn build && yarn migrate",
+    "setup": "is-ci && echo 'skipping build...' || yarn build && yarn migrate",
     "start": "pm2 start pm2.config.js",
     "start:web": "pm2-runtime start pm2.config.js --only server",
     "start:worker": "pm2-runtime start pm2.config.js --only worker",

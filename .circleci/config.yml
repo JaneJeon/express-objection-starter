@@ -54,9 +54,15 @@ jobs:
       - run: yarn build
       - persist_to_workspace:
           root: '.'
+          # https://discuss.circleci.com/t/glob-patterns-document-persist-to-workspace-paths/17442
+          # https://github.com/golang/go/issues/11862
+          # CircleCI uses Go's "glob" pattern, it doesn't support the '**' match,
+          # because of fucking course it doesn't, it's fucking Go and its Go-tards.
+          # So for recursive folders, we need both /*/*.json AND /*.json!
           paths:
-            - config/**/*.json
-            - views/**/html.hbs
+            - config/*/*.json
+            - config/*.json
+            - views/emails/*/html.hbs
             - views/emails/index.js
 
   test-node-maintenance-lts:
