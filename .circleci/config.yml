@@ -45,6 +45,20 @@ jobs:
         store_test_results:
           path: reports/junit
 
+  build:
+    docker:
+      - *node-active-lts
+    steps:
+      - checkout
+      - *restore-active-lts-cache
+      - run: yarn build
+      - persist_to_workspace:
+          root: '.'
+          paths:
+            - config/**/*.json
+            - views/**/html.hbs
+            - views/emails/index.js
+
   test-node-maintenance-lts:
     docker:
       - <<: *node-maintenance-lts
@@ -61,8 +75,9 @@ jobs:
     steps:
       - checkout
       - *restore-maintenance-lts-cache
-      - &build
-        run: yarn build
+      - &attach-workspace
+        attach_workspace:
+          at: '.'
       - run:
           environment:
             JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/node-maintenance-lts.xml
@@ -79,7 +94,7 @@ jobs:
     steps:
       - checkout
       - *restore-active-lts-cache
-      - *build
+      - *attach-workspace
       - run:
           environment:
             JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/node-active-lts.xml
@@ -96,11 +111,10 @@ jobs:
     steps:
       - checkout
       - *restore-active-lts-cache
-      - attach_workspace:
-          at: '.'
+      - *attach-workspace
       - run: yarn coverage
 
-  deploy-docs:
+  build-and-deploy-docs:
     docker:
       - *node-active-lts
     steps:
@@ -119,17 +133,23 @@ workflows:
           requires:
             - install-maintenance-lts
             - install-active-lts
+      - build:
+          requires:
+            - install-maintenance-lts
+            - install-active-lts
       - test-node-maintenance-lts:
           requires:
             - lint
+            - build
       - test-node-active-lts:
           requires:
             - lint
+            - build
       - coverage:
           requires:
             - test-node-maintenance-lts
             - test-node-active-lts
-      - deploy-docs:
+      - build-and-deploy-docs:
           requires:
             - lint
           filters: &master-branch-only
