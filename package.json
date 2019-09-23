@@ -145,7 +145,7 @@
     "nconf": "^0.10.0",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
-    "objection": "^1.6.9",
+    "objection": "^1.6.11",
     "objection-authorize": "^0.6.2",
     "objection-db-errors": "^1.1.1",
     "objection-hashid": "^0.3.2",
