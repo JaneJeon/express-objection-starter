@@ -44,7 +44,9 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "surge docs/.vuepress/dist \"$SURGE_URL\"",
-    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js"
+    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -162,7 +164,8 @@
     "role-acl": "^3.3.5",
     "sqlite3": "^4.1.0",
     "ua-parser-js": "^0.7.20",
-    "yamljs": "^0.3.0"
+    "yamljs": "^0.3.0",
+    "snyk": "^1.230.5"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
@@ -225,5 +228,6 @@
     "roles",
     "policy",
     "nodemailer"
-  ]
+  ],
+  "snyk": true
 }
