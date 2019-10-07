@@ -128,7 +128,7 @@
     "handlebars": "^4.4.2",
     "helmet": "^3.21.1",
     "http-assert": "^1.4.1",
-    "husky": "^3.0.7",
+    "husky": "^3.0.8",
     "is-ci": "^2.0.0",
     "ioredis": "^4.14.1",
     "jsonwebtoken": "^8.5.1",
