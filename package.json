@@ -159,7 +159,7 @@
     "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
     "restana": "^3.3.2",
-    "role-acl": "^3.3.5",
+    "role-acl": "^4.1.0",
     "sqlite3": "^4.1.0",
     "ua-parser-js": "^0.7.20",
     "yamljs": "^0.3.0"
