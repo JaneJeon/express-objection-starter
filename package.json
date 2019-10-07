@@ -141,7 +141,7 @@
     "mssql": "^5.1.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
-    "nanoid": "^2.1.1",
+    "nanoid": "^2.1.2",
     "nconf": "^0.10.0",
     "nodemailer": "^6.2.1",
     "normalize-email": "^1.1.1",
