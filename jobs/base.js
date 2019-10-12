@@ -25,7 +25,7 @@ class BaseJob {
     if (!opts.id) opts.id = nanoid()
     opts.jobId = this._jobId(opts.id)
 
-    this.log.info('adding job', opts.jobId)
+    this.log.info({ job: { id: opts.jobId } }, 'adding job')
 
     return this.queue.add(
       this.name,

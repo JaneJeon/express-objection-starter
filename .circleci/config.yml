@@ -131,7 +131,7 @@ jobs:
 
 workflows:
   version: 2
-  default:
+  pipeline:
     jobs:
       - install-maintenance-lts
       - install-active-lts
