@@ -1,6 +1,18 @@
 <h1 align="center">Welcome to express-objection-starter 👋</h1>
 
-[![CircleCI](https://img.shields.io/circleci/build/github/JaneJeon/express-objection-starter)](https://circleci.com/gh/JaneJeon/express-objection-starter) [![codecov](https://codecov.io/gh/JaneJeon/express-objection-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/JaneJeon/express-objection-starter) [![Maintainability](https://api.codeclimate.com/v1/badges/61db6d107fc76f47751f/maintainability)](https://codeclimate.com/github/JaneJeon/express-objection-starter/maintainability) [![David](https://img.shields.io/david/JaneJeon/express-objection-starter)](https://david-dm.org/JaneJeon/express-objection-starter) [![Known Vulnerabilities](https://snyk.io//test/github/JaneJeon/express-objection-starter/badge.svg?targetFile=package.json)](https://snyk.io//test/github/JaneJeon/express-objection-starter?targetFile=package.json) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=JaneJeon/express-objection-starter)](https://dependabot.com) [![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/JaneJeon/express-objection-starter/blob/master/LICENSE) [![Docs](https://img.shields.io/badge/docs-surge.sh-yellowgreen)](https://objection.surge.sh) [![Docs](https://img.shields.io/badge/docs-netlify-blue)](https://objection.netlify.com) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![CircleCI](https://img.shields.io/circleci/build/github/JaneJeon/express-objection-starter)](https://circleci.com/gh/JaneJeon/express-objection-starter)
+[![Coverage](https://codecov.io/gh/JaneJeon/express-objection-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/JaneJeon/express-objection-starter)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/JaneJeon/express-objection-starter)](https://codeclimate.com/github/JaneJeon/express-objection-starter/maintainability)
+[![Dependencies](https://img.shields.io/david/JaneJeon/express-objection-starter)](https://david-dm.org/JaneJeon/express-objection-starter)
+[![devDependencies](https://img.shields.io/david/dev/JaneJeon/express-objection-starter)](https://david-dm.org/JaneJeon/express-objection-starter?type=dev)
+[![Vulnerabilities](https://snyk.io//test/github/JaneJeon/express-objection-starter/badge.svg?targetFile=package.json)](https://snyk.io//test/github/JaneJeon/express-objection-starter?targetFile=package.json)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=JaneJeon/express-objection-starter)](https://dependabot.com)
+[![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/JaneJeon/express-objection-starter/blob/master/LICENSE)
+[![Surge Docs](https://img.shields.io/badge/docs-surge.sh-yellowgreen)](https://objection.surge.sh)
+[![Netlify Docs](https://img.shields.io/badge/docs-netlify-blue)](https://objection.netlify.com)
+[![Standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Deploy to Heroku](https://img.shields.io/badge/deploy%20to-heroku-6762a6)](https://heroku.com/deploy)
 
 > an opinionated, production-ready, isomorphic express/knex/objection starter with centralized configuration
 
