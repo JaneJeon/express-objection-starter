@@ -40,10 +40,7 @@ jobs:
     steps:
       - checkout
       - *restore-active-lts-cache
-      - run: yarn lint --format junit -o reports/junit/eslint/results.xml
-      - &store-test-results
-        store_test_results:
-          path: reports/junit
+      - run: yarn lint
 
   build:
     docker:
@@ -85,7 +82,9 @@ jobs:
         attach_workspace:
           at: '.'
       - run: &test yarn test --ci --runInBand
-      - *store-test-results
+      - &store-test-results
+        store_test_results:
+          path: reports/junit
 
   test-node-active-lts-and-upload-coverage:
     docker:
