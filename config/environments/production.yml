@@ -4,6 +4,7 @@ proxy: true
 logger:
   options:
     timestamp: false
+    prettyPrint: false
 
 # copy+paste the output of the following command to replace secret:
 # node -p "require('nanoid')(24)"

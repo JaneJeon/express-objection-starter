@@ -1,0 +1,28 @@
+{
+  "name": "express-objection-template",
+  "description": "TODO:",
+  "repository": "https://github.com/JaneJeon/express-objection-template",
+  "website": "https://objection.netlify.com",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "heroku-redis"
+    },
+    {
+      "plan": "heroku-postgres"
+    },
+    {
+      "plan": "papertrail:choklad"
+    }
+  ],
+  "env": {
+    "SESSION_SECRET": {
+      "description": "the session encryption key",
+      "generator": "secret"
+    }
+  }
+}

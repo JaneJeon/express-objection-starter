@@ -6,7 +6,7 @@ describe('config loader', () => {
   })
 
   test('loads the right environment', () => {
-    expect(config.get('logger:destination')).toBeDefined()
+    expect(config.get('logger:options:level')).toBe('error')
   })
 
   test('loads default variables', () => {

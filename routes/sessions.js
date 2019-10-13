@@ -25,10 +25,9 @@ module.exports = Router()
   })
   .delete('/logout', requireAuthN, (req, res, next) => {
     req.session.destroy(err => {
-      if (err) next(err)
-
+      if (err) req.log.error('Failed to destroy the session during logout', err)
+      req.user = null
       res.sendStatus(204)
-      next()
     })
   })
   .get('/sessions', requireAuthN, async (req, res) => {

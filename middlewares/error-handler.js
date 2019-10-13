@@ -37,6 +37,6 @@ module.exports = (err, req, res, next) => {
     name: err.name
   })
 
-  const level = err.statusCode >= 500 ? 'error' : 'warn'
-  req.log[level]({ req, err, res }, 'Request failed')
+  err.stack = err.stack.substring(0, err.stack.indexOf('at newFn')).trimRight()
+  req.log[err.status < 500 ? 'warn' : 'error'](err)
 }

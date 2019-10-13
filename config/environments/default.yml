@@ -29,13 +29,13 @@ logger:
 
 session:
   secret: nyaa
+  resave: false
+  rolling: false
+  saveUninitialized: false # GDPR compliance
   cookie:
     sameSite: lax # CSRF protection
     maxAge: 86400e+3 # 1 day, in milliseconds
     rememberMe: 2.592e+9 # 30 days, in milliseconds
-  resave: false
-  rolling: true
-  saveUninitialized: false # GDPR compliance
 
 jwt:
   secret: aayn
@@ -48,13 +48,13 @@ redis:
 
 # https://github.com/OptimalBits/bull/blob/develop/REFERENCE.md#queue
 queue:
-  defaultJobOptions:
-    removeOnComplete: true
-
-# extends queue
-mailQueue:
-  defaultJobOptions:
-    removeOnFail: 3000 # we don't need to store too many failed email "jobs"
+  default:
+    defaultJobOptions:
+      removeOnComplete: true
+  # extends default queue
+  mail:
+    defaultJobOptions:
+      removeOnFail: 3000 # we don't need to store too many failed email "jobs"
 
 knex:
   # available clients: https://knexjs.org/#Installation-node

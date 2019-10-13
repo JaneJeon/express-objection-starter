@@ -160,14 +160,12 @@ describe('access control', () => {
           .with({ role: 'user' })
           .on('User')
         expect(access.granted).toBe(true)
-        console.log(access)
 
         access = await acl
           .can(role)
           .execute('update')
           .with({ role: 'admin' })
           .on('User')
-        console.log(access)
         expect(access.filter({ role: 'user' }).role).toBeUndefined()
       })
     })
