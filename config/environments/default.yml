@@ -10,7 +10,9 @@ frontend:
 
 logger:
   options:
-    level: debug
+    base: null
+    level: info
+    timestamp: true
     prettyPrint:
       translateTime: true
   # https://github.com/fastify/fastify/blob/master/lib/logger.js
@@ -20,7 +22,6 @@ logger:
       - method
       - url
       - user
-      - body
     res:
       - statusCode
       - statusMessage

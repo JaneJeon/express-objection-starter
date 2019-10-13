@@ -3,14 +3,7 @@ proxy: true
 
 logger:
   options:
-    level: info
-    prettyPrint: false
-  serializers:
-    req:
-      - id
-      - method
-      - url
-      - user
+    timestamp: false
 
 # copy+paste the output of the following command to replace secret:
 # node -p "require('nanoid')(24)"
