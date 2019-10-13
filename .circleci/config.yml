@@ -84,14 +84,10 @@ jobs:
       - &attach-workspace
         attach_workspace:
           at: '.'
-      - run:
-          environment:
-            JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/node-maintenance-lts.xml
-          command: &test yarn test --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+      - run: &test yarn test --ci --runInBand
       - *store-test-results
 
-  # only this one gets to report coverage
-  test-node-active-lts:
+  test-node-active-lts-and-upload-coverage:
     docker:
       - <<: *node-active-lts
         environment: *base-env
@@ -101,24 +97,9 @@ jobs:
       - checkout
       - *restore-active-lts-cache
       - *attach-workspace
-      - run:
-          environment:
-            JEST_JUNIT_OUTPUT_NAME: reports/junit/jest/node-active-lts.xml
-          command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit --forceExit
+      - run: *test
       - *store-test-results
-      - persist_to_workspace:
-          root: '.'
-          paths:
-            - coverage
-
-  coverage:
-    docker:
-      - *node-active-lts
-    steps:
-      - checkout
-      - *restore-active-lts-cache
-      - *attach-workspace
-      - run: yarn coverage
+      - yarn coverage
 
   build-and-deploy-docs:
     docker:
@@ -145,13 +126,9 @@ workflows:
       - test-node-maintenance-lts:
           requires:
             - build
-      - test-node-active-lts:
+      - test-node-active-lts-and-upload-coverage:
           requires:
             - build
-      - coverage:
-          requires:
-            - test-node-maintenance-lts
-            - test-node-active-lts
       - build-and-deploy-docs:
           requires:
             - lint
