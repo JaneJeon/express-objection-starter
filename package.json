@@ -92,7 +92,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.11.0",
-    "pino": "^5.13.4",
+    "pino": "^5.13.5",
     "pm2": "^3.5.1",
     "rate-limit-redis": "^1.6.0",
     "restana": "^3.3.2",
