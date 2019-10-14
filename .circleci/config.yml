@@ -98,7 +98,7 @@ jobs:
       - *attach-workspace
       - run: *test
       - *store-test-results
-      - yarn coverage
+      - run: yarn coverage
 
   build-and-deploy-docs:
     docker:
