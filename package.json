@@ -29,7 +29,7 @@
     "pretest": "yarn setup",
     "test": "run-p dev:mail 'test:unit {@}' --race -- --",
     "test:watch": "run-p watch 'test --watch'",
-    "test:unit": "wait-on http://localhost:1080 && jest",
+    "test:unit": "wait-on http://localhost:1080 && jest --forceExit",
     "coverage": "is-ci && codecov || echo 'coverage only runs on CI!'",
     "lint": "run-s lint:*",
     "lint:eslint": "eslint .",
