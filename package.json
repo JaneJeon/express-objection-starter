@@ -63,7 +63,7 @@
     "express-ws": "^4.0.0",
     "glob": "^7.1.4",
     "got": "^9.6.0",
-    "handlebars": "^4.4.3",
+    "handlebars": "^4.4.5",
     "helmet": "^3.21.1",
     "http-assert": "^1.4.1",
     "husky": "^3.0.9",
