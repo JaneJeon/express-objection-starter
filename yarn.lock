@@ -10146,10 +10146,10 @@ pm2-multimeter@^0.1.2:
   dependencies:
     charm "~0.1.1"
 
-pm2@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/pm2/-/pm2-4.0.1.tgz#7e9cbd3cce75083180707d53bd4712adb6f8ad40"
-  integrity sha512-MmRc1vz8wH/TZFuPRHUzY/EJFtCrnzN4UzBA4OOQrYGVoNxmtOIJC+sKxYuFqy7OWAVpmZlLQmCOnt2L3FE/gg==
+pm2@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/pm2/-/pm2-4.1.2.tgz#97f852c731d307a60dde1ef2fc5a622813ab6cf4"
+  integrity sha512-HkNP3K79PmqxkxfgNX/t5rsfWLNMc89KVKDm2Xoju0MU3TbGZSc2rWLZffgEitITsMcPpkKtZmAJBcxMXvURFA==
   dependencies:
     "@pm2/agent" "^0.5.26"
     "@pm2/io" "^4.3.2"
@@ -10180,9 +10180,10 @@ pm2@^4.0.1:
     shelljs "0.8.3"
     source-map-support "0.5.12"
     sprintf-js "1.1.2"
-    systeminformation "^4.14.11"
     vizion "~2.0.2"
     yamljs "0.3.0"
+  optionalDependencies:
+    systeminformation "^4.14.11"
 
 pn@^1.1.0:
   version "1.1.0"
