@@ -106,7 +106,7 @@
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.17",
+    "@types/jest": "^24.0.19",
     "codecov": "^3.6.1",
     "cross-env": "^6.0.3",
     "dotenv": "^8.2.0",
