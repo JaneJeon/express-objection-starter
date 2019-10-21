@@ -72,7 +72,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.5",
     "lodash": "^4.17.11",
-    "mailchecker": "^3.2.35",
+    "mailchecker": "^3.3.1",
     "mjml": "^4.5.1",
     "ms": "^2.1.2",
     "mssql": "^5.1.0",
