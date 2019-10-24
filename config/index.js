@@ -11,7 +11,7 @@ nconf
   })
   .file(
     'envs',
-    path.resolve(__dirname, 'environments', `${nconf.get('node:env')}.json`)
+    path.resolve(__dirname, 'environments', `${process.env.NODE_ENV}.json`)
   )
   .file('default', path.resolve(__dirname, 'environments', 'default.json'))
 
