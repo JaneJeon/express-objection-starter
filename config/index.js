@@ -5,10 +5,6 @@ nconf
   .argv({ parseValues: true })
   .env({ parseValues: true, lowerCase: true, separator: '_' })
   .add('schema', { type: 'literal', store: { schema: require('./schema') } })
-  .add('relations', {
-    type: 'literal',
-    store: { relations: require('./relations') }
-  })
   .file(
     'envs',
     path.resolve(__dirname, 'environments', `${process.env.NODE_ENV}.json`)

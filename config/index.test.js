@@ -15,6 +15,5 @@ describe('config loader', () => {
 
   test('loads schema/relations', () => {
     expect(config.get('schema')).toBeDefined()
-    expect(config.get('relations')).toBeDefined()
   })
 })
