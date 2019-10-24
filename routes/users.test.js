@@ -15,41 +15,41 @@ describe('user routes', () => {
       .where({ username })
   })
 
-  describe('POST /account', () => {
+  describe('POST /users', () => {
     it('should create account', async () => {
       const res = await request
-        .post('/account')
+        .post('/users')
         .send({ username, password, email })
       expect(res.status).toBe(201)
     })
   })
 
-  describe('GET /account', () => {
+  describe('GET /user', () => {
     it('should return current user', async () => {
-      const res = await request.get('/account')
+      const res = await request.get('/user')
       expect(res.body.username).toEqual(username)
     })
   })
 
-  describe('POST /account/verify', () => {
+  describe('POST /user/verify', () => {
     it.skip('should send password verification link', async () => {
       // TODO:
     })
   })
 
-  describe('PATCH /account/verify/:token', () => {
+  describe('PATCH /user/verify/:token', () => {
     it.skip('should verify user', async () => {
       // TODO:
     })
   })
 
-  describe('POST /account/forgot/:email', () => {
+  describe('POST /user/forgot/:email', () => {
     it.skip('should send password reset link', async () => {
       // TODO:
     })
   })
 
-  describe('PATCH /account/reset/:token', () => {
+  describe('PATCH /user/reset/:token', () => {
     it.skip('should reset password', async () => {
       // TODO:
     })
@@ -71,9 +71,9 @@ describe('user routes', () => {
     })
   })
 
-  describe('DELETE /account', () => {
+  describe('DELETE /user', () => {
     it('should close account', async () => {
-      const res = await request.delete('/account').send({ confirm: true })
+      const res = await request.delete('/user').send({ confirm: true })
       expect(res.status).toBe(204)
     })
   })

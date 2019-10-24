@@ -1,3 +1,4 @@
+// istanbul ignore file
 const { Model, AjvValidator } = require('objection')
 const tableName = require('objection-table-name')()
 const { DbErrors } = require('objection-db-errors')
@@ -6,13 +7,12 @@ const visibility = require('objection-visibility').default
 const hashId = require('objection-hashid')
 const config = require('../config')
 
+const supportsReturning = ['pg', 'mssql'].includes(process.env.DATABASE_CLIENT)
 Model.knex(require('knex')(require('../knexfile')))
 
 class BaseModel extends hashId(
   visibility(authorize(DbErrors(tableName(Model))))
 ) {
-  // TODO: test these once I have actual relations
-  // istanbul ignore next
   static get modelPaths() {
     return [__dirname]
   }
@@ -21,12 +21,10 @@ class BaseModel extends hashId(
     return true
   }
 
-  // istanbul ignore next
   static get defaultEagerAlgorithm() {
     return Model.JoinEagerAlgorithm
   }
 
-  // istanbul ignore next
   static get pageSize() {
     return 15
   }
@@ -37,7 +35,6 @@ class BaseModel extends hashId(
 
   static createValidator() {
     this.jsonSchema = config.get(`schema:${this.name}`)
-    this.relationMappings = config.get(`relations:${this.name}`)
 
     return new AjvValidator({
       // eslint-disable-next-line no-unused-vars
@@ -65,24 +62,43 @@ class BaseModel extends hashId(
 
   static get QueryBuilder() {
     return class extends super.QueryBuilder {
-      insert(body) {
-        const q = super.insert(body).returning('*')
-
-        return Array.isArray(body) ? q : q.first()
+      insertAndFetch(body) {
+        return supportsReturning
+          ? Array.isArray(body)
+            ? this.insert(body).returning('*')
+            : this.insert(body)
+                .returning('*')
+                .first()
+          : super.insertAndFetch(body)
       }
 
-      patch(body) {
-        const q = super.patch(body).returning('*')
+      patchAndFetchById(id, body) {
+        return supportsReturning
+          ? this.findById(id)
+              .patch(body)
+              .returning('*')
+              .first()
+          : super.patchAndFetchById(id, body)
+      }
 
-        return Array.isArray(body) ? q : q.first()
+      patchAndFetch(body) {
+        return supportsReturning
+          ? Array.isArray(body)
+            ? this.patch(body).returning('*')
+            : this.patch(body)
+                .returning('*')
+                .first()
+          : super.patchAndFetch(body)
       }
 
       findById(id) {
         return super.findById(id).throwIfNotFound()
       }
 
-      // TODO:
-      // istanbul ignore next
+      findOne(obj) {
+        return super.findOne(obj).throwIfNotFound()
+      }
+
       paginate(after, sortField = 'id', direction = 'desc') {
         return this.skipUndefined()
           .where(sortField, '<', after)

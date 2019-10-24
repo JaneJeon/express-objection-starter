@@ -8,16 +8,16 @@ const JWT_SECRET = config.get('jwt:secret')
 const jwt = require('jsonwebtoken')
 
 module.exports = Router()
-  .get('/account', requireAuthN, (req, res) => {
+  .get('/user', requireAuthN, (req, res) => {
     res.send(req.user)
   })
-  .post('/account', async (req, res) => {
+  .post('/users', async (req, res) => {
     const user = await User.query()
       .authorize(req.user, null, {
         unauthorizedErrorCode: 405,
         userFromResult: true
       })
-      .insert(req.body)
+      .insertAndFetch(req.body)
 
     req.login(user, async err => {
       if (err) throw err
@@ -31,11 +31,11 @@ module.exports = Router()
         audience: req.user.hashId,
         expiresIn: '1d'
       })
-      const data = { link: `${FRONTEND_URL}/account/verify/${token}` }
+      const data = { link: `${FRONTEND_URL}/user/verify/${token}` }
       await req.user.sendMail(subject, data)
     })
   })
-  .post('/account/verify', requireAuthN, async (req, res) => {
+  .post('/user/verify', requireAuthN, async (req, res) => {
     const subject = 'verify-email'
 
     const token = jwt.sign({}, JWT_SECRET, {
@@ -43,18 +43,18 @@ module.exports = Router()
       audience: req.user.hashId,
       expiresIn: '1d'
     })
-    const data = { link: `${FRONTEND_URL}/account/verify/${token}` }
+    const data = { link: `${FRONTEND_URL}/user/verify/${token}` }
     await req.user.sendMail(subject, data)
 
     res.end()
   })
-  .patch('/account/verify/:token', async (req, res) => {
+  .patch('/user/verify/:token', async (req, res) => {
     const subject = 'verify-email'
 
     const { aud } = jwt.verify(req.params.token, JWT_SECRET, { subject })
     const user = await User.query()
       .findByHashId(aud)
-      .patch({ verified: true })
+      .patchAndFetch({ verified: true })
 
     // automatically log in user since we know they own the account
     req.login(user, async err => {
@@ -63,7 +63,7 @@ module.exports = Router()
       res.send(req.user)
     })
   })
-  .post('/account/forgot/:email', async (req, res) => {
+  .post('/user/forgot/:email', async (req, res) => {
     const subject = 'password-reset'
 
     const user = await User.query().findByEmail(req.params.email)
@@ -72,18 +72,18 @@ module.exports = Router()
       audience: user.hashId,
       expiresIn: '1d'
     })
-    const data = { link: `${FRONTEND_URL}/account/reset/${token}` }
+    const data = { link: `${FRONTEND_URL}/user/reset/${token}` }
     await user.sendMail(subject, data)
 
     res.end()
   })
-  .patch('/account/reset/:token', async (req, res) => {
+  .patch('/user/reset/:token', async (req, res) => {
     const subject = 'password-reset'
 
     const { aud } = jwt.verify(req.params, JWT_SECRET, { subject })
     const user = await User.query()
       .findByHashId(aud)
-      .patch({ verified: true })
+      .patchAndFetch({ verified: true })
 
     // automatically log in user since we know they own the account
     req.login(user, async err => {
@@ -92,7 +92,7 @@ module.exports = Router()
       res.send(req.user)
     })
   })
-  .delete('/account', requireAuthN, async (req, res) => {
+  .delete('/user', requireAuthN, async (req, res) => {
     await req.user
       .$query()
       .authorize(req.user, null, { unauthorizedErrorCode: 400 })
@@ -114,7 +114,7 @@ module.exports = Router()
     user = await user
       .$query()
       .authorize(req.user)
-      .patch(req.body)
+      .patchAndFetch(req.body)
 
     res.send(user)
   })
