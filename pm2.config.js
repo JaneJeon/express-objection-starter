@@ -4,7 +4,7 @@ const maxMemory = process.env.WEB_MEMORY || 512
 module.exports = {
   apps: [
     {
-      script: 'server.js',
+      script: 'bin/www',
       instances,
       exec_mode: 'cluster',
       max_memory_restart: maxMemory + 'M',
@@ -12,7 +12,7 @@ module.exports = {
       env: { NODE_ENV: 'production' }
     },
     {
-      script: 'worker.js',
+      script: 'bin/worker',
       instances,
       max_memory_restart: maxMemory + 'M',
       node_args: '--optimize-for-size',
