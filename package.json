@@ -54,7 +54,7 @@
     "glob": "^7.1.4",
     "got": "^9.6.0",
     "handlebars": "^4.4.5",
-    "helmet": "^3.21.1",
+    "helmet": "^3.21.2",
     "http-assert": "^1.4.1",
     "husky": "^3.0.9",
     "ioredis": "^4.14.1",
