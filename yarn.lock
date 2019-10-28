@@ -5096,10 +5096,10 @@ find-cache-dir@^2.0.0, find-cache-dir@^2.1.0:
     make-dir "^2.0.0"
     pkg-dir "^3.0.0"
 
-find-my-way@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/find-my-way/-/find-my-way-2.1.1.tgz#df5e68c575de49e5de135bc2cbf59ef10cf77d90"
-  integrity sha512-yznKDx1xELFkTrV2Ke9x3IOr9zn5isdFA2Af/NKjU8kmQQhtn3TmqrVZ6OiLO5pj1dAScxe4dAo92ieG4nGcoA==
+find-my-way@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/find-my-way/-/find-my-way-2.2.1.tgz#248e939243af1b9df368bcc9b8c8286306caae7d"
+  integrity sha512-pzZA9/PlhDGG5PRzmd4vH4AbKW7FO68RE7q2I3NzjJHcVPukYbDA7bPdArg7ySKfS6pKki+qhrawFoN6aNZfjA==
   dependencies:
     fast-decode-uri-component "^1.0.0"
     safe-regex2 "^2.0.0"
@@ -11401,12 +11401,12 @@ responselike@^1.0.2:
   dependencies:
     lowercase-keys "^1.0.0"
 
-restana@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/restana/-/restana-3.3.2.tgz#8f8f4e6edbf0f3bc1021b1eb75e92f8255e81f42"
-  integrity sha512-UTBUoXPncV7XbfxkAGvSRPGA/X/+33pPpQhplhF9zp81CX8bfrZ1d7id7vQf+affcPosdWYk/rLu82ckGROt7Q==
+restana@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/restana/-/restana-3.3.3.tgz#0824b78cc310155966faa8d3f9664f956e63efc9"
+  integrity sha512-14e5/Ah2B27vKyu5ZN0eEYgtBoy1zcIrXbf2EoG20a6SEuPSJ35j+uE/xEplodaN0C0wWNiATdxhUnkgdI2TaA==
   dependencies:
-    find-my-way "^2.1.1"
+    find-my-way "^2.2.1"
 
 restore-cursor@^2.0.0:
   version "2.0.0"
