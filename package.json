@@ -121,7 +121,7 @@
     "pino-pretty": "^3.3.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
-    "string-natural-compare": "^2.0.3",
+    "string-natural-compare": "^3.0.0",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
     "surge": "^0.21.3",
