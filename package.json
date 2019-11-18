@@ -84,7 +84,7 @@
     "pg": "^7.11.0",
     "pino": "^5.13.6",
     "pm2": "^4.1.2",
-    "rate-limit-redis": "^1.6.0",
+    "rate-limit-redis": "^1.7.0",
     "restana": "^3.3.3",
     "role-acl": "^4.0.0",
     "sqlite3": "^4.1.0",
