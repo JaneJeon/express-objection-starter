@@ -9465,10 +9465,10 @@ objection-password@^2.0.0:
   dependencies:
     bcrypt "^3.0.0"
 
-objection-table-name@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/objection-table-name/-/objection-table-name-1.1.0.tgz#c481733ef1adeb78a42144f43cd5595f84126fd9"
-  integrity sha512-+2vNEvAOV8TQiSrhvh4rUPDDU3J3u1pftTTg9M0VAvrXiY9gCtyxFjEiWL6DSC6LqJqbnBej3ZX4aE47QHjfMg==
+objection-table-name@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/objection-table-name/-/objection-table-name-1.1.1.tgz#bf46d737b7174f17f53e8c5edfa07848836399a9"
+  integrity sha512-GkG2cOkiT9/0hGIy01lL+hegsJIm88N48s/qbZZ1YSoMq+KKrI+Gpt8gcEOFBqOMKBF2BZhOXUgXwrRmSwGPvg==
   dependencies:
     lodash.camelcase "^4.3.0"
     lodash.memoize "^4.1.2"
