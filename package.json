@@ -40,7 +40,7 @@
     "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js"
   },
   "dependencies": {
-    "bull": "^3.12.0",
+    "bull": "^3.12.1",
     "connect-redis": "^4.0.3",
     "cors": "^2.8.5",
     "dayjs": "^1.8.17",
