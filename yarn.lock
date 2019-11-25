@@ -8838,10 +8838,10 @@ ms@^2.1.1, ms@^2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-mssql@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/mssql/-/mssql-6.0.0.tgz#e7f100b18d45327b8ea80bb75df436b14f2028a8"
-  integrity sha512-r2o62C+liexxSQWK98mlocoJjbrneZ9p3+wXAoaMkcdsnaNwejymGuksf42ZpfxXG7Jl8cYA5PNaJ/tOr39haw==
+mssql@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/mssql/-/mssql-6.0.1.tgz#3aab69b7c19dd1b304495f27b748535d0110b477"
+  integrity sha512-7oPhbQjotFJBgMPlzLmPwWlnrryxrDltjCNCD9BK7Df7TA9wc6Mb/0Bcx04NJyHCMAhw8C/iWjbJoeDyUfRNUA==
   dependencies:
     debug "^4"
     tarn "^1.1.5"
