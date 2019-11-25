@@ -81,7 +81,7 @@
     "objection-visibility": "^0.4.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pg": "^7.11.0",
+    "pg": "^7.14.0",
     "pino": "^5.13.6",
     "pm2": "^4.1.2",
     "rate-limit-redis": "^1.7.0",
