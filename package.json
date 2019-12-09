@@ -87,7 +87,7 @@
     "rate-limit-redis": "^1.7.0",
     "restana": "^3.3.3",
     "role-acl": "^4.3.2",
-    "sqlite3": "^4.1.0",
+    "sqlite3": "^4.1.1",
     "ua-parser-js": "^0.7.20",
     "yamljs": "^0.3.0"
   },
