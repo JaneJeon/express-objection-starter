@@ -8050,10 +8050,10 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-mailchecker@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/mailchecker/-/mailchecker-3.3.2.tgz#206968fa217f87f6df9dd63b02eb4028c7e25b1b"
-  integrity sha512-4DLL199z6k30FenWBmt2cNSjiE15SifeWyAQaHla8yCpDOhLdoeeB7XMEzOVODSuCFW6WUPeMAdv3YG06jjGOw==
+mailchecker@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/mailchecker/-/mailchecker-3.3.3.tgz#8679bcee8399f1bcc0348dfa4ca2089a0da64a8e"
+  integrity sha512-ZJLOqbnATtfzQKwcd8gcP+UPFhOziRt9YldRtZhdKzQuNVALaF6mt38WgwmYyEwyifcU3xnayw+o78TYq4J3JQ==
   dependencies:
     async "^3.1.0"
     eventemitter2 "^5.0.1"
