@@ -11502,10 +11502,10 @@ responselike@^1.0.2:
   dependencies:
     lowercase-keys "^1.0.0"
 
-restana@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/restana/-/restana-3.3.3.tgz#0824b78cc310155966faa8d3f9664f956e63efc9"
-  integrity sha512-14e5/Ah2B27vKyu5ZN0eEYgtBoy1zcIrXbf2EoG20a6SEuPSJ35j+uE/xEplodaN0C0wWNiATdxhUnkgdI2TaA==
+restana@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/restana/-/restana-3.4.2.tgz#892687c79b199c32896eb0bf35db62ac7a7366aa"
+  integrity sha512-yCv6SK3X2Zv3Ztminu52UffI7/6b9gXjUjSKZReQxSSTZKxUI/VCx/7cp1VSPTse9xhB3A6v67nS+iKelKck+w==
   dependencies:
     find-my-way "^2.2.1"
 
