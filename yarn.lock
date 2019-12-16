@@ -9171,10 +9171,10 @@ nodemailer@^3.1.1:
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-3.1.8.tgz#febfaccb4bd273678473a309c6cb4b4a2f3c48e3"
   integrity sha1-/r+sy0vSc2eEc6MJxstLSi88SOM=
 
-nodemailer@^6.4.1:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.4.1.tgz#f70b40355b7b08f1f80344b353970a4f8f664370"
-  integrity sha512-mSQAzMim8XIC1DemK9TifDTIgASfoJEllG5aC1mEtZeZ+FQyrSOdGBRth6JRA1ERzHQCET3QHVSd9Kc6mh356g==
+nodemailer@^6.4.2:
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.4.2.tgz#7147550e32cdc37453380ab78d2074533966090a"
+  integrity sha512-g0n4nH1ONGvqYo1v72uSWvF/MRNnnq1LzmSzXb/6EPF3LFb51akOhgG3K2+aETAsJx90/Q5eFNTntu4vBCwyQQ==
 
 nodemon@^2.0.2:
   version "2.0.2"
