@@ -88,7 +88,7 @@
     "restana": "^3.4.2",
     "role-acl": "^4.3.2",
     "sqlite3": "^4.1.1",
-    "ua-parser-js": "^0.7.20",
+    "ua-parser-js": "^0.7.21",
     "yamljs": "^0.3.0"
   },
   "optionalDependencies": {
