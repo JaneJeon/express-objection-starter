@@ -1,53 +1,36 @@
 version: 2
 jobs:
-  install-maintenance-lts:
+  install:
     docker:
-      - &node-maintenance-lts
-        image: circleci/node:8 # to be updated to 10 once 2020 hits
+      - &node
+        image: circleci/node
     steps:
       - checkout
-      - &restore-maintenance-lts-cache
+      - &restore-cache
         restore-cache:
           keys:
-            - v1-node-8-dependencies-{{ checksum "yarn.lock" }}
-            - v1-node-8-dependencies-
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
       - run: yarn install --frozen-lockfile
       - save-cache:
           paths:
             - node_modules
-          key: v1-node-8-dependencies-{{ checksum "yarn.lock" }}
-
-  install-active-lts:
-    docker:
-      - &node-active-lts
-        image: circleci/node:10 # to be updated to 12 once 2020 hits
-    steps:
-      - checkout
-      - &restore-active-lts-cache
-        restore-cache:
-          keys:
-            - v1-node-10-dependencies-{{ checksum "yarn.lock" }}
-            - v1-node-10-dependencies-
-      - run: yarn install --frozen-lockfile
-      - save-cache:
-          paths:
-            - node_modules
-          key: v1-node-10-dependencies-{{ checksum "yarn.lock" }}
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
 
   lint:
     docker:
-      - *node-active-lts
+      - *node
     steps:
       - checkout
-      - *restore-active-lts-cache
+      - *restore-cache
       - run: yarn lint
 
   build:
     docker:
-      - *node-active-lts
+      - *node
     steps:
       - checkout
-      - *restore-active-lts-cache
+      - *restore-cache
       - run: yarn build
       - persist_to_workspace:
           root: '.'
@@ -62,50 +45,33 @@ jobs:
             - views/emails/*/html.hbs
             - views/emails/index.js
 
-  test-node-maintenance-lts:
+  test:
     docker:
-      - <<: *node-maintenance-lts
+      - <<: *node
         environment: &base-env
           KNEX_CONNECTION_USER: &test-user knex
           KNEX_CONNECTION_DATABASE: &test-db test
-      - &redis
-        image: circleci/redis
-      - &postgres
-        image: circleci/postgres
+      - image: circleci/redis
+      - image: circleci/postgres
         environment:
           POSTGRES_USER: *test-user
           POSTGRES_DB: *test-db
     steps:
       - checkout
-      - *restore-maintenance-lts-cache
-      - &attach-workspace
-        attach_workspace:
+      - *restore-cache
+      - attach_workspace:
           at: '.'
-      - run: &test yarn test --ci --runInBand
-      - &store-test-results
-        store_test_results:
+      - run: yarn test --ci --runInBand
+      - store_test_results:
           path: reports/junit
-
-  test-node-active-lts-and-upload-coverage:
-    docker:
-      - <<: *node-active-lts
-        environment: *base-env
-      - *redis
-      - *postgres
-    steps:
-      - checkout
-      - *restore-active-lts-cache
-      - *attach-workspace
-      - run: *test
-      - *store-test-results
       - run: yarn coverage
 
-  build-and-deploy-docs:
+  docs:
     docker:
-      - *node-active-lts
+      - *node
     steps:
       - checkout
-      - *restore-active-lts-cache
+      - *restore-cache
       - run: yarn docs:build
       - run: yarn docs:deploy
 
@@ -113,22 +79,17 @@ workflows:
   version: 2
   pipeline:
     jobs:
-      - install-maintenance-lts
-      - install-active-lts
+      - install
       - lint:
           requires:
-            - install-active-lts
+            - install
       - build:
           requires:
             - lint
-            - install-maintenance-lts
-      - test-node-maintenance-lts:
+      - test:
           requires:
             - build
-      - test-node-active-lts-and-upload-coverage:
-          requires:
-            - build
-      - build-and-deploy-docs:
+      - docs:
           requires:
             - lint
           filters: &master-branch-only
