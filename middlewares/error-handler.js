@@ -1,6 +1,5 @@
 // istanbul ignore file
-const { ValidationError, NotFoundError } = require('objection')
-const { DBError } = require('objection-db-errors')
+const { ValidationError, NotFoundError, DBError } = require('objection')
 const { JsonWebTokenError } = require('jsonwebtoken')
 
 // eslint-disable-next-line no-unused-vars

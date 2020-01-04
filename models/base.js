@@ -1,8 +1,10 @@
 // istanbul ignore file
 const { Model, AjvValidator } = require('objection')
 const tableName = require('objection-table-name')()
-const { DbErrors } = require('objection-db-errors')
-const authorize = require('objection-authorize')(require('../lib/acl'))
+const authorize = require('objection-authorize')(
+  require('../lib/acl'),
+  'role-acl@4'
+)
 const visibility = require('objection-visibility').default
 const hashId = require('objection-hashid')
 const config = require('../config')
@@ -10,19 +12,13 @@ const config = require('../config')
 const supportsReturning = ['pg', 'mssql'].includes(process.env.DATABASE_CLIENT)
 Model.knex(require('knex')(require('../knexfile')))
 
-class BaseModel extends hashId(
-  visibility(authorize(DbErrors(tableName(Model))))
-) {
+class BaseModel extends hashId(visibility(authorize(tableName(Model)))) {
   static get modelPaths() {
     return [__dirname]
   }
 
   static get useLimitInFirst() {
     return true
-  }
-
-  static get defaultEagerAlgorithm() {
-    return Model.JoinEagerAlgorithm
   }
 
   static get pageSize() {
