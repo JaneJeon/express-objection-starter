@@ -1,6 +1,6 @@
 const BaseModel = require('./base')
 const password = require('objection-password')()
-const checkDomain = require('../lib/domain-checker')
+const filterTempEmail = require('../services/filter-temp-email')
 const normalize = require('normalize-email')
 const mailer = require('../jobs/mailer')
 
@@ -12,7 +12,7 @@ class User extends password(BaseModel) {
   processInput() {
     if (this.username) this.username = this.username.toLowerCase()
     if (this.email) {
-      checkDomain(this.email)
+      filterTempEmail(this.email)
       this.email = normalize(this.email)
     }
   }

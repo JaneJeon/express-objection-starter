@@ -4019,6 +4019,11 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
+disposable-email-domains@^1.0.51:
+  version "1.0.51"
+  resolved "https://registry.yarnpkg.com/disposable-email-domains/-/disposable-email-domains-1.0.51.tgz#723217aa91ada7fd5884a53a378a77e1f7608415"
+  integrity sha512-KiNrnKLz++/FhqkPAQKlvLBh9U2wFu7hPLBso7dFKXMX9MGQMT5MvuZgFjtjwr8SQQ8OL5OF2eGxqkOtgm9RGA==
+
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -7943,7 +7948,7 @@ lodash@4.17.14:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
   integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
 
-lodash@>4.17.5, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.17.5:
+lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.17.5:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -8022,18 +8027,6 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
-
-mailchecker@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/mailchecker/-/mailchecker-3.3.3.tgz#8679bcee8399f1bcc0348dfa4ca2089a0da64a8e"
-  integrity sha512-ZJLOqbnATtfzQKwcd8gcP+UPFhOziRt9YldRtZhdKzQuNVALaF6mt38WgwmYyEwyifcU3xnayw+o78TYq4J3JQ==
-  dependencies:
-    async "^3.1.0"
-    eventemitter2 "^5.0.1"
-    glob "^7.0.3"
-    lodash ">4.17.5"
-    mu2 "~0.5.20"
-    node-range "0.1.x"
 
 maildev@^1.1.0:
   version "1.1.0"
@@ -8850,11 +8843,6 @@ mssql@^6.0.1:
     tarn "^1.1.5"
     tedious "^6.6.2"
 
-mu2@~0.5.20:
-  version "0.5.21"
-  resolved "https://registry.yarnpkg.com/mu2/-/mu2-0.5.21.tgz#888a8f0fd90eb1cfda9db81476f6e199cc9e58d3"
-  integrity sha1-iIqPD9kOsc/anbgUdvbhmcyeWNM=
-
 multicast-dns-service-types@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/multicast-dns-service-types/-/multicast-dns-service-types-1.1.0.tgz#899f11d9686e5e05cb91b35d5f0e63b773cfc901"
@@ -9109,11 +9097,6 @@ node-pre-gyp@^0.11.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
-
-node-range@0.1.x:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/node-range/-/node-range-0.1.0.tgz#bdaa9796713bb07270746051f133912ddea48f2b"
-  integrity sha1-vaqXlnE7sHJwdGBR8TORLd6kjys=
 
 node-releases@^1.1.29:
   version "1.1.35"
