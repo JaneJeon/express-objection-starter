@@ -175,10 +175,15 @@ jobs:
         env: *knex-env
 
       - name: Test
-        run: yarn test --ci --reporters=default --reporters=jest-junit
+        if: matrix.node-version != '12' || matrix.client != 'pg' || github.ref != 'refs/heads/master'
+        run: yarn test:ci
         # we need to define the environment variables here (instead of at the job level)
         # since some of them relies on the value of dynamically assigned port,
         # and we can't have job.services.<name>.ports until the service containers have been mounted.
+        env: *knex-env
+      - name: Test w/ Coverage
+        if: &collect-coverage matrix.node-version == '12' && matrix.client == 'pg' && github.ref == 'refs/heads/master'
+        run: yarn test:ci --coverage
         env: *knex-env
 
       - name: Archive Test Results
@@ -188,7 +193,7 @@ jobs:
           path: reports/junit
 
       - name: Upload Coverage
-        if: matrix.node-version == '12' && matrix.client == 'pg' && github.ref == 'refs/heads/master'
+        if: *collect-coverage
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

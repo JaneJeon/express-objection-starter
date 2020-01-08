@@ -28,6 +28,7 @@
     "watch:hbs": "onchange -k 'views/**/*.hbs' -- yarn build:hbs",
     "pretest": "yarn setup",
     "test": "run-p dev:mail 'test:unit {@}' --race -- --",
+    "test:ci": "yarn test --ci --reporters=default --reporters=jest-junit",
     "test:watch": "run-p watch 'test --watch'",
     "test:unit": "wait-on http://localhost:1080 && jest --forceExit",
     "lint": "run-s lint:*",
