@@ -153,6 +153,7 @@
                     {
                       'MYSQL_USER': 'SA',
                       'MYSQL_ROOT_PASSWORD': 'Knex(!)objectionPassw0rd',
+                      'MYSQL_PASSWORD': 'Knex(!)objectionPassw0rd',
                       'MYSQL_DATABASE': 'test-${{ matrix.node-version }}',
                       'POSTGRES_USER': 'SA',
                       'POSTGRES_PASSWORD': 'Knex(!)objectionPassw0rd',
@@ -185,6 +186,11 @@
                 'name': 'Download Compiled Views',
                 'uses': 'actions/download-artifact@v1',
                 'with': { 'name': 'views' },
+              },
+              {
+                'name': 'Print Environment Variables',
+                'shell': 'bash',
+                'run': 'printenv | sort',
               },
               {
                 'name': 'Test',

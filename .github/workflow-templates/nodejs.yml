@@ -124,9 +124,11 @@ jobs:
           - ${{ matrix.port }}/tcp
         env:
           # for MySQL/MariaDB
+          # We need to fix username = 'SA' because the mssql image has no way of configuring username via
+          # environment variables.
           MYSQL_USER: &test-user SA
           MYSQL_ROOT_PASSWORD: &test-pw Knex(!)objectionPassw0rd
-          # MYSQL_PASSWORD: *test-pw
+          MYSQL_PASSWORD: *test-pw
           MYSQL_DATABASE: &test-db test-${{ matrix.node-version }}
           # for Postgres
           POSTGRES_USER: *test-user
@@ -147,6 +149,9 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: views
+      - name: Print Environment Variables
+        shell: bash
+        run: printenv | sort
 
       - name: Test
         run: yarn test --ci --reporters=default --reporters=jest-junit
@@ -154,7 +159,6 @@ jobs:
         # the value of dynamically assigned port, and we can't have job.services.<name>.ports
         # until the service containers have been mounted.
         env:
-          # mssql container has no option to create a user via environment variables
           KNEX_CONNECTION_USER: *test-user
           KNEX_CONNECTION_PASSWORD: *test-pw
           KNEX_CONNECTION_DATABASE: *test-db
