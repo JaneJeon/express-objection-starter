@@ -90,14 +90,6 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      # mssql container has no option to create a user via environment variables
-      KNEX_CONNECTION_USER: &test-user SA
-      KNEX_CONNECTION_PASSWORD: &test-pw Knex(!)objectionPassw0rd
-      KNEX_CONNECTION_DATABASE: &test-db test-${{ matrix.node-version }}
-      KNEX_CONNECTION_PORT: &test-port ${{ job.services.database.ports[${{ matrix.port }}] }}
-      KNEX_CLIENT: ${{ matrix.client }}
-      REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}
 
     strategy:
       matrix:
@@ -132,10 +124,10 @@ jobs:
           - ${{ matrix.port }}/tcp
         env:
           # for MySQL/MariaDB
-          MYSQL_USER: *test-user
-          MYSQL_ROOT_PASSWORD: *test-pw
+          MYSQL_USER: &test-user SA
+          MYSQL_ROOT_PASSWORD: &test-pw Knex(!)objectionPassw0rd
           # MYSQL_PASSWORD: *test-pw
-          MYSQL_DATABASE: *test-db
+          MYSQL_DATABASE: &test-db test-${{ matrix.node-version }}
           # for Postgres
           POSTGRES_USER: *test-user
           POSTGRES_PASSWORD: *test-pw
@@ -158,6 +150,18 @@ jobs:
 
       - name: Test
         run: yarn test --ci --reporters=default --reporters=jest-junit
+        # we need to define the environment variables here since some of them relies on
+        # the value of dynamically assigned port, and we can't have job.services.<name>.ports
+        # until the service containers have been mounted.
+        env:
+          # mssql container has no option to create a user via environment variables
+          KNEX_CONNECTION_USER: *test-user
+          KNEX_CONNECTION_PASSWORD: *test-pw
+          KNEX_CONNECTION_DATABASE: *test-db
+          KNEX_CONNECTION_PORT: ${{ job.services.database.ports[${{ matrix.port }}] }}
+          KNEX_CLIENT: ${{ matrix.client }}
+          REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}
+
       - name: Archive Test Results
         uses: actions/upload-artifact@v1
         with:

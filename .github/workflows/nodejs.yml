@@ -113,15 +113,6 @@
         {
           'needs': 'build',
           'runs-on': 'ubuntu-latest',
-          'env':
-            {
-              'KNEX_CONNECTION_USER': 'SA',
-              'KNEX_CONNECTION_PASSWORD': 'Knex(!)objectionPassw0rd',
-              'KNEX_CONNECTION_DATABASE': 'test-${{ matrix.node-version }}',
-              'KNEX_CONNECTION_PORT': '${{ job.services.database.ports[${{ matrix.port }}] }}',
-              'KNEX_CLIENT': '${{ matrix.client }}',
-              'REDIS_URL': "redis://localhost:${{ job.services.redis.ports['6379'] }}",
-            },
           'strategy':
             {
               'matrix':
@@ -198,6 +189,15 @@
               {
                 'name': 'Test',
                 'run': 'yarn test --ci --reporters=default --reporters=jest-junit',
+                'env':
+                  {
+                    'KNEX_CONNECTION_USER': 'SA',
+                    'KNEX_CONNECTION_PASSWORD': 'Knex(!)objectionPassw0rd',
+                    'KNEX_CONNECTION_DATABASE': 'test-${{ matrix.node-version }}',
+                    'KNEX_CONNECTION_PORT': '${{ job.services.database.ports[${{ matrix.port }}] }}',
+                    'KNEX_CLIENT': '${{ matrix.client }}',
+                    'REDIS_URL': "redis://localhost:${{ job.services.redis.ports['6379'] }}",
+                  },
               },
               {
                 'name': 'Archive Test Results',
