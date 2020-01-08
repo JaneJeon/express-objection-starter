@@ -153,7 +153,7 @@ jobs:
       - name: Print Environment Variables
         shell: bash
         run: printenv | sort
-        env:
+        env: &knex-env
           KNEX_CONNECTION_USER: *test-user
           KNEX_CONNECTION_PASSWORD: *test-pw
           KNEX_CONNECTION_DATABASE: *test-db
@@ -163,16 +163,10 @@ jobs:
 
       - name: Test
         run: yarn test --ci --reporters=default --reporters=jest-junit
-        # we need to define the environment variables here since some of them relies on
-        # the value of dynamically assigned port, and we can't have job.services.<name>.ports
-        # until the service containers have been mounted.
-        env:
-          KNEX_CONNECTION_USER: *test-user
-          KNEX_CONNECTION_PASSWORD: *test-pw
-          KNEX_CONNECTION_DATABASE: *test-db
-          KNEX_CONNECTION_PORT: ${{ job.services.database.ports[matrix.port] }}
-          KNEX_CLIENT: ${{ matrix.client }}
-          REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}
+        # we need to define the environment variables here (instead of at the job level)
+        # since some of them relies on the value of dynamically assigned port,
+        # and we can't have job.services.<name>.ports until the service containers have been mounted.
+        env: *knex-env
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v1
