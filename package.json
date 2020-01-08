@@ -36,7 +36,8 @@
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:publish": "surge docs/.vuepress/dist \"$SURGE_URL\"",
-    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js"
+    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js",
+    "compile-workflow": "yaml2json .github/workflow-templates/nodejs.yml > .github/workflows/nodejs.yml"
   },
   "dependencies": {
     "bull": "^3.12.1",

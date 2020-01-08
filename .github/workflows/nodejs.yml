@@ -1,161 +1,214 @@
-name: Node CI
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-env:
-  CI: true
-
-jobs:
-  install:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix: &node-versions
-        node-version: ['10', '12']
-
-    steps:
-      - &checkout
-        uses: actions/checkout@v1
-      - &setup-node
-        name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - &restore-cache
-        name: Restore Cache
-        id: cache
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-node-${{ matrix.node-version }}-
-
-      - name: Install Dependencies
-        run: yarn --frozen-lockfile
-        if: steps.cache.outputs.cache-hit != 'true'
-
-  lint:
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - *checkout
-      - *restore-cache
-      - name: Lint
-        run: yarn lint
-
-  build:
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - *checkout
-      - *restore-cache
-      - name: Build
-        run: yarn build
-      # Currently, https://github.com/actions/upload-artifact doesn't support either:
-      # 1. Wildcard selects
-      # 2. Providing a *list* of paths to upload
-      # So we have to 1. select the entire directories, and 2. run separate actions for this.
-      - name: Upload Compiled Config
-        uses: actions/upload-artifact@v1
-        with:
-          name: config
-          path: config
-      - name: Upload Compiled Views
-        uses: actions/upload-artifact@v1
-        with:
-          name: views
-          path: views
-
-  docs:
-    needs: lint
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    steps:
-      - *checkout
-      - *restore-cache
-      - name: Build Docs
-        run: yarn docs:build
-      - name: Publish Docs
-        run: yarn docs:publish
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      # mssql container has no option to create a user via environment variables
-      KNEX_CONNECTION_USER: &test-user SA
-      KNEX_CONNECTION_PASSWORD: &test-pw Knex(!)objectionPassw0rd
-      KNEX_CONNECTION_DATABASE: &test-db test
-      KNEX_CLIENT: ${{ matrix.client }}
-
-    strategy:
-      matrix:
-        <<: *node-versions
-        database:
-          - mysql
-          - mariadb
-          - postgres
-          - &mssql mcr.microsoft.com/mssql/server:2019-latest
-        include:
-          - database: mysql
-            port: 3306
-            client: mysql2
-          - database: mariadb
-            port: 3306
-            client: mysql2
-          - database: postgres
-            port: 5432
-            client: pg
-          - database: *mssql
-            port: 1433
-            client: mssql
-
-    services:
-      redis:
-        image: redis
-        ports:
-          - 6379/tcp
-      database:
-        image: ${{ matrix.database }}
-        ports:
-          - ${{ matrix.port }}/tcp
-        env:
-          # for MySQL/MariaDB
-          MYSQL_USER: *test-user
-          MYSQL_ROOT_PASSWORD: *test-pw
-          MYSQL_DATABASE: *test-db
-          # for Postgres
-          POSTGRES_USER: *test-user
-          POSTGRES_PASSWORD: *test-pw
-          POSTGRES_DB: *test-db
-          # for SQL Server
-          ACCEPT_EULA: Y
-          SA_PASSWORD: *test-pw
-
-    steps:
-      - *checkout
-      - *restore-cache
-      - name: Download Compiled Config
-        uses: actions/download-artifact@v1
-        with:
-          name: config
-      - name: Download Compiled Views
-        uses: actions/download-artifact@v1
-        with:
-          name: views
-
-      - name: Test
-        run: yarn test --ci --reporters=default --reporters=jest-junit
-      - name: Archive Test Results
-        uses: actions/upload-artifact@v1
-        with:
-          name: Test Report
-          path: reports/junit
-
-      - name: Upload Coverage
-        if: matrix.node-version == '12' && matrix.client == 'pg' && github.ref == 'refs/heads/master'
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+{
+  'name': 'Node CI',
+  'on': { 'push': { 'branches': ['master'] }, 'pull_request': null },
+  'env': { 'CI': true },
+  'jobs':
+    {
+      'install':
+        {
+          'runs-on': 'ubuntu-latest',
+          'strategy': { 'matrix': { 'node-version': ['10', '12'] } },
+          'steps':
+            [
+              { 'uses': 'actions/checkout@v1' },
+              {
+                'name': 'Use Node.js ${{ matrix.node-version }}',
+                'uses': 'actions/setup-node@v1',
+                'with': { 'node-version': '${{ matrix.node-version }}' },
+              },
+              {
+                'name': 'Restore Cache',
+                'id': 'cache',
+                'uses': 'actions/cache@v1',
+                'with':
+                  {
+                    'path': 'node_modules',
+                    'key': "${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}",
+                    'restore-keys': '${{ runner.os }}-node-${{ matrix.node-version }}-',
+                  },
+              },
+              {
+                'name': 'Install Dependencies',
+                'run': 'yarn --frozen-lockfile',
+                'if': "steps.cache.outputs.cache-hit != 'true'",
+              },
+            ],
+        },
+      'lint':
+        {
+          'needs': 'install',
+          'runs-on': 'ubuntu-latest',
+          'steps':
+            [
+              { 'uses': 'actions/checkout@v1' },
+              {
+                'name': 'Restore Cache',
+                'id': 'cache',
+                'uses': 'actions/cache@v1',
+                'with':
+                  {
+                    'path': 'node_modules',
+                    'key': "${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}",
+                    'restore-keys': '${{ runner.os }}-node-${{ matrix.node-version }}-',
+                  },
+              },
+              { 'name': 'Lint', 'run': 'yarn lint' },
+            ],
+        },
+      'build':
+        {
+          'needs': 'lint',
+          'runs-on': 'ubuntu-latest',
+          'steps':
+            [
+              { 'uses': 'actions/checkout@v1' },
+              {
+                'name': 'Restore Cache',
+                'id': 'cache',
+                'uses': 'actions/cache@v1',
+                'with':
+                  {
+                    'path': 'node_modules',
+                    'key': "${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}",
+                    'restore-keys': '${{ runner.os }}-node-${{ matrix.node-version }}-',
+                  },
+              },
+              { 'name': 'Build', 'run': 'yarn build' },
+              {
+                'name': 'Upload Compiled Config',
+                'uses': 'actions/upload-artifact@v1',
+                'with': { 'name': 'config', 'path': 'config' },
+              },
+              {
+                'name': 'Upload Compiled Views',
+                'uses': 'actions/upload-artifact@v1',
+                'with': { 'name': 'views', 'path': 'views' },
+              },
+            ],
+        },
+      'docs':
+        {
+          'needs': 'lint',
+          'if': "github.ref == 'refs/heads/master'",
+          'runs-on': 'ubuntu-latest',
+          'steps':
+            [
+              { 'uses': 'actions/checkout@v1' },
+              {
+                'name': 'Restore Cache',
+                'id': 'cache',
+                'uses': 'actions/cache@v1',
+                'with':
+                  {
+                    'path': 'node_modules',
+                    'key': "${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}",
+                    'restore-keys': '${{ runner.os }}-node-${{ matrix.node-version }}-',
+                  },
+              },
+              { 'name': 'Build Docs', 'run': 'yarn docs:build' },
+              { 'name': 'Publish Docs', 'run': 'yarn docs:publish' },
+            ],
+        },
+      'test':
+        {
+          'needs': 'build',
+          'runs-on': 'ubuntu-latest',
+          'env':
+            {
+              'KNEX_CONNECTION_USER': 'SA',
+              'KNEX_CONNECTION_PASSWORD': 'Knex(!)objectionPassw0rd',
+              'KNEX_CONNECTION_DATABASE': 'test',
+              'KNEX_CLIENT': '${{ matrix.client }}',
+            },
+          'strategy':
+            {
+              'matrix':
+                {
+                  'node-version': ['10', '12'],
+                  'database':
+                    [
+                      'mysql',
+                      'mariadb',
+                      'postgres',
+                      'mcr.microsoft.com/mssql/server:2019-latest',
+                    ],
+                  'include':
+                    [
+                      { 'database': 'mysql', 'port': 3306, 'client': 'mysql2' },
+                      {
+                        'database': 'mariadb',
+                        'port': 3306,
+                        'client': 'mysql2',
+                      },
+                      { 'database': 'postgres', 'port': 5432, 'client': 'pg' },
+                      {
+                        'database': 'mcr.microsoft.com/mssql/server:2019-latest',
+                        'port': 1433,
+                        'client': 'mssql',
+                      },
+                    ],
+                },
+            },
+          'services':
+            {
+              'redis': { 'image': 'redis', 'ports': ['6379/tcp'] },
+              'database':
+                {
+                  'image': '${{ matrix.database }}',
+                  'ports': ['${{ matrix.port }}/tcp'],
+                  'env':
+                    {
+                      'MYSQL_USER': 'SA',
+                      'MYSQL_ROOT_PASSWORD': 'Knex(!)objectionPassw0rd',
+                      'MYSQL_DATABASE': 'test',
+                      'POSTGRES_USER': 'SA',
+                      'POSTGRES_PASSWORD': 'Knex(!)objectionPassw0rd',
+                      'POSTGRES_DB': 'test',
+                      'ACCEPT_EULA': 'Y',
+                      'SA_PASSWORD': 'Knex(!)objectionPassw0rd',
+                    },
+                },
+            },
+          'steps':
+            [
+              { 'uses': 'actions/checkout@v1' },
+              {
+                'name': 'Restore Cache',
+                'id': 'cache',
+                'uses': 'actions/cache@v1',
+                'with':
+                  {
+                    'path': 'node_modules',
+                    'key': "${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}",
+                    'restore-keys': '${{ runner.os }}-node-${{ matrix.node-version }}-',
+                  },
+              },
+              {
+                'name': 'Download Compiled Config',
+                'uses': 'actions/download-artifact@v1',
+                'with': { 'name': 'config' },
+              },
+              {
+                'name': 'Download Compiled Views',
+                'uses': 'actions/download-artifact@v1',
+                'with': { 'name': 'views' },
+              },
+              {
+                'name': 'Test',
+                'run': 'yarn test --ci --reporters=default --reporters=jest-junit',
+              },
+              {
+                'name': 'Archive Test Results',
+                'uses': 'actions/upload-artifact@v1',
+                'with': { 'name': 'Test Report', 'path': 'reports/junit' },
+              },
+              {
+                'name': 'Upload Coverage',
+                'if': "matrix.node-version == '12' && matrix.client == 'pg' && github.ref == 'refs/heads/master'",
+                'uses': 'codecov/codecov-action@v1',
+                'with': { 'token': '${{ secrets.CODECOV_TOKEN }}' },
+              },
+            ],
+        },
+    },
+}
