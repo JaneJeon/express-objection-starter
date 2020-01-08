@@ -143,7 +143,12 @@
             },
           'services':
             {
-              'redis': { 'image': 'redis', 'ports': ['6379/tcp'] },
+              'redis':
+                {
+                  'image': 'redis',
+                  'ports': ['6379/tcp'],
+                  'options': '--name ${{ matrix.client }}-redis-${{ matrix.node-version }}',
+                },
               'database':
                 {
                   'image': '${{ matrix.database }}',
