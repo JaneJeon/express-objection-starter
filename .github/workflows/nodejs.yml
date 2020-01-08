@@ -160,7 +160,7 @@
                       'ACCEPT_EULA': 'Y',
                       'SA_PASSWORD': 'Knex(!)objectionPassw0rd',
                     },
-                  'options': '--name ${{ matrix.client }}-db',
+                  'options': '--name ${{ matrix.client }}-db-${{ matrix.node-version }}',
                 },
             },
           'steps':
@@ -211,7 +211,7 @@
                 'name': 'Create MSSQL Database',
                 'shell': 'bash',
                 'if': "matrix.client == 'mssql'",
-                'run': "docker exec -it mssql-db /opt/mssql-tools/bin/sqlcmd \\\n  -S $KNEX_CONNECTION_HOST -U $KNEX_CONNECTION_USER -P \"${KNEX_CONNECTION_PASSWORD@Q}\"\n  -Q $(printf 'CREATE DATABASE %s' $KNEX_CONNECTION_DATABASE)\n",
+                'run': "docker exec -it mssql-db-${{ matrix.node-version }} /opt/mssql-tools/bin/sqlcmd  -S $KNEX_CONNECTION_HOST -U $KNEX_CONNECTION_USER -P \"${KNEX_CONNECTION_PASSWORD@Q}\"\n  -Q $(printf 'CREATE DATABASE %s' $KNEX_CONNECTION_DATABASE)",
                 'env':
                   {
                     'KNEX_CONNECTION_USER': 'SA',
