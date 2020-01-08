@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - &restore-cache
+      - &restore-cache-matrix
         name: Restore Cache
         id: cache
         uses: actions/cache@v1
@@ -41,7 +41,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *restore-cache
+      - &restore-cache-node-12
+        name: Restore Cache
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-12-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-node-12-
       - name: Lint
         run: yarn lint
 
@@ -50,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *restore-cache
+      - *restore-cache-node-12
       - name: Build
         run: yarn build
       # Currently, https://github.com/actions/upload-artifact doesn't support either:
@@ -74,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *restore-cache
+      - *restore-cache-node-12
       - name: Build Docs
         run: yarn docs:build
       - name: Publish Docs
@@ -136,7 +143,7 @@ jobs:
 
     steps:
       - *checkout
-      - *restore-cache
+      - *restore-cache-matrix
       - name: Download Compiled Config
         uses: actions/download-artifact@v1
         with:
