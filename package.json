@@ -28,16 +28,17 @@
     "watch:hbs": "onchange -k 'views/**/*.hbs' -- yarn build:hbs",
     "pretest": "yarn setup",
     "test": "run-p dev:mail 'test:unit {@}' --race -- --",
+    "test:ci": "yarn test --ci --reporters=default --reporters=jest-junit",
     "test:watch": "run-p watch 'test --watch'",
     "test:unit": "wait-on http://localhost:1080 && jest --forceExit",
-    "coverage": "is-ci && codecov || echo 'coverage only runs on CI!'",
     "lint": "run-s lint:*",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check '**/*.{js,md,json,yml,yaml,css,html}'",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "surge docs/.vuepress/dist \"$SURGE_URL\"",
-    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js"
+    "docs:publish": "surge docs/.vuepress/dist \"$SURGE_URL\"",
+    "clean": "rimraf logs/*.log docs/.vuepress/dist reports coverage config/**/*.json config/*.json views/**/html.hbs views/emails/index.js",
+    "compile-workflow": "yaml2json .github/workflow-templates/nodejs.yml > .github/workflows/nodejs.yml"
   },
   "dependencies": {
     "bull": "^3.12.1",
@@ -66,7 +67,6 @@
     "mjml": "^4.5.1",
     "ms": "^2.1.2",
     "mssql": "^6.0.1",
-    "mysql": "^2.17.1",
     "mysql2": "^2.1.0",
     "nanoid": "^2.1.8",
     "nconf": "^0.10.0",
@@ -95,7 +95,6 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
-    "codecov": "^3.6.1",
     "cross-env": "^6.0.3",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",

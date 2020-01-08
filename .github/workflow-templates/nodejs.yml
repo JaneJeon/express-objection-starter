@@ -1,0 +1,199 @@
+name: Node CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+env:
+  CI: true
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix: &node-versions
+        node-version: ['10', '12']
+
+    steps:
+      - &checkout
+        uses: actions/checkout@v2
+      - &setup-node
+        name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - &restore-cache-matrix
+        name: Restore Cache
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: v1-${{ runner.os }}-node-${{ matrix.node-version }}-
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+        if: steps.cache.outputs.cache-hit != 'true'
+
+  lint:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - *checkout
+      - &restore-cache-node-12
+        name: Restore Cache
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: v1-${{ runner.os }}-node-12-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: v1-${{ runner.os }}-node-12-
+      - name: Lint
+        run: yarn lint
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - *checkout
+      - *restore-cache-node-12
+      - name: Build
+        run: yarn build
+      # Currently, https://github.com/actions/upload-artifact doesn't support either:
+      # 1. Wildcard selects
+      # 2. Providing a *list* of paths to upload
+      # So we have to 1. select the entire directories, and 2. run separate actions for this.
+      - name: Upload Compiled Config
+        uses: actions/upload-artifact@v1
+        with:
+          name: config
+          path: config
+      - name: Upload Compiled Views
+        uses: actions/upload-artifact@v1
+        with:
+          name: views
+          path: views
+
+  docs:
+    needs: lint
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - *checkout
+      - *restore-cache-node-12
+      - name: Build Docs
+        run: yarn docs:build
+      - name: Publish Docs
+        run: yarn docs:publish
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        <<: *node-versions
+        database:
+          # - mysql
+          # - mariadb
+          - postgres
+          # - &mssql mcr.microsoft.com/mssql/server:2019-latest
+        include:
+          # - database: mysql
+          #   port: 3306
+          #   client: mysql2
+          # - database: mariadb
+          #   port: 3306
+          #   client: mysql2
+          - database: postgres
+            port: 5432
+            client: pg
+          # - database: *mssql
+          #   port: 1433
+          #   client: mssql
+
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379/tcp
+        options: --name ${{ matrix.client }}-redis-${{ matrix.node-version }}
+      database:
+        image: ${{ matrix.database }}
+        ports:
+          - ${{ matrix.port }}/tcp
+        env:
+          # for MySQL/MariaDB
+          # We need to fix username = 'SA' because the mssql image has no way of configuring username via
+          # environment variables.
+          MYSQL_USER: &test-user SA
+          MYSQL_ROOT_PASSWORD: &test-pw Knex(!)objectionPassw0rd
+          MYSQL_PASSWORD: *test-pw
+          MYSQL_DATABASE: &test-db test-${{ matrix.node-version }}
+          # for Postgres
+          POSTGRES_USER: *test-user
+          POSTGRES_PASSWORD: *test-pw
+          POSTGRES_DB: *test-db
+          # for SQL Server
+          ACCEPT_EULA: Y
+          SA_PASSWORD: *test-pw
+        options: --name ${{ matrix.client }}-db-${{ matrix.node-version }}
+
+    steps:
+      - *checkout
+      - *setup-node
+      - *restore-cache-matrix
+      - name: Download Compiled Config
+        uses: actions/download-artifact@v1
+        with:
+          name: config
+      - name: Download Compiled Views
+        uses: actions/download-artifact@v1
+        with:
+          name: views
+      - name: Print Environment Variables
+        shell: bash
+        run: printenv | sort
+        env: &knex-env
+          KNEX_CONNECTION_USER: *test-user
+          KNEX_CONNECTION_PASSWORD: *test-pw
+          KNEX_CONNECTION_DATABASE: *test-db
+          KNEX_CONNECTION_HOST: localhost
+          KNEX_CONNECTION_PORT: ${{ job.services.database.ports[matrix.port] }}
+          KNEX_CLIENT: ${{ matrix.client }}
+          REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}
+
+      - name: Create MSSQL Database
+        shell: bash
+        if: matrix.client == 'mssql'
+        run: >-
+          docker exec mssql-db-${{ matrix.node-version }} /opt/mssql-tools/bin/sqlcmd
+          -S $KNEX_CONNECTION_HOST -U $KNEX_CONNECTION_USER -P "${KNEX_CONNECTION_PASSWORD@Q}"
+          -Q $(printf 'CREATE DATABASE %s' $KNEX_CONNECTION_DATABASE)
+        env: *knex-env
+
+      - name: Test
+        if: matrix.node-version != '12' || matrix.client != 'pg' || github.ref != 'refs/heads/master'
+        run: yarn test:ci
+        # we need to define the environment variables here (instead of at the job level)
+        # since some of them relies on the value of dynamically assigned port,
+        # and we can't have job.services.<name>.ports until the service containers have been mounted.
+        env: *knex-env
+      - name: Test w/ Coverage
+        if: &collect-coverage matrix.node-version == '12' && matrix.client == 'pg' && github.ref == 'refs/heads/master'
+        run: yarn test:ci --coverage
+        env: *knex-env
+
+      - name: Archive Test Results
+        uses: actions/upload-artifact@v1
+        with:
+          name: Test Report
+          path: reports/junit
+
+      - name: Upload Coverage
+        if: *collect-coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

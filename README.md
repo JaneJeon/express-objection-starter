@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to express-objection-starter 👋</h1>
 
-[![CircleCI](https://img.shields.io/circleci/build/github/JaneJeon/express-objection-starter)](https://circleci.com/gh/JaneJeon/express-objection-starter)
+[![GitHub Actions](https://github.com/JaneJeon/express-objection-starter/actions)](https://github.com/JaneJeon/express-objection-starter/workflows/Node%20CI/badge.svg)
 [![Coverage](https://codecov.io/gh/JaneJeon/express-objection-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/JaneJeon/express-objection-starter)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/JaneJeon/express-objection-starter)](https://codeclimate.com/github/JaneJeon/express-objection-starter/maintainability)
 [![Dependencies](https://img.shields.io/david/JaneJeon/express-objection-starter)](https://david-dm.org/JaneJeon/express-objection-starter)
