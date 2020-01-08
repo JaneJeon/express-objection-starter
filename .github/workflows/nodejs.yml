@@ -117,8 +117,8 @@
             {
               'KNEX_CONNECTION_USER': 'SA',
               'KNEX_CONNECTION_PASSWORD': 'Knex(!)objectionPassw0rd',
-              'KNEX_CONNECTION_DATABASE': 'test',
-              'KNEX_CONNECTION_HOST': '${{ matrix.database }}',
+              'KNEX_CONNECTION_DATABASE': 'test-${{ matrix.node-version }}',
+              'KNEX_CONNECTION_HOST': 'database',
               'KNEX_CLIENT': '${{ matrix.client }}',
             },
           'strategy':
@@ -161,10 +161,10 @@
                     {
                       'MYSQL_USER': 'SA',
                       'MYSQL_ROOT_PASSWORD': 'Knex(!)objectionPassw0rd',
-                      'MYSQL_DATABASE': 'test',
+                      'MYSQL_DATABASE': 'test-${{ matrix.node-version }}',
                       'POSTGRES_USER': 'SA',
                       'POSTGRES_PASSWORD': 'Knex(!)objectionPassw0rd',
-                      'POSTGRES_DB': 'test',
+                      'POSTGRES_DB': 'test-${{ matrix.node-version }}',
                       'ACCEPT_EULA': 'Y',
                       'SA_PASSWORD': 'Knex(!)objectionPassw0rd',
                     },
