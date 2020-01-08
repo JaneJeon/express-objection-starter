@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - &checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - &setup-node
         name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -137,6 +137,7 @@ jobs:
           # for SQL Server
           ACCEPT_EULA: Y
           SA_PASSWORD: *test-pw
+        options: --name ${{ matrix.client }}-db
 
     steps:
       - *checkout
@@ -161,6 +162,15 @@ jobs:
           KNEX_CONNECTION_PORT: ${{ job.services.database.ports[matrix.port] }}
           KNEX_CLIENT: ${{ matrix.client }}
           REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}
+
+      - name: Create MSSQL Database
+        shell: bash
+        if: matrix.client == 'mssql'
+        run: |
+          docker exec -it mssql-db /opt/mssql-tools/bin/sqlcmd \
+            -S $KNEX_CONNECTION_HOST -U $KNEX_CONNECTION_USER -P "${KNEX_CONNECTION_PASSWORD@Q}"
+            -Q $(printf 'CREATE DATABASE %s' $KNEX_CONNECTION_DATABASE)
+        env: *knex-env
 
       - name: Test
         run: yarn test --ci --reporters=default --reporters=jest-junit
