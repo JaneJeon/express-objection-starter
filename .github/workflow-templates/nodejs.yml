@@ -140,6 +140,7 @@ jobs:
 
     steps:
       - *checkout
+      - *setup-node
       - *restore-cache-matrix
       - name: Download Compiled Config
         uses: actions/download-artifact@v1
