@@ -29,8 +29,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-node-${{ matrix.node-version }}-
+          key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: v1-${{ runner.os }}-node-${{ matrix.node-version }}-
 
       - name: Install Dependencies
         run: yarn --frozen-lockfile
@@ -47,8 +47,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-12-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-node-12-
+          key: v1-${{ runner.os }}-node-12-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: v1-${{ runner.os }}-node-12-
       - name: Lint
         run: yarn lint
 
@@ -152,6 +152,13 @@ jobs:
       - name: Print Environment Variables
         shell: bash
         run: printenv | sort
+        env:
+          KNEX_CONNECTION_USER: *test-user
+          KNEX_CONNECTION_PASSWORD: *test-pw
+          KNEX_CONNECTION_DATABASE: *test-db
+          KNEX_CONNECTION_PORT: ${{ job.services.database.ports[matrix.port] }}
+          KNEX_CLIENT: ${{ matrix.client }}
+          REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}
 
       - name: Test
         run: yarn test --ci --reporters=default --reporters=jest-junit
