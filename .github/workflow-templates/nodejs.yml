@@ -95,6 +95,7 @@ jobs:
       KNEX_CONNECTION_USER: &test-user SA
       KNEX_CONNECTION_PASSWORD: &test-pw Knex(!)objectionPassw0rd
       KNEX_CONNECTION_DATABASE: &test-db test
+      KNEX_CONNECTION_HOST: ${{ matrix.database }}
       KNEX_CLIENT: ${{ matrix.client }}
 
     strategy:
@@ -132,6 +133,7 @@ jobs:
           # for MySQL/MariaDB
           MYSQL_USER: *test-user
           MYSQL_ROOT_PASSWORD: *test-pw
+          # MYSQL_PASSWORD: *test-pw
           MYSQL_DATABASE: *test-db
           # for Postgres
           POSTGRES_USER: *test-user

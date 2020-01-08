@@ -118,6 +118,7 @@
               'KNEX_CONNECTION_USER': 'SA',
               'KNEX_CONNECTION_PASSWORD': 'Knex(!)objectionPassw0rd',
               'KNEX_CONNECTION_DATABASE': 'test',
+              'KNEX_CONNECTION_HOST': '${{ matrix.database }}',
               'KNEX_CLIENT': '${{ matrix.client }}',
             },
           'strategy':
