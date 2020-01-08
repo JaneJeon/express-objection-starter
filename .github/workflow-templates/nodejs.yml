@@ -158,7 +158,7 @@ jobs:
           KNEX_CONNECTION_USER: *test-user
           KNEX_CONNECTION_PASSWORD: *test-pw
           KNEX_CONNECTION_DATABASE: *test-db
-          KNEX_CONNECTION_PORT: ${{ job.services.database.ports[${{ matrix.port }}] }}
+          KNEX_CONNECTION_PORT: ${{ job.services.database.ports[matrix.port] }}
           KNEX_CLIENT: ${{ matrix.client }}
           REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}
 
