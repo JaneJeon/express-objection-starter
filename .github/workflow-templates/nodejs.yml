@@ -169,9 +169,9 @@ jobs:
         shell: bash
         if: matrix.client == 'mssql'
         run: >-
-          docker exec -it mssql-db-${{ matrix.node-version }} /opt/mssql-tools/bin/sqlcmd
-            -S $KNEX_CONNECTION_HOST -U $KNEX_CONNECTION_USER -P "${KNEX_CONNECTION_PASSWORD@Q}"
-            -Q $(printf 'CREATE DATABASE %s' $KNEX_CONNECTION_DATABASE)
+          docker exec mssql-db-${{ matrix.node-version }} /opt/mssql-tools/bin/sqlcmd
+          -S $KNEX_CONNECTION_HOST -U $KNEX_CONNECTION_USER -P "${KNEX_CONNECTION_PASSWORD@Q}"
+          -Q $(printf 'CREATE DATABASE %s' $KNEX_CONNECTION_DATABASE)
         env: *knex-env
 
       - name: Test
