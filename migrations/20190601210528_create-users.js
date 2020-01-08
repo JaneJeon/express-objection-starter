@@ -4,11 +4,11 @@ exports.up = knex =>
   knex.schema.createTable(tableName, table => {
     table.increments()
     table
-      .text('username', 'mediumtext')
+      .text('username')
       .notNullable()
       .unique()
     table
-      .text('email', 'mediumtext')
+      .text('email')
       .notNullable()
       .unique()
     table.text('password').notNullable()

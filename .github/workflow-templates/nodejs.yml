@@ -100,9 +100,9 @@ jobs:
           - postgres
           - &mssql mcr.microsoft.com/mssql/server:2019-latest
         include:
-          - database: mysql
-            port: 3306
-            client: mysql2
+          # - database: mysql
+          #   port: 3306
+          #   client: mysql2
           - database: mariadb
             port: 3306
             client: mysql2
