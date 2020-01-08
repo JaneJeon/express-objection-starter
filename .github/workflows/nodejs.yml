@@ -119,26 +119,9 @@
               'matrix':
                 {
                   'node-version': ['10', '12'],
-                  'database':
-                    [
-                      'mariadb',
-                      'postgres',
-                      'mcr.microsoft.com/mssql/server:2019-latest',
-                    ],
+                  'database': ['postgres'],
                   'include':
-                    [
-                      {
-                        'database': 'mariadb',
-                        'port': 3306,
-                        'client': 'mysql2',
-                      },
-                      { 'database': 'postgres', 'port': 5432, 'client': 'pg' },
-                      {
-                        'database': 'mcr.microsoft.com/mssql/server:2019-latest',
-                        'port': 1433,
-                        'client': 'mssql',
-                      },
-                    ],
+                    [{ 'database': 'postgres', 'port': 5432, 'client': 'pg' }],
                 },
             },
           'services':

@@ -97,22 +97,22 @@ jobs:
         <<: *node-versions
         database:
           # - mysql
-          - mariadb
+          # - mariadb
           - postgres
-          - &mssql mcr.microsoft.com/mssql/server:2019-latest
+          # - &mssql mcr.microsoft.com/mssql/server:2019-latest
         include:
           # - database: mysql
           #   port: 3306
           #   client: mysql2
-          - database: mariadb
-            port: 3306
-            client: mysql2
+          # - database: mariadb
+          #   port: 3306
+          #   client: mysql2
           - database: postgres
             port: 5432
             client: pg
-          - database: *mssql
-            port: 1433
-            client: mssql
+          # - database: *mssql
+          #   port: 1433
+          #   client: mssql
 
     services:
       redis:
