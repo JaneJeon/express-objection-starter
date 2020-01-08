@@ -95,7 +95,6 @@ jobs:
       KNEX_CONNECTION_USER: &test-user SA
       KNEX_CONNECTION_PASSWORD: &test-pw Knex(!)objectionPassw0rd
       KNEX_CONNECTION_DATABASE: &test-db test-${{ matrix.node-version }}
-      KNEX_CONNECTION_HOST: database
       KNEX_CLIENT: ${{ matrix.client }}
 
     strategy:
@@ -124,11 +123,11 @@ jobs:
       redis:
         image: redis
         ports:
-          - 6379
+          - 6379:6379
       database:
         image: ${{ matrix.database }}
         ports:
-          - ${{ matrix.port }}
+          - ${{ matrix.port }}:${{ matrix.port }}
         env:
           # for MySQL/MariaDB
           MYSQL_USER: *test-user

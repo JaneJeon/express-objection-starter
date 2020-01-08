@@ -118,7 +118,6 @@
               'KNEX_CONNECTION_USER': 'SA',
               'KNEX_CONNECTION_PASSWORD': 'Knex(!)objectionPassw0rd',
               'KNEX_CONNECTION_DATABASE': 'test-${{ matrix.node-version }}',
-              'KNEX_CONNECTION_HOST': 'database',
               'KNEX_CLIENT': '${{ matrix.client }}',
             },
           'strategy':
@@ -152,11 +151,11 @@
             },
           'services':
             {
-              'redis': { 'image': 'redis', 'ports': [6379] },
+              'redis': { 'image': 'redis', 'ports': ['6379:6379'] },
               'database':
                 {
                   'image': '${{ matrix.database }}',
-                  'ports': ['${{ matrix.port }}'],
+                  'ports': ['${{ matrix.port }}:${{ matrix.port }}'],
                   'env':
                     {
                       'MYSQL_USER': 'SA',
