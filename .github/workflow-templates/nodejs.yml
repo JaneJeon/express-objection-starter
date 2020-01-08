@@ -94,8 +94,8 @@ jobs:
       # mssql container has no option to create a user via environment variables
       KNEX_CONNECTION_USER: &test-user SA
       KNEX_CONNECTION_PASSWORD: &test-pw Knex(!)objectionPassw0rd
-      KNEX_CONNECTION_DATABASE: &test-db test
-      KNEX_CONNECTION_HOST: ${{ matrix.database }}
+      KNEX_CONNECTION_DATABASE: &test-db test-${{ matrix.node-version }}
+      KNEX_CONNECTION_HOST: database
       KNEX_CLIENT: ${{ matrix.client }}
 
     strategy:
