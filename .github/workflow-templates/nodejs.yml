@@ -95,7 +95,7 @@ jobs:
       matrix:
         <<: *node-versions
         database:
-          - mysql
+          # - mysql
           - mariadb
           - postgres
           - &mssql mcr.microsoft.com/mssql/server:2019-latest

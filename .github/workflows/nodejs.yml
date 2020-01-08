@@ -120,7 +120,6 @@
                   'node-version': ['10', '12'],
                   'database':
                     [
-                      'mysql',
                       'mariadb',
                       'postgres',
                       'mcr.microsoft.com/mssql/server:2019-latest',
