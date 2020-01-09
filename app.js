@@ -26,3 +26,24 @@ module.exports = app
   // eslint-disable-next-line no-unused-vars
   .use((req, res) => res.sendStatus(404))
   .use(require('./middlewares/error-handler'))
+
+/* -------------------- Asynchronous app init -------------------- */
+const fs = require('fs')
+const log = require('./lib/logger')
+
+module.exports.initialize = async () => {
+  const models = await fs.promises.readdir(`${__dirname}/models`)
+  const inits = models
+    .filter(
+      file =>
+        file.endsWith('.js') && file !== 'base.js' && file !== 'session.js'
+    )
+    .map(model => {
+      const modelClass = require(`./models/${model}`)
+      log.info(`Initializing model ${model}`)
+
+      return modelClass.fetchTableMetadata()
+    })
+
+  await Promise.all(inits)
+}

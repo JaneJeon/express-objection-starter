@@ -12,10 +12,12 @@ nconf
   .file('default', path.resolve(__dirname, 'environments', 'default.json'))
 
 // mappings
-if (process.env.DATABASE_URL) {
-  // istanbul ignore next
+// istanbul ignore next
+if (process.env.DATABASE_URL)
   nconf.set('knex:connection', process.env.DATABASE_URL)
-}
+// istanbul ignore next
+if (process.env.LOG_LEVEL)
+  nconf.set('logger:options:level', process.env.LOG_LEVEL)
 // TODO: bonsai_url
 
 module.exports = nconf
