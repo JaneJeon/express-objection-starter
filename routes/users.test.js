@@ -10,9 +10,12 @@ describe('user routes', () => {
   const email = 'test.users@gmail.com'
 
   beforeAll(async () => {
-    await User.query()
-      .delete()
-      .where({ username })
+    await Promise.all([
+      User.query()
+        .delete()
+        .where({ username }),
+      app.initialize()
+    ])
   })
 
   describe('POST /users', () => {

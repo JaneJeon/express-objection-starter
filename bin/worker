@@ -10,6 +10,7 @@ fs.readdirSync(`${path.dirname(__dirname)}/jobs`)
   .filter(file => file.endsWith('.js') && file !== 'base.js')
   .forEach(job => {
     const jobClass = require(`../jobs/${job}`)
+    log.info(`Starting worker ${job}`)
+
     jobClass.queue.process(jobClass.name, jobClass.process)
-    log.info(`Starting ${jobClass.name} worker`)
   })

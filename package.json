@@ -41,6 +41,7 @@
     "compile-workflow": "yaml2json .github/workflow-templates/nodejs.yml > .github/workflows/nodejs.yml"
   },
   "dependencies": {
+    "@casl/ability": "^3.4.0",
     "bull": "^3.12.1",
     "connect-redis": "^4.0.3",
     "cors": "^2.8.5",
@@ -84,7 +85,6 @@
     "pino": "^5.15.0",
     "pm2": "^4.2.1",
     "rate-limit-redis": "^1.7.0",
-    "role-acl": "^4.3.2",
     "sqlite3": "^4.1.1",
     "ua-parser-js": "^0.7.21",
     "yamljs": "^0.3.0"

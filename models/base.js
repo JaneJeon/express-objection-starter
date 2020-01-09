@@ -1,10 +1,7 @@
 // istanbul ignore file
 const { Model, AjvValidator } = require('objection')
 const tableName = require('objection-table-name')()
-const authorize = require('objection-authorize')(
-  require('../lib/acl'),
-  'role-acl@4'
-)
+const authorize = require('objection-authorize')(require('../policies'), 'casl')
 const visibility = require('objection-visibility').default
 const hashId = require('objection-hashid')
 const config = require('../config')
