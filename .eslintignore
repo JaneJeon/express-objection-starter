@@ -4,3 +4,4 @@ docs/.vuepress/dist
 config/**/*.json
 views/**/html.hbs
 views/emails/index.js
+test-utils/policy-tester.js
