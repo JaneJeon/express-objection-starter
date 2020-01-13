@@ -9429,10 +9429,10 @@ objection@^1.4.0:
     bluebird "^3.5.5"
     lodash "^4.17.11"
 
-objection@^2.0.10:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/objection/-/objection-2.1.0.tgz#31b8039c7707c15f2e823156cb30df8525a4a8f9"
-  integrity sha512-E5Gg6Cd8aTvtRGKzYpQOi5+FAxFAFcvXeHr3fLtqy9nE5KM1XGyepNTHfPSLjAgGHFU/UbLr5AB5gDinac2K9g==
+objection@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/objection/-/objection-2.1.2.tgz#da42e743ef69eabbb29bbf50efbe6f49acc854ba"
+  integrity sha512-55tkg1C8iFfsEz07N3peKXU4COve+jRTaUlSXAGlcC2Kk/7ONntREnwErQp+0483g7eexEbc8EJ7CDPu/RmYoQ==
   dependencies:
     ajv "^6.10.2"
     db-errors "^0.2.3"
