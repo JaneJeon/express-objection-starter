@@ -13820,10 +13820,10 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-default-prefers-color-scheme@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/vuepress-theme-default-prefers-color-scheme/-/vuepress-theme-default-prefers-color-scheme-1.0.4.tgz#623344bde1626871d667765a20e695b3b612926c"
-  integrity sha512-bsvvEF0hd7cEguqSCptkAIbcTpnwQswnzBZXGakQ33cAqQZEnKoLNzO82R1KZlRaUCMCN60kbPHsByXfvJo52A==
+vuepress-theme-default-prefers-color-scheme@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-default-prefers-color-scheme/-/vuepress-theme-default-prefers-color-scheme-1.0.5.tgz#b7b3398447926cbfea4cddfb68930cbd39bd5bd4"
+  integrity sha512-qKUbZ2hJ9sV1JEoNbSDBu776q9weNubflmFIQJjuHVEPh9q0YI7d1GKQeHCON0vEoOEOXWiNkkLGVqmyrye4Uw==
   dependencies:
     css-prefers-color-scheme "^3.1.1"
 
