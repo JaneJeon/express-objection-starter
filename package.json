@@ -43,7 +43,7 @@
   "dependencies": {
     "@casl/ability": "^3.4.0",
     "bull": "^3.12.1",
-    "connect-redis": "^4.0.3",
+    "connect-redis": "^4.0.4",
     "cors": "^2.8.5",
     "dayjs": "^1.8.19",
     "disposable-email-domains": "^1.0.51",
