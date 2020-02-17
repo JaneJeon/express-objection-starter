@@ -9928,10 +9928,10 @@ objection@^1.4.0:
     bluebird "^3.5.5"
     lodash "^4.17.11"
 
-objection@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/objection/-/objection-2.1.2.tgz#da42e743ef69eabbb29bbf50efbe6f49acc854ba"
-  integrity sha512-55tkg1C8iFfsEz07N3peKXU4COve+jRTaUlSXAGlcC2Kk/7ONntREnwErQp+0483g7eexEbc8EJ7CDPu/RmYoQ==
+objection@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/objection/-/objection-2.1.3.tgz#ca90675d4f6489766bbbf806af973d86aaf6036f"
+  integrity sha512-aKr28HntHoX6wPiFw3BWLx0Ufqmu4h4Ygj/xCYgFXrgftxB7+lWtAA/J13zcLlSmLl9Jifs6HEJFMjFrbH358w==
   dependencies:
     ajv "^6.10.2"
     db-errors "^0.2.3"
