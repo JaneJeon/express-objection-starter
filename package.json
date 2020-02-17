@@ -59,7 +59,7 @@
     "handlebars": "^4.7.3",
     "helmet": "^3.21.2",
     "http-assert": "^1.4.1",
-    "husky": "^4.2.1",
+    "husky": "^4.2.3",
     "ioredis": "^4.14.1",
     "is-ci": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
