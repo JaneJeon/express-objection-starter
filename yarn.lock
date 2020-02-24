@@ -9496,10 +9496,10 @@ ms@^2.1.1, ms@^2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-mssql@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/mssql/-/mssql-6.0.1.tgz#3aab69b7c19dd1b304495f27b748535d0110b477"
-  integrity sha512-7oPhbQjotFJBgMPlzLmPwWlnrryxrDltjCNCD9BK7Df7TA9wc6Mb/0Bcx04NJyHCMAhw8C/iWjbJoeDyUfRNUA==
+mssql@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/mssql/-/mssql-6.1.0.tgz#78ef99c6ef2901cba848bd527228aa446c3dde83"
+  integrity sha512-tlzqjnWkV2Ra5TuPh/Snmp1CF/+yDJOPjQ2yoVzdvl0vQePPFITSLQCBLRydNbg8sR6HXQFEIQL9mPaCA3oO0Q==
   dependencies:
     debug "^4"
     tarn "^1.1.5"
