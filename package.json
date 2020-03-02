@@ -60,7 +60,7 @@
     "helmet": "^3.21.3",
     "http-assert": "^1.4.1",
     "husky": "^4.2.3",
-    "ioredis": "^4.14.1",
+    "ioredis": "^4.16.0",
     "is-ci": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.10",
