@@ -10086,10 +10086,10 @@ objection-authorize@^3.1.1:
     lodash.omit "^4.5.0"
     lodash.pick "^4.4.0"
 
-objection-gen@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/objection-gen/-/objection-gen-0.5.2.tgz#7057b4e333a2f6434964cb82c857c5ff815acba1"
-  integrity sha512-eJUDK+3c7tlzEzyPDlMTSj1tCU4nj0euXA9O1cqMhncrBLKx30wgOkfJn0TiHCzDz5iTSfm3g6U8DAfLrhYGhg==
+objection-gen@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/objection-gen/-/objection-gen-0.5.3.tgz#00da1e1e55b4fffb977a35a00ec45f8487024d66"
+  integrity sha512-3KRs7F1SEoPBXOdmBQT++atfLkBpH2dE24xF4IN4IwVorjeuByn7l27QDMF8btVHhRPCVoHmeSS6RNhLUFr8vA==
   dependencies:
     json-schema-faker "^0.5.0-rc16"
     lodash.camelcase "^4.3.0"
