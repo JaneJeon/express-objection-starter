@@ -4525,10 +4525,10 @@ dir-glob@^2.0.0, dir-glob@^2.2.2:
   dependencies:
     path-type "^3.0.0"
 
-disposable-email-domains@^1.0.53:
-  version "1.0.53"
-  resolved "https://registry.yarnpkg.com/disposable-email-domains/-/disposable-email-domains-1.0.53.tgz#0025fb525ca518e865d8af9e2ac407544e434b74"
-  integrity sha512-nutItDoDcGZxrRj66I/0iLS9H3np4Pq2CCAUR8vWwMyu0vcTgSv+xHFEf9897wP/JBavfN1kyG31WKsUTPpx3A==
+disposable-email-domains@^1.0.54:
+  version "1.0.54"
+  resolved "https://registry.yarnpkg.com/disposable-email-domains/-/disposable-email-domains-1.0.54.tgz#ae95f07846c54c814ef7f3c9a5b23d7ce48465fe"
+  integrity sha512-9ZZwApAYIocmzSZC4vE2IjSI8HxMLWgemHz0KkMMEicOoSyyo1ecpAnjfzCeebQptPfaigRXzZZg+L6O6zHPcQ==
 
 dns-equal@^1.0.0:
   version "1.0.0"
