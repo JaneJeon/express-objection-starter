@@ -1,6 +1,6 @@
-<h1 align="center">Welcome to express-objection-starter 👋</h1>
+<h1 align="center">Welcome to express-objection-starter (WIP) 👋</h1>
 
-[![GitHub Actions](https://github.com/JaneJeon/express-objection-starter/actions)](https://github.com/JaneJeon/express-objection-starter/workflows/Node%20CI/badge.svg)
+[![GitHub Actions](https://github.com/JaneJeon/express-objection-starter/workflows/Node%20CI/badge.svg)](https://github.com/JaneJeon/express-objection-starter/actions)
 [![Coverage](https://codecov.io/gh/JaneJeon/express-objection-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/JaneJeon/express-objection-starter)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/JaneJeon/express-objection-starter)](https://codeclimate.com/github/JaneJeon/express-objection-starter/maintainability)
 [![Dependencies](https://img.shields.io/david/JaneJeon/express-objection-starter)](https://david-dm.org/JaneJeon/express-objection-starter)
@@ -26,14 +26,16 @@ Thus, based on my experience building production-level systems, I built a compre
 
 - a centralized hierarchical configuration system that can be easily overwritten
 - sensible defaults that can suit any production environment - PaaS, containers, behind proxy/CDN, etc, with support for production logging and distributed tracing
-- a proper ORM and query builder (Objection.js + knex) to allow working with relational databases in an ergonomic way
+- a proper ORM and query builder (Objection.js + knex) to allow working with relational databases in an ergonomic way without resulting in N+1
 - extensible relational models with tons of features (e.g. validation and pagination) baked-in
 - secure authentication system with Active Session management features
 - fine-grained role-based authorization to control access down to the field level, that seamlessly integrates with the query builder
-- a scalable, fault-tolerant queuing system that takes advantage of multi-core CPUs
+- a fast, fault-tolerant queuing system that takes advantage of multi-core CPUs
 - fully-loaded development environment with automated testing/migration/dependencies/linting via git & npm hooks, development-purpose mail server, and even automatic type generation!
+- a scalable process model (both for the server and the worker) that is easy to maintain once in production
+- _insanely_ easy & fast email templating w/ a custom MJML -> hbs -> node solution
 
-To get started, [check out the documentation](https://objection.netlify.com) for more details!
+<!-- To get started, [check out the documentation](https://objection.netlify.com) for more details! -->
 
 ## Install
 
