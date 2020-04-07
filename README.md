@@ -33,7 +33,7 @@ Thus, based on my experience building production-level systems, I built a compre
 - a fast, fault-tolerant queuing system that takes advantage of multi-core CPUs
 - fully-loaded development environment with automated testing/migration/dependencies/linting via git & npm hooks, development-purpose mail server, and even automatic type generation!
 - a scalable process model (both for the server and the worker) that is easy to maintain once in production
-- _insanely_ easy & fast email templating w/ a custom MJML -> hbs -> node solution
+- easy & mobile-optimized email templating w/ a custom MJML -> hbs -> node solution
 
 <!-- To get started, [check out the documentation](https://objection.netlify.com) for more details! -->
 
