@@ -30,7 +30,7 @@ Thus, based on my experience building production-level systems, I built a compre
 - extensible relational models with tons of features (e.g. validation and pagination) baked-in
 - secure authentication system with Active Session management features
 - fine-grained role-based authorization to control access down to the field level, that seamlessly integrates with the query builder
-- a fast, fault-tolerant queuing system that takes advantage of multi-core CPUs
+- a fast, distributed, fault-tolerant, class-based, and (optionally) rate-limited queuing system that takes advantage of multi-core CPUs
 - fully-loaded development environment with automated testing/migration/dependencies/linting via git & npm hooks, development-purpose mail server, and even automatic type generation!
 - a scalable process model (both for the server and the worker) that is easy to maintain once in production
 - easy & mobile-optimized email templating w/ a custom MJML -> hbs -> node solution
