@@ -1030,12 +1030,12 @@
   resolved "https://registry.yarnpkg.com/@blakeembrey/deque/-/deque-1.0.5.tgz#f4fa17fc5ee18317ec01a763d355782c7b395eaf"
   integrity sha512-6xnwtvp9DY1EINIKdTfvfeAtCYw4OqBZJhtiqkT3ivjnEfa25VQ3TsKvaFfKm8MyGIEfE95qLe+bNEt3nB0Ylg==
 
-"@casl/ability@^3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@casl/ability/-/ability-3.4.0.tgz#06c9f2df0bbb257b3deecb05885e731420cca780"
-  integrity sha512-aJodlkXamBRNnb25m0xuibU6StiyWZzz7EFivqLKO5kmfLDAwrIklysa1w4K/Exi1mRt+lfOp7pSb4QtuAXx+A==
+"@casl/ability@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@casl/ability/-/ability-4.0.4.tgz#c5c1fea7665431b2e082419a72387ebfc408a9f3"
+  integrity sha512-8XuUBNcU16lSmCogYr96TWuEq4HlygrrnK3wUaK8PnPBI/dtMqptzGfHLDdNnjQWQ7Bbuc3frvYkCpGPavvqdQ==
   dependencies:
-    sift "^9.0.4"
+    sift "^12.0.0"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
@@ -12578,10 +12578,10 @@ side-channel@^1.0.2:
     es-abstract "^1.17.0-next.1"
     object-inspect "^1.7.0"
 
-sift@^9.0.4:
-  version "9.0.7"
-  resolved "https://registry.yarnpkg.com/sift/-/sift-9.0.7.tgz#7b6e10466d9c3d580f87bef8670b26da9acc7786"
-  integrity sha512-q8Wvt15s0UJfIgVBEupXwITi8AKoHwCZbIO/bz+YMgEZRPh5qj/gjvYtqhKjHWe9srbuq5DyYeRyWPVjkOihPg==
+sift@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/sift/-/sift-12.0.0.tgz#744d46c52e60430eb80da227f8f983b946faeedb"
+  integrity sha512-aWQoexMzacDdUrUuPWLrvfHiYCW7QyMYZ6D7ipkuas7gdvn0GoUVzU/fyvPpgPjS49IRvZktCQWYxgWOwACk/A==
 
 sigmund@^1.0.1:
   version "1.0.1"
