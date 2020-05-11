@@ -124,6 +124,6 @@
     "surge": "^0.21.3",
     "vuepress": "^1.4.1",
     "vuepress-theme-default-prefers-color-scheme": "^1.0.6",
-    "wait-on": "^4.0.2"
+    "wait-on": "^5.0.0"
   }
 }
