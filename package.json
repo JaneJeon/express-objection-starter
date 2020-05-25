@@ -85,7 +85,7 @@
     "pino": "^5.17.0",
     "pm2": "^4.4.0",
     "rate-limit-redis": "^2.0.0",
-    "sqlite3": "^4.1.1",
+    "sqlite3": "^4.2.0",
     "ua-parser-js": "^0.7.21",
     "yamljs": "^0.3.0"
   },
