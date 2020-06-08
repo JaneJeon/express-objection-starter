@@ -82,7 +82,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pg": "^8.2.1",
-    "pino": "^5.17.0",
+    "pino": "^6.3.2",
     "pm2": "^4.4.0",
     "rate-limit-redis": "^2.0.0",
     "sqlite3": "^4.2.0",
