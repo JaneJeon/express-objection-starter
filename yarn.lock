@@ -10185,10 +10185,10 @@ objection@^1.4.0:
     bluebird "^3.5.5"
     lodash "^4.17.11"
 
-objection@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/objection/-/objection-2.1.5.tgz#eab081b4a98a2b42282b60fba064652f2625196e"
-  integrity sha512-y4wyMHy0zByvcXPL+A2wD7wVRUnn/b9r+D6ms2LSmQSwo2WPoifwOOdwkyIGZ6312bp2YgzuEoAG/xv44RKevA==
+objection@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/objection/-/objection-2.2.0.tgz#477d659c9c4667a024d845fdde6bf8bb0225f7d8"
+  integrity sha512-CijzCWeTTiFf6RCOMAUBWX0cPCvjLjEnQtGacTRQQ/sKlvXi6Mp22AxdD4N6ApjCgwpo8qHF3H73+ZYGOQ8u8w==
   dependencies:
     ajv "^6.12.0"
     db-errors "^0.2.3"
