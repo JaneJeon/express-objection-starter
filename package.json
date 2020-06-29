@@ -71,7 +71,7 @@
     "mysql2": "^2.1.0",
     "nanoid": "^2.1.11",
     "nconf": "^0.10.0",
-    "nodemailer": "^6.4.8",
+    "nodemailer": "^6.4.10",
     "normalize-email": "^1.1.1",
     "objection": "^2.2.0",
     "objection-authorize": "^3.1.1",
