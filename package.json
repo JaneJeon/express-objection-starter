@@ -121,7 +121,7 @@
     "string-natural-compare": "^3.0.1",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
-    "surge": "^0.21.3",
+    "surge": "^0.21.5",
     "vuepress": "^1.5.2",
     "vuepress-theme-default-prefers-color-scheme": "^1.0.9",
     "wait-on": "^5.0.1"
