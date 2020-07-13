@@ -55,7 +55,7 @@
     "express-session": "^1.17.1",
     "express-ws": "^4.0.0",
     "glob": "^7.1.6",
-    "got": "^11.4.0",
+    "got": "^11.5.0",
     "handlebars": "^4.7.6",
     "helmet": "^3.23.3",
     "http-assert": "^1.4.1",
