@@ -10135,10 +10135,10 @@ objection-password@^2.0.0:
   dependencies:
     bcrypt "^3.0.0"
 
-objection-table-name@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/objection-table-name/-/objection-table-name-1.2.1.tgz#d8c402ed5652a70e71b3030591740f3a3ebe7830"
-  integrity sha512-qQx6vfzobZ8muk4cVU12KDx4qVVrNO87+oAEfK3tTmqBTI9z46xUSckOeeDf8FY/sJ1c3x9JRgBs/uAHYTnXBQ==
+objection-table-name@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/objection-table-name/-/objection-table-name-1.2.2.tgz#bf3249e51c2faf95f30748565aefa11082fe8178"
+  integrity sha512-tkcsgdVwKDdEl5kSgV2cotYMF6lGmQPuyf9cF6Nj4gPFVWqj3CtXrbFCWndpL23GVh8j6wU9r+LIPBBez+VAgQ==
   dependencies:
     lodash.camelcase "^4.3.0"
     lodash.memoize "^4.1.2"

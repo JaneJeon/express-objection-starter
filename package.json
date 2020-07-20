@@ -77,7 +77,7 @@
     "objection-authorize": "^3.1.1",
     "objection-hashid": "^1.4.0",
     "objection-password": "^2.0.0",
-    "objection-table-name": "^1.2.0",
+    "objection-table-name": "^1.2.2",
     "objection-visibility": "^1.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
