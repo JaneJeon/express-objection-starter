@@ -73,7 +73,7 @@
     "nconf": "^0.10.0",
     "nodemailer": "^6.4.10",
     "normalize-email": "^1.1.1",
-    "objection": "^2.2.0",
+    "objection": "^2.2.1",
     "objection-authorize": "^3.1.1",
     "objection-hashid": "^1.4.0",
     "objection-password": "^2.0.0",
