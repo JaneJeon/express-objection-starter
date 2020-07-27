@@ -10174,10 +10174,10 @@ objection-table-name@^1.2.2:
     lodash.memoize "^4.1.2"
     pluralize "^8.0.0"
 
-objection-visibility@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/objection-visibility/-/objection-visibility-1.0.0.tgz#a79ceee54bc30743677b5ed526edf4f0bdcebbd0"
-  integrity sha512-mxM9ykxR5WMUNRUlbOf87UPntsLevAGdzrAEiYZGpk47h8wCGF22/9pfj431R2Phn5BaA6Kt+hAkWUVond3GVw==
+objection-visibility@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/objection-visibility/-/objection-visibility-1.1.0.tgz#6320dbabc2890652eeaf1f4a42d33f9d7bb2c255"
+  integrity sha512-kz1s9QeyIqtvCKUB/toKjg4UBAgCuNE9gpDMfUpYiNLLLvs8IpcbH+MqbPWxHYf8XAt+piptq76nyM5yxCSWhg==
 
 objection@^1.4.0:
   version "1.6.11"
