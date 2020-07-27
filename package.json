@@ -123,7 +123,7 @@
     "supertest-session": "^4.0.0",
     "surge": "^0.21.5",
     "vuepress": "^1.5.2",
-    "vuepress-theme-default-prefers-color-scheme": "^1.0.9",
+    "vuepress-theme-default-prefers-color-scheme": "^1.1.0",
     "wait-on": "^5.0.1"
   }
 }
