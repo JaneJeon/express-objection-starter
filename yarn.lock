@@ -9515,10 +9515,10 @@ ms@^2.1.1, ms@^2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-mssql@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/mssql/-/mssql-6.2.0.tgz#44af82701ffadf979baa0275b77a9ddb776f00c3"
-  integrity sha512-C1WcvpiyGGoNyA+rNae/87V4O47S1P75zqmITutxzamocccY8BsZA+cljXJvpnYbbGlmMB5eoSaVUSqR9NyLCg==
+mssql@^6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/mssql/-/mssql-6.2.1.tgz#4f18b8e2a29d67ee341dca84870d5de6234f7709"
+  integrity sha512-erINJ9EUPvPuWXifZfhum0CVEVrdvnFYlpgU6WKkQW69W4W7DWqJS2FHdedHnuJWlJ8x1WW1NcD8GFfF15O2aA==
   dependencies:
     debug "^4"
     tarn "^1.1.5"
