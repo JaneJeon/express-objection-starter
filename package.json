@@ -75,7 +75,7 @@
     "normalize-email": "^1.1.1",
     "objection": "^2.2.2",
     "objection-authorize": "^3.1.1",
-    "objection-hashid": "^1.4.0",
+    "objection-hashid": "^1.4.1",
     "objection-password": "^2.0.0",
     "objection-table-name": "^1.2.2",
     "objection-visibility": "^1.1.0",
