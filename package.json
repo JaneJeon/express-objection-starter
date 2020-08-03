@@ -69,7 +69,7 @@
     "ms": "^2.1.2",
     "mssql": "^6.2.1",
     "mysql2": "^2.1.0",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.0.2",
     "nconf": "^0.10.0",
     "nodemailer": "^6.4.10",
     "normalize-email": "^1.1.1",
