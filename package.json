@@ -86,7 +86,7 @@
     "pm2": "^4.4.0",
     "rate-limit-redis": "^2.0.0",
     "sqlite3": "^5.0.0",
-    "ua-parser-js": "^0.7.21",
+    "ua-parser-js": "^0.7.24",
     "yamljs": "^0.3.0"
   },
   "optionalDependencies": {
